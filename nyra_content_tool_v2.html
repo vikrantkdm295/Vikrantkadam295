@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYRA — Контент Студия</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --accent: #c9a96e;
+    --accent2: #e8c98a;
+    --text: #f0f0f0;
+    --text2: #999;
+    --text3: #666;
+    --bashkir: #7eb8a4;
+    --independent: #c47ab3;
+    --funny: #e8845a;
+    --done: #4caf50;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── LOCK SCREEN ── */
+  #lock-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .lock-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 40px 40px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lock-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--bashkir), var(--accent), var(--independent));
+  }
+
+  .lock-logo {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 4px;
+    letter-spacing: -1px;
+  }
+
+  .lock-sub {
+    font-size: 12px;
+    color: var(--text3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .lock-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .lock-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .lock-hint {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .lock-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    outline: none;
+    text-align: center;
+    letter-spacing: 2px;
+    transition: border-color 0.2s;
+    margin-bottom: 14px;
+  }
+  .lock-input:focus { border-color: var(--accent); }
+  .lock-input.error { border-color: var(--funny); animation: shake 0.3s ease; }
+
+  .lock-btn {
+    width: 100%;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .lock-btn:hover { background: var(--accent2); }
+
+  .lock-error {
+    font-size: 12px;
+    color: var(--funny);
+    margin-top: 10px;
+    display: none;
+  }
+  .lock-error.visible { display: block; }
+
+  .lock-credit {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 28px;
+    line-height: 1.6;
+  }
+  .lock-credit strong { color: var(--text2); }
+
+  /* ── HEADER ── */
+  header {
+    padding: 24px 40px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 20px; }
+
+  .logo {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .logo span {
+    color: var(--text2);
+    font-weight: 400;
+    font-size: 11px;
+    display: block;
+    letter-spacing: 2px;
+    margin-top: 3px;
+    text-transform: uppercase;
+  }
+
+  .insta-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    padding: 7px 14px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    transition: opacity 0.2s;
+  }
+  .insta-badge:hover { opacity: 0.85; }
+  .insta-badge svg { width: 14px; height: 14px; }
+
+  .header-right { display: flex; align-items: center; gap: 14px; }
+
+  .progress-badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 7px 16px;
+    font-size: 12px;
+    color: var(--text2);
+    white-space: nowrap;
+  }
+  .progress-badge strong { color: var(--accent); }
+
+  .lock-out-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text3);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lock-out-btn:hover { border-color: var(--funny); color: var(--funny); }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    gap: 4px;
+    padding: 20px 40px 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .tab {
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: var(--radius) var(--radius) 0 0;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: var(--text2);
+    background: transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); background: var(--surface); }
+  .tab.active {
+    color: var(--accent);
+    background: var(--surface);
+    border-color: var(--border);
+    border-bottom-color: var(--surface);
+    margin-bottom: -1px;
+  }
+
+  /* ── MAIN ── */
+  main { padding: 36px 40px; max-width: 1100px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  /* ── PILLAR TABS ── */
+  .pillar-tabs { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+
+  .pillar-btn {
+    padding: 10px 20px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text2);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pillar-btn:hover { border-color: var(--accent); color: var(--text); }
+  .pillar-btn.active { color: var(--bg); font-weight: 600; border-color: transparent; }
+  .pillar-btn[data-pillar="bashkir"].active { background: var(--bashkir); }
+  .pillar-btn[data-pillar="independent"].active { background: var(--independent); }
+  .pillar-btn[data-pillar="funny"].active { background: var(--funny); }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  [data-pillar="bashkir"] .dot { background: var(--bashkir); }
+  [data-pillar="independent"] .dot { background: var(--independent); }
+  [data-pillar="funny"] .dot { background: var(--funny); }
+  .pillar-btn.active .dot { background: var(--bg); }
+
+  /* ── IDEAS GRID ── */
+  .ideas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .idea-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .idea-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  [data-pillar="bashkir"] .idea-card::before { background: var(--bashkir); }
+  [data-pillar="independent"] .idea-card::before { background: var(--independent); }
+  [data-pillar="funny"] .idea-card::before { background: var(--funny); }
+
+  .idea-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .idea-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
+  .idea-card p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .idea-format {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--surface2);
+    color: var(--text3);
+  }
+
+  /* ── AI BOX ── */
+  .ai-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 14px;
+  }
+  .ai-box label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .ai-input-row { display: flex; gap: 10px; }
+  .ai-input-row input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .ai-input-row input:focus { border-color: var(--accent); }
+  .ai-input-row input::placeholder { color: var(--text3); }
+
+  .btn-generate {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-generate:hover { background: var(--accent2); }
+  .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .ai-result {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 14px;
+    display: none;
+    line-height: 1.8;
+    font-size: 14px;
+    white-space: pre-wrap;
+  }
+  .ai-result.visible { display: block; animation: fadeIn 0.3s ease; }
+
+  .ai-loading { display: none; align-items: center; gap: 10px; padding: 16px 0; color: var(--text2); font-size: 14px; }
+  .ai-loading.visible { display: flex; }
+
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .checklist-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .checklist-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .checklist-header h3 { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+  .pillar-tag { width: 10px; height: 10px; border-radius: 50%; }
+  .checklist-progress-text { font-size: 12px; color: var(--text2); }
+  .checklist-progress-text strong { color: var(--accent); }
+
+  .checklist-bar { height: 3px; background: var(--surface2); }
+  .checklist-bar-fill { height: 100%; background: var(--accent); transition: width 0.4s ease; }
+
+  .checklist-items { padding: 12px 0; }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .checklist-item:hover { background: var(--surface2); }
+
+  .check-box {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .checklist-item.done .check-box { background: var(--done); border-color: var(--done); }
+  .check-tick { display: none; color: white; font-size: 11px; font-weight: 700; }
+  .checklist-item.done .check-tick { display: block; }
+  .check-text { font-size: 13px; color: var(--text); line-height: 1.5; transition: color 0.2s; }
+  .checklist-item.done .check-text { color: var(--text3); text-decoration: line-through; }
+
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text2);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 24px;
+  }
+  .reset-btn:hover { border-color: var(--funny); color: var(--funny); }
+
+  /* ── STRATEGY ── */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .strategy-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+  .strategy-card .card-icon { font-size: 24px; margin-bottom: 12px; }
+  .strategy-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .strategy-card p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  .platform-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  .platform-card { flex: 1; min-width: 180px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+  .platform-card h5 { font-size: 14px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .platform-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .platform-card ul li { font-size: 12px; color: var(--text2); padding-left: 14px; position: relative; line-height: 1.5; }
+  .platform-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 11px; }
+
+  /* ── CREDITS SECTION ── */
+  .credits-bar {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .credits-left { display: flex; align-items: center; gap: 14px; }
+  .credits-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--independent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--bg);
+    flex-shrink: 0;
+  }
+  .credits-info { line-height: 1; }
+  .credits-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .credits-role { font-size: 11px; color: var(--text3); }
+  .credits-right { font-size: 11px; color: var(--text3); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    animation: fadeIn 0.2s ease;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: var(--surface2);
+    border: none;
+    color: var(--text2);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--border); color: var(--text); }
+
+  .modal h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-right: 40px;
+    line-height: 1.4;
+  }
+
+  .script-block { margin-bottom: 18px; }
+  .script-block label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .script-block p {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    border-left: 3px solid var(--accent);
+  }
+
+  .btn-use-idea {
+    width: 100%;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+  .btn-use-idea:hover { background: var(--accent2); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    nav { padding: 14px 20px 0; }
+    main { padding: 24px 20px; }
+    .tab { padding: 8px 14px; font-size: 12px; }
+    .ai-input-row { flex-direction: column; }
+    .lock-card { padding: 36px 24px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ LOCK SCREEN ══════════════ -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-logo">NYRA</div>
+    <div class="lock-sub">Контент Студия</div>
+    <span class="lock-icon">🔐</span>
+    <div class="lock-title">Приватный доступ</div>
+    <div class="lock-hint">Этот инструмент только для Ниры и Викранта.<br>Введи пароль чтобы войти.</div>
+    <input
+      class="lock-input"
+      type="password"
+      id="lock-input"
+      placeholder="••••••••"
+      autocomplete="off"
+      onkeydown="if(event.key==='Enter') unlock()"
+    />
+    <button class="lock-btn" onclick="unlock()">Войти →</button>
+    <div class="lock-error" id="lock-error">Неверный пароль. Попробуй снова.</div>
+    <div class="lock-credit">
+      Создано: <strong>Vikrant Satish Kadam</strong><br>
+      Редактор и контент-стратег • @nyra_nass
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MAIN APP ══════════════ -->
+<div id="app" style="display:none">
+
+  <header>
+    <div class="header-left">
+      <div class="logo">
+        NYRA
+        <span>Контент Студия</span>
+      </div>
+      <a class="insta-badge" href="https://www.instagram.com/nyra_nass" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+        @nyra_nass
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="progress-badge">Выполнено: <strong id="global-progress">0</strong></div>
+      <button class="lock-out-btn" onclick="lockApp()">🔒 Выйти</button>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab active" onclick="showTab('ideas', this)">💡 Идеи</button>
+    <button class="tab" onclick="showTab('checklist', this)">✅ Чеклист</button>
+    <button class="tab" onclick="showTab('strategy', this)">📊 Стратегия</button>
+  </nav>
+
+  <main>
+
+    <!-- ── IDEAS ── -->
+    <div class="section active" id="tab-ideas">
+      <div class="section-title">Идеи для контента</div>
+      <div class="section-sub">Выбери столп → смотри готовые идеи → или сгенерируй новые через ИИ</div>
+
+      <div class="pillar-tabs">
+        <button class="pillar-btn active" data-pillar="bashkir" onclick="switchPillar('bashkir', this)">
+          <span class="dot"></span> Башкирская культура
+        </button>
+        <button class="pillar-btn" data-pillar="independent" onclick="switchPillar('independent', this)">
+          <span class="dot"></span> Независимая жизнь
+        </button>
+        <button class="pillar-btn" data-pillar="funny" onclick="switchPillar('funny', this)">
+          <span class="dot"></span> Смешное и реальное
+        </button>
+      </div>
+
+      <div class="ideas-grid" id="ideas-grid"></div>
+
+      <div class="ai-box">
+        <label>✨ Сгенерировать новые идеи через ИИ</label>
+        <div class="ai-input-row">
+          <input type="text" id="ai-prompt" placeholder="Например: башкирская еда, зима в Уфе, студенческая жизнь..." />
+          <button class="btn-generate" id="gen-btn" onclick="generateIdeas()">Генерировать</button>
+        </div>
+      </div>
+      <div class="ai-loading" id="ai-loading"><div class="spinner"></div> Генерирую идеи...</div>
+      <div class="ai-result" id="ai-result"></div>
+
+      <!-- CREDITS -->
+      <div class="credits-bar">
+        <div class="credits-left">
+          <div class="credits-avatar">VK</div>
+          <div class="credits-info">
+            <div class="credits-name">Vikrant Satish Kadam</div>
+            <div class="credits-role">Видео редактор & Контент стратег — @nyra_nass</div>
+          </div>
+        </div>
+        <div class="credits-right">vikrantkadam295.online</div>
+      </div>
+    </div>
+
+    <!-- ── CHECKLIST ── -->
+    <div class="section" id="tab-checklist">
+      <div class="section-title">Мастер-Чеклист</div>
+      <div class="section-sub">Нажми на задачу чтобы отметить выполненной. Прогресс сохраняется автоматически.</div>
+      <button class="reset-btn" onclick="resetChecklist()">↺ Сбросить прогресс</button>
+      <div class="checklist-grid" id="checklist-grid"></div>
+    </div>
+
+    <!-- ── STRATEGY ── -->
+    <div class="section" id="tab-strategy">
+      <div class="section-title">Стратегия роста</div>
+      <div class="section-sub">Главные принципы для роста Ниры с 1500 до 10K+ подписчиков</div>
+
+      <div class="strategy-grid">
+        <div class="strategy-card">
+          <div class="card-icon">🎯</div>
+          <h4>Бренд-идентичность</h4>
+          <p>«Башкирская девушка, живущая по своим правилам — независимая, настоящая, бескомпромиссная.» Повторяй это интонацией в каждом видео.</p>
+        </div>
+        <div class="strategy-card">
+          <div class="card-icon">📝</div>
+          <h4>Структура каждого рила</h4>
+          <p><strong>Хук (3 сек)</strong> → Ценность → Человеческий момент → CTA. Первые 3 секунды решают всё — никогда не пропускай хук.</p>
+        </div>
+        <div class="strategy-card">
+          <div class="card-icon">💰</div>
+          <h4>Путь к платным рекламам</h4>
+          <p>10K+ → первые микро-сделки. 50K+ → стабильный доход. Бренды: косметика, студ. приложения, турагентства, одежда.</p>
+        </div>
+        <div class="strategy-card">
+          <div class="card-icon">🔥</div>
+          <h4>Секретное оружие</h4>
+          <p>Башкирская культура — большинство мира её не знает. Это не минус — это золотая жила. Показывай с гордостью.</p>
+        </div>
+        <div class="strategy-card">
+          <div class="card-icon">📱</div>
+          <h4>Биография профиля</h4>
+          <p>🐾 Студентка ветфака | Уфа<br>🚗 BMW | Живу сама<br>🌍 Башкирская культура | Travel<br><em>Заполни сейчас — пустая bio = люди уходят</em></p>
+        </div>
+        <div class="strategy-card">
+          <div class="card-icon">✂️</div>
+          <h4>Правило монтажа</h4>
+          <p>Один стиль цветокора. Один шрифт. Субтитры всегда. TikTok: быстрый монтаж. Instagram: плавный. VK: личный тон.</p>
+        </div>
+      </div>
+
+      <div class="platform-row">
+        <div class="platform-card">
+          <h5>📱 TikTok <span style="font-size:11px;color:var(--funny);font-weight:400">№1</span></h5>
+          <ul>
+            <li>1 видео в день минимум</li>
+            <li>Хук в первые 2 секунды</li>
+            <li>Трендовая музыка</li>
+            <li>15–30 секунд</li>
+            <li>Субтитры обязательно</li>
+          </ul>
+        </div>
+        <div class="platform-card">
+          <h5>📸 Instagram <span style="font-size:11px;color:var(--independent);font-weight:400">№2</span></h5>
+          <ul>
+            <li>4–5 рилсов в неделю</li>
+            <li>Сторис каждый день</li>
+            <li>Опросы и вопросы</li>
+            <li>Единый визуальный стиль</li>
+            <li>Вопрос в каждой подписи</li>
+          </ul>
+        </div>
+        <div class="platform-card">
+          <h5>💙 VK <span style="font-size:11px;color:var(--bashkir);font-weight:400">№3</span></h5>
+          <ul>
+            <li>3–4 публикации в неделю</li>
+            <li>Нативная загрузка видео</li>
+            <li>Подписи на русском</li>
+            <li>Башкирские сообщества</li>
+            <li>Личный тёплый тон</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <h3 id="modal-title"></h3>
+    <div id="modal-body"></div>
+    <button class="btn-use-idea" onclick="closeModalDirect()">✓ Понятно, буду снимать</button>
+  </div>
+</div>
+
+<script>
+// ── PASSWORD ─────────────────────────────────────────────
+const PASSWORD = "nyra@2101";
+const SESSION_KEY = "nyra_unlocked";
+
+function unlock() {
+  const val = document.getElementById('lock-input').value;
+  const input = document.getElementById('lock-input');
+  const err = document.getElementById('lock-error');
+  if (val === PASSWORD) {
+    sessionStorage.setItem(SESSION_KEY, "1");
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    err.classList.remove('visible');
+  } else {
+    input.classList.add('error');
+    err.classList.add('visible');
+    setTimeout(() => input.classList.remove('error'), 400);
+    input.value = '';
+    input.focus();
+  }
+}
+
+function lockApp() {
+  sessionStorage.removeItem(SESSION_KEY);
+  document.getElementById('lock-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('lock-input').value = '';
+}
+
+// Auto-unlock if same session
+if (sessionStorage.getItem(SESSION_KEY) === "1") {
+  document.getElementById('lock-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// ── DATA ─────────────────────────────────────────────────
+const IDEAS = {
+  bashkir: [
+    { title: "Блюда башкирской кухни — объясняю каждое", desc: "Покажи 3 традиционных блюда с реакцией и историей", format: "Рилс 30–45 сек", hook: "«Это блюдо едят в Башкирии уже 500 лет — угадай что это»", value: "Показываешь блюдо, рассказываешь историю в 2–3 фразах", moment: "Твоя настоящая реакция когда ешь", cta: "«Какое башкирское блюдо ты бы попробовал первым?»" },
+    { title: "Вещи которые знают только башкиры", desc: "5–7 культурных моментов с юмором", format: "TikTok тренд", hook: "«Ты башкир если...»", value: "Каждый пункт с мимикой и объяснением", moment: "Смех или эмоция в конце каждого пункта", cta: "«Добавь свой пункт в комментариях»" },
+    { title: "Башкирский язык — учим 5 слов", desc: "Смешные башкирские слова для любой аудитории", format: "Рилс 20–30 сек", hook: "«Это слово по-башкирски звучит как...»", value: "5 слов с произношением и значением, с юмором", moment: "Реакция когда кто-то пытается повторить", cta: "«Угадай что значит это слово 👇»" },
+    { title: "Уфа которую не знают туристы", desc: "Красивые места в Уфе которые знают только местные", format: "Влог-рилс 45 сек", hook: "«В Уфе есть место которое я никогда не покажу туристам... ладно покажу»", value: "3–4 места с коротким рассказом о каждом", moment: "Ты на фоне места, личный комментарий", cta: "«Вы были в Уфе? Куда сходить?»" },
+    { title: "Башкирская традиция — объясняю современно", desc: "Одна традиция, объяснённая просто и с личным отношением", format: "Образовательный рилс", hook: "«Эту традицию мы соблюдаем до сих пор и вот почему»", value: "Объяснение + личная история", moment: "Момент когда видно что тебе это важно", cta: "«Есть ли похожие традиции у вас?»" },
+    { title: "Башкирская зима — эстетика и реальность", desc: "Контраст красивой зимы и реальной жизни в ней", format: "Эстетический рилс", hook: "«Зима в Башкирии выглядит так... а ощущается вот так»", value: "Красивые кадры + честная реакция на холод", moment: "Смешной момент в конце", cta: "«-30°C — нормально или нет? 🥶»" }
+  ],
+  independent: [
+    { title: "Я сама оплачиваю свою жизнь в 23 — как", desc: "Честный рассказ о работе, учёбе и независимости", format: "Личный влог-рилс", hook: "«Мне 23. Я сама плачу за всё. Вот как это работает»", value: "Учёба + работа продавца SIM-карт + планы", moment: "Честный момент — сложно но стоит того", cta: "«Вы тоже живёте независимо? Как справляетесь?»" },
+    { title: "BMW — моя цель и почему именно она", desc: "Мечта, мотивация и BMW как символ свободы", format: "Мотивационный рилс", hook: "«Все спрашивают зачем мне BMW. Вот настоящий ответ»", value: "Личная история отношения к машине", moment: "Видно что это не понты — это цель", cta: "«Какая у тебя цель которую все не понимают?»" },
+    { title: "День из жизни — учёба + работа + жизнь", desc: "Честный day-in-my-life без фильтров", format: "Влог TikTok", hook: "«6:30 утра. Ветфак. Потом работа. Поехали»", value: "Реальный день — усталость, маленькие победы", moment: "Один честный момент — что думаешь перед сном", cta: "«Как вы балансируете учёбу и работу?»" },
+    { title: "Вещи на которые я не пойду ради денег", desc: "Личные ценности и границы — смелый контент", format: "Talking head рилс", hook: "«Я скажу кое-что что многим не понравится»", value: "3–4 чёткие позиции с объяснением", moment: "Уверенный тон без извинений", cta: "«Согласны? Напишите своё»" },
+    { title: "Планирую поездку сама — первый шаг", desc: "Планирование путешествия на студенческий бюджет", format: "Рилс или серия", hook: "«Хочу в [страна]. Бюджет минимальный. Смотрите как я это делаю»", value: "Конкретные шаги — приложения, цены, хитрости", moment: "Настоящая реакция когда находишь хорошую цену", cta: "«Куда мне поехать следующим? Голосуйте 👇»" }
+  ],
+  funny: [
+    { title: "Ожидание vs реальность — ветфак", desc: "Что думают про ветеринарную учёбу и что это реально", format: "Трендовый рилс", hook: "«Все думают ветфак — это милые котики. Реальность:»", value: "3–4 контраста с юмором", moment: "Твоя реальная усталая реакция", cta: "«Угадайте что было самым неожиданным 👇»" },
+    { title: "Русские проблемы которые все поймут", desc: "Юмор про жизнь в России для любой аудитории", format: "TikTok тренд", hook: "«Ты живёшь в России если...»", value: "5–7 ситуаций с мимикой", moment: "Последний пункт — самый смешной", cta: "«Какой пункт ваш? 😂»" },
+    { title: "Истории с работы продавца SIM-карт", desc: "Смешные случаи с работы — с юмором", format: "Storytelling рилс", hook: "«Сегодня ко мне пришёл клиент и я не знала что сказать»", value: "Одна история, рассказанная живо", moment: "Твоя реакция в конце", cta: "«Бывало у вас такое на работе?»" },
+    { title: "Я и мой счёт против мечты о BMW", desc: "Финансовый юмор для каждого студента", format: "Комедийный рилс", hook: "«BMW стоит Х рублей. На счету у меня...»", value: "Юмористическое сравнение мечты и реальности", moment: "Переход от грусти к решимости — с юмором", cta: "«Что твоя BMW-мечта vs реальность?»" },
+    { title: "Вещи которые я говорила и никогда не делала", desc: "Самоироничный контент — очень высокая вовлечённость", format: "TikTok формат", hook: "«Я обещала себе что никогда не буду... и вот я»", value: "3–5 смешных саморазоблачений", moment: "Последнее — самое честное и смешное", cta: "«Поделитесь своим 😅»" }
+  ]
+};
+
+const CHECKLIST_DATA = [
+  { title: "Башкирская культура", color: "#7eb8a4", key: "bashkir", items: ["Снять видео про башкирскую кухню (1 блюдо)", "Рилс «Вещи которые знают только башкиры»", "Урок башкирского языка (5 слов)", "Красивые места Уфы которые не знают туристы", "Рассказать одну башкирскую традицию", "Эстетический рилс про башкирскую зиму", "Снять башкирскую одежду или украшения", "Видео про башкирскую музыку или танцы", "Рассказ о башкирских праздниках", "Серия «Башкирия которую ты не знаешь» — эп.1"] },
+  { title: "Независимая жизнь", color: "#c47ab3", key: "independent", items: ["Заполнить биографию профиля", "Рилс «Я сама оплачиваю свою жизнь в 23»", "Видео про BMW — цель и история", "День из жизни — учёба + работа без постановки", "Рассказ про работу продавца SIM-карт", "Планирование путешествия на студ. бюджет", "«Вещи на которые я не пойду ради денег»", "Утренняя рутина — честная версия", "Рилс про цели на год", "Видео как я принимаю сложные решения"] },
+  { title: "Смешное и реальное", color: "#e8845a", key: "funny", items: ["«Ожидание vs реальность» — ветфак", "«Русские проблемы» трендовый формат", "Смешная история с работы", "«Я и мой счёт против BMW» — юмор", "«Вещи которые я говорила и не делала»", "Реакция на стереотипы о Башкирии", "Самый неловкий момент на ветфаке", "«Мой день по плану vs реально»", "Смешное сравнение студенческой жизни", "Рилс с одногруппниками (с согласия)"] },
+  { title: "Технические задачи", color: "#c9a96e", key: "technical", items: ["Установить единый стиль цветокоррекции", "Выбрать один шрифт для всех видео", "Создать шаблон обложек для сторис", "Настроить расписание публикаций", "Завести Notion-календарь контента", "Подключить TikTok Business Account", "Настроить ссылку в Bio (Linktree)", "Папка для архива лучших видео", "Изучить TikTok Creative Center", "Проанализировать статистику через 2 недели"] }
+];
+
+// ── TABS ─────────────────────────────────────────────────
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── PILLARS ──────────────────────────────────────────────
+let currentPillar = 'bashkir';
+
+function switchPillar(pillar, btn) {
+  currentPillar = pillar;
+  document.querySelectorAll('.pillar-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderIdeas();
+}
+
+function renderIdeas() {
+  const grid = document.getElementById('ideas-grid');
+  grid.setAttribute('data-pillar', currentPillar);
+  grid.innerHTML = IDEAS[currentPillar].map((idea, i) => `
+    <div class="idea-card" onclick="openModal(${i})" style="animation:fadeIn 0.3s ease ${i*0.05}s both">
+      <h4>${idea.title}</h4>
+      <p>${idea.desc}</p>
+      <span class="idea-format">${idea.format}</span>
+    </div>
+  `).join('');
+}
+
+// ── MODAL ────────────────────────────────────────────────
+function openModal(idx) {
+  const idea = IDEAS[currentPillar][idx];
+  document.getElementById('modal-title').textContent = idea.title;
+  document.getElementById('modal-body').innerHTML = `
+    <div class="script-block"><label>🎣 Хук (первые 3 секунды)</label><p>${idea.hook}</p></div>
+    <div class="script-block"><label>💡 Ценность / Содержание</label><p>${idea.value}</p></div>
+    <div class="script-block"><label>❤️ Человеческий момент</label><p>${idea.moment}</p></div>
+    <div class="script-block"><label>📣 Призыв к действию (CTA)</label><p>${idea.cta}</p></div>
+  `;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(e) { if (e.target.id === 'modal-overlay') closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+// ── AI GENERATOR ─────────────────────────────────────────
+async function generateIdeas() {
+  const prompt = document.getElementById('ai-prompt').value.trim();
+  if (!prompt) return;
+  const btn = document.getElementById('gen-btn');
+  const loading = document.getElementById('ai-loading');
+  const result = document.getElementById('ai-result');
+  btn.disabled = true;
+  loading.classList.add('visible');
+  result.classList.remove('visible');
+  result.textContent = '';
+  const names = { bashkir: 'Башкирская культура', independent: 'Независимая жизнь', funny: 'Смешное и реальное' };
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: `Ты — эксперт по контент-стратегии для Instagram, TikTok и VK. Помогаешь Нире — 23-летней башкирской девушке из Уфы: студентке ветфака, продавцу SIM-карт, любительнице BMW, независимой и открытой. Генерируй идеи на русском. Каждая идея: специфичная, с сильным хуком на 3 секунды, эмоциональная, реалистичная для съёмки одним человеком. Формат: нумерованный список из 5 идей. Каждая: название → хук → что показывать → CTA. Только русский язык.`,
+        messages: [{ role: "user", content: `Столп: ${names[currentPillar]}. Запрос: ${prompt}. Придумай 5 конкретных идей.` }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(c => c.text || '').join('') || 'Ошибка — попробуй снова';
+    result.textContent = text;
+    result.classList.add('visible');
+  } catch(err) {
+    result.textContent = '⚠️ Ошибка соединения. Проверь интернет и попробуй снова.';
+    result.classList.add('visible');
+  }
+  loading.classList.remove('visible');
+  btn.disabled = false;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('ai-prompt');
+  if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') generateIdeas(); });
+});
+
+// ── CHECKLIST ────────────────────────────────────────────
+let checklistState = JSON.parse(localStorage.getItem('nyra_checklist') || '{}');
+
+function saveChecklist() {
+  localStorage.setItem('nyra_checklist', JSON.stringify(checklistState));
+  updateGlobalProgress();
+}
+
+function toggleItem(sectionKey, idx) {
+  const key = `${sectionKey}_${idx}`;
+  checklistState[key] = !checklistState[key];
+  saveChecklist();
+  renderChecklist();
+}
+
+function resetChecklist() {
+  if (confirm('Сбросить весь прогресс? Это нельзя отменить.')) {
+    checklistState = {};
+    saveChecklist();
+    renderChecklist();
+  }
+}
+
+function renderChecklist() {
+  const grid = document.getElementById('checklist-grid');
+  if (!grid) return;
+  grid.innerHTML = CHECKLIST_DATA.map(section => {
+    const done = section.items.filter((_, i) => checklistState[`${section.key}_${i}`]).length;
+    const total = section.items.length;
+    const pct = Math.round((done / total) * 100);
+    return `
+      <div class="checklist-section">
+        <div class="checklist-header">
+          <h3><span class="pillar-tag" style="background:${section.color}"></span>${section.title}</h3>
+          <div class="checklist-progress-text"><strong>${done}</strong>/${total}</div>
+        </div>
+        <div class="checklist-bar"><div class="checklist-bar-fill" style="width:${pct}%;background:${section.color}"></div></div>
+        <div class="checklist-items">
+          ${section.items.map((item, i) => `
+            <div class="checklist-item ${checklistState[`${section.key}_${i}`] ? 'done' : ''}" onclick="toggleItem('${section.key}', ${i})">
+              <div class="check-box"><span class="check-tick">✓</span></div>
+              <span class="check-text">${item}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function updateGlobalProgress() {
+  const total = Object.values(checklistState).filter(Boolean).length;
+  const el = document.getElementById('global-progress');
+  if (el) el.textContent = total;
+}
+
+// ── INIT ─────────────────────────────────────────────────
+renderIdeas();
+renderChecklist();
+updateGlobalProgress();
+</script>
+</body>
+</html>
