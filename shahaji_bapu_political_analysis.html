@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>सांगोला राजकीय विश्लेषण – शहाजी बापू vs भाजप</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:ital@0;1&family=Playfair+Display:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #FF6B00;
+    --deep-saffron: #CC4400;
+    --gold: #FFB800;
+    --dark: #0A0A0F;
+    --darker: #050508;
+    --card-bg: #12121A;
+    --card-border: #2A2A3A;
+    --text-main: #F0EDE8;
+    --text-muted: #8A8499;
+    --shiv: #FF6B00;
+    --bjp: #1A5FB4;
+    --shekap: #2D8A4E;
+    --green-accent: #00FF88;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--darker);
+    color: var(--text-main);
+    font-family: 'Tiro Devanagari Marathi', serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 2rem;
+    background: radial-gradient(ellipse at 50% 0%, #1A0500 0%, var(--darker) 70%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,107,0,0.03) 60px, rgba(255,107,0,0.03) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,107,0,0.03) 60px, rgba(255,107,0,0.03) 61px);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,107,0,0.1);
+    border: 1px solid rgba(255,107,0,0.3);
+    color: var(--saffron);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeInDown 0.8s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+
+  .hero h1 .highlight { color: var(--saffron); position: relative; }
+  .hero h1 .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--saffron);
+    transform: scaleX(0);
+    animation: lineGrow 0.8s ease 1s both;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    animation: fadeInUp 0.8s ease 0.4s both;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+    color: var(--saffron);
+    font-size: 1.5rem;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 5rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-title .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--saffron);
+    background: rgba(255,107,0,0.1);
+    border: 1px solid var(--saffron);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .section-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--saffron);
+    margin: 1rem 0 2.5rem;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--saffron), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    animation: slideInLeft 0.6s ease both;
+  }
+
+  .timeline-item:hover {
+    border-color: var(--saffron);
+    box-shadow: 0 0 20px rgba(255,107,0,0.1);
+    transform: translateX(4px);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 1.5rem;
+    width: 12px;
+    height: 12px;
+    background: var(--saffron);
+    border-radius: 50%;
+    border: 2px solid var(--darker);
+  }
+
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--saffron);
+    letter-spacing: 2px;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-body {
+    font-size: 0.9rem;
+    color: rgba(240,237,232,0.8);
+    line-height: 1.6;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-right: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-win { background: rgba(0,255,136,0.1); color: var(--green-accent); border: 1px solid rgba(0,255,136,0.3); }
+  .tag-loss { background: rgba(255,50,50,0.1); color: #FF5555; border: 1px solid rgba(255,50,50,0.3); }
+  .tag-betrayal { background: rgba(255,107,0,0.1); color: var(--saffron); border: 1px solid rgba(255,107,0,0.3); }
+  .tag-dev { background: rgba(26,95,180,0.1); color: #6AB0FF; border: 1px solid rgba(26,95,180,0.3); }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.8rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .card-saffron::before { background: linear-gradient(90deg, var(--saffron), var(--gold)); }
+  .card-blue::before { background: linear-gradient(90deg, var(--bjp), #6AB0FF); }
+  .card-red::before { background: linear-gradient(90deg, #FF3333, #FF8888); }
+  .card-green::before { background: linear-gradient(90deg, var(--shekap), var(--green-accent)); }
+
+  .card:hover {
+    border-color: var(--saffron);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    transform: translateY(-4px);
+  }
+
+  .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .card-body { font-size: 0.85rem; color: rgba(240,237,232,0.75); line-height: 1.6; }
+
+  /* COMPARISON TABLE */
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .comparison-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+  }
+
+  .comparison-table th:first-child { text-align: left; }
+  .comparison-table th.th-bapu { color: var(--saffron); }
+  .comparison-table th.th-bjp { color: #6AB0FF; }
+
+  .comparison-table td {
+    padding: 0.9rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    font-size: 0.9rem;
+    vertical-align: middle;
+  }
+
+  .comparison-table tr td:first-child {
+    border-radius: 8px 0 0 8px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-family: 'Space Mono', monospace;
+  }
+  .comparison-table tr td:last-child { border-radius: 0 8px 8px 0; }
+
+  .bapu-cell { color: var(--saffron); }
+  .bjp-cell { color: #6AB0FF; }
+
+  /* VOTE CHART */
+  .vote-visual {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .vote-bar-container { margin-top: 1.5rem; }
+
+  .vote-party {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .vote-label {
+    min-width: 160px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .vote-bar-wrap {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    height: 28px;
+    overflow: hidden;
+    min-width: 100px;
+  }
+
+  .vote-bar {
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    transition: width 1.5s ease;
+    width: 0;
+  }
+
+  .bar-shekap { background: linear-gradient(90deg, #2D8A4E, #00FF88); color: #000; }
+  .bar-bapu { background: linear-gradient(90deg, #CC4400, #FF6B00); color: #fff; }
+  .bar-ubt { background: linear-gradient(90deg, #6A0000, #AA3333); color: #fff; }
+
+  /* POLITICAL CHESS */
+  .chess-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 600px) { .chess-grid { grid-template-columns: 1fr; } }
+
+  .chess-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .chess-card .move-num {
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    background: var(--bjp);
+    color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 10px;
+  }
+
+  .chess-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #6AB0FF;
+    margin-bottom: 0.6rem;
+  }
+
+  .chess-card-body {
+    font-size: 0.85rem;
+    color: rgba(240,237,232,0.8);
+    line-height: 1.65;
+  }
+
+  /* PREDICT BOX */
+  .predict-box {
+    background: linear-gradient(135deg, rgba(255,107,0,0.05) 0%, rgba(26,95,180,0.05) 100%);
+    border: 1px solid rgba(255,107,0,0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .predict-box::before {
+    content: '⚠';
+    position: absolute;
+    right: 2rem;
+    top: 1.5rem;
+    font-size: 3rem;
+    opacity: 0.08;
+  }
+
+  .predict-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .predict-list { list-style: none; padding: 0; }
+  .predict-list li {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .predict-list li:last-child { border-bottom: none; }
+  .predict-icon { color: var(--saffron); font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+
+  /* VERDICT */
+  .verdict-section {
+    background: var(--card-bg);
+    border: 2px solid rgba(255,107,0,0.4);
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    margin-top: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .verdict-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,107,0,0.06) 0%, transparent 70%);
+  }
+
+  .verdict-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .verdict-quote::before {
+    content: '"';
+    font-size: 5rem;
+    color: rgba(255,107,0,0.15);
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    line-height: 1;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* PARTY BADGE */
+  .party-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .badge-shiv { background: rgba(255,107,0,0.15); color: var(--saffron); border: 1px solid rgba(255,107,0,0.4); }
+  .badge-bjp { background: rgba(26,95,180,0.15); color: #6AB0FF; border: 1px solid rgba(26,95,180,0.4); }
+  .badge-shekap { background: rgba(45,138,78,0.15); color: #5ED98A; border: 1px solid rgba(45,138,78,0.4); }
+
+  /* DIVIDER */
+  .section-sep {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,107,0,0.3), transparent);
+    margin: 0;
+  }
+
+  /* STAT BOXES */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.4rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--saffron);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* REASON CHAIN */
+  .reason-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .reason-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 0;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .reason-item:first-child { border-radius: 12px 12px 0 0; }
+  .reason-item:last-child { border-radius: 0 0 12px 12px; }
+  .reason-item:only-child { border-radius: 12px; }
+
+  .reason-item:not(:last-child)::after {
+    content: '↓';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--saffron);
+    font-size: 1.1rem;
+    z-index: 2;
+    background: var(--darker);
+    padding: 0 4px;
+  }
+
+  .reason-item:hover { background: rgba(255,107,0,0.05); border-color: rgba(255,107,0,0.3); }
+
+  .reason-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--saffron);
+    font-weight: 700;
+    min-width: 24px;
+    margin-top: 2px;
+  }
+
+  .reason-text { font-size: 0.9rem; line-height: 1.6; }
+
+  /* ANIMATIONS */
+  @keyframes fadeInDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideInLeft { from { opacity:0; transform:translateX(-20px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes lineGrow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+  @keyframes bounce { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(8px); } }
+  @keyframes pulse { 0%,100% { opacity:0.6; } 50% { opacity:1; } }
+
+  .section { animation: fadeInUp 0.6s ease both; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .comparison-table { font-size: 0.8rem; }
+    .comparison-table td, .comparison-table th { padding: 0.7rem 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🏛 राजकीय विश्लेषण • सांगोला तालुका</div>
+    <h1>
+      <span class="highlight">शहाजी बापू</span><br>
+      विरुद्ध भाजपचे राजकारण
+    </h1>
+    <p class="hero-sub">
+      एका निष्ठावंत नेत्याची कहाणी, एक मित्रपक्षाचा विश्वासघात,<br>आणि सांगोल्याचे राजकीय भवितव्य
+    </p>
+    <div style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; margin-top:1.5rem;">
+      <span class="party-badge badge-shiv">⚡ शिवसेना (शिंदे)</span>
+      <span class="party-badge badge-bjp">🪷 भाजप</span>
+      <span class="party-badge badge-shekap">🌾 शेकाप (PWPI)</span>
+    </div>
+  </div>
+  <div class="scroll-indicator">↓</div>
+</section>
+
+<hr class="section-sep">
+
+<!-- SECTION 1: BAPU KAUN AAHE -->
+<div class="section">
+  <h2 class="section-title"><span class="num">01</span> शहाजी बापू – एक परिचय</h2>
+  <div class="section-divider"></div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <span class="stat-num">1995</span>
+      <span class="stat-label">पहिल्यांदा आमदार झाले</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">2019</span>
+      <span class="stat-label">शिवसेनेतून दुसरी विजय</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">70 वर्षे</span>
+      <span class="stat-label">वय, कायदेपंडित</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">₹55.8 लाख</span>
+      <span class="stat-label">एकूण संपत्ती – प्रामाणिक नेता</span>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card card-saffron">
+      <div class="card-icon">💧</div>
+      <div class="card-title">पाणी पुरवठा – शेतकऱ्यांसाठी लढाई</div>
+      <div class="card-body">शिरभावी पाणी पुरवठा योजना, जलजीवन मिशन अंतर्गत हजारो एकर सिंचन. पुण्याच्या धरणातून सोलापूरसाठी पाणी मागण्याची धडाडी.</div>
+    </div>
+    <div class="card card-saffron">
+      <div class="card-icon">🌾</div>
+      <div class="card-title">शेतकरी कल्याण</div>
+      <div class="card-body">डाळिंब शेतकऱ्यांसाठी आवाज, कोरडवाहू भागातील १४ गावांचे सिंचन, ग्रामीण पायाभूत सुविधा.</div>
+    </div>
+    <div class="card card-saffron">
+      <div class="card-icon">🏗️</div>
+      <div class="card-title">विकासकामे</div>
+      <div class="card-body">२०१९-२०२४ आमदारकीत एकनाथ शिंदेंच्या साथीने मोठा निधी आणला. रस्ते, पाणी, शाळा – साऱ्या पायाभूत गोष्टींवर काम.</div>
+    </div>
+    <div class="card card-saffron">
+      <div class="card-icon">🤝</div>
+      <div class="card-title">जनतेशी नाळ</div>
+      <div class="card-body">गावरान भाषेत बोलणारा, जनतेत मिसळणारा, कार्यकर्त्यांना आयुष्यभर जपणारा असा नेता म्हणून ओळखले जातात.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- SECTION 2: TIMELINE -->
+<div class="section">
+  <h2 class="section-title"><span class="num">02</span> निवडणूक इतिहास – कालप्रवाह</h2>
+  <div class="section-divider"></div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-year">1995</div>
+      <span class="tag tag-win">✓ विजय</span>
+      <div class="timeline-title">काँग्रेसतून पहिली आमदारकी</div>
+      <div class="timeline-body">गणपतराव देशमुखांच्या दीर्घ वर्चस्वाला धक्का देत शहाजी बापू पहिल्यांदा विधानसभेत गेले. काँग्रेसच्या तिकिटावर ऐतिहासिक विजय.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">1999 ते 2014</div>
+      <span class="tag tag-loss">✗ पराभव</span>
+      <div class="timeline-title">गणपतरावांचे परत वर्चस्व</div>
+      <div class="timeline-body">शेकापचे गणपतराव देशमुख पुन्हा अनेक वर्षे जिंकले. बापूंनी धीर सोडला नाही – सातत्याने जनतेत राहिले.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">2014</div>
+      <span class="tag tag-win">✓ शिवसेनेत प्रवेश</span>
+      <div class="timeline-title">शिवसेनेची साथ स्वीकारली</div>
+      <div class="timeline-body">काँग्रेस सोडून शिवसेनेत प्रवेश. नव्या राजकीय घरात स्थिरावण्याची सुरुवात.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">2019</div>
+      <span class="tag tag-win">✓ ४६.३% मते – दणदणीत विजय</span>
+      <div class="timeline-title">दुसरी आमदारकी – शिवसेनेतून</div>
+      <div class="timeline-body">९९,४६४ मते मिळवत प्रचंड बहुमताने विजय. सांगोल्यात शिवसेनेचा डंका वाजवला. जनतेचा आत्मविश्वास परत मिळवला.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">जून 2022</div>
+      <span class="tag tag-betrayal">⚡ महत्त्वाचा निर्णय</span>
+      <div class="timeline-title">एकनाथ शिंदेंना पाठिंबा</div>
+      <div class="timeline-body">शिवसेना फुटीच्या वेळी बापूंनी एकनाथ शिंदेंची साथ दिली. याचे कारण – उद्धव ठाकरेंपेक्षा शिंदे गट भाजपसोबत असल्याने निधी मिळेल, विकास होईल. या निर्णयाने त्यांची शक्ती वाढली.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">2024 लोकसभा</div>
+      <span class="tag tag-dev">🙏 निष्ठा</span>
+      <div class="timeline-title">भाजपसाठी माढ्यात प्रचार केला</div>
+      <div class="timeline-body">भाजपचे रणजीतसिंह नाईक-निंबाळकर यांच्यासाठी माढा मतदारसंघात जाऊन प्रचार केला. पण भाजपने ही निष्ठा परतफेड केली नाही.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">नोव्हेंबर 2024</div>
+      <span class="tag tag-loss">✗ पराभव – २५,३८६ मतांनी</span>
+      <div class="timeline-title">विधानसभा निवडणूक – भाजपच्या घाताने हार</div>
+      <div class="timeline-body">शेकापचे डॉ. बाबासाहेब देशमुख यांनी ४४.०९% मते घेऊन बापूंना पराभूत केले. बापूंना फक्त ३४.४६% मते. भाजपने शेकापला छुपा पाठिंबा दिल्याने हा पराभव झाल्याचा आरोप.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">नोव्हेंबर-डिसेंबर 2025</div>
+      <span class="tag tag-betrayal">🔥 थेट संघर्ष</span>
+      <div class="timeline-title">सांगोला नगरपालिका – एकट्याने लढत</div>
+      <div class="timeline-body">भाजपने शेकाप + दीपक साळुंखे + NCP (अजित) एकत्र आणून बापूंची कोंडी केली. बापूंनी थेट फडणवीसांना सवाल केला – "मी तुमचा कोणता शब्द मोडला?" शिंदेंनी "बापू अकेला नहीं" म्हणत साथ दिली.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">१ डिसेंबर 2025</div>
+      <span class="tag tag-loss">🚔 LCB छापा</span>
+      <div class="timeline-title">बापूंच्या कार्यालयावर छापेमारी</div>
+      <div class="timeline-body">भाजपवर टीका केल्यानंतर लगेच LCB आणि निवडणूक आयोगाने बापूंच्या कार्यालयावर छापा टाकला. बापूंचा थेट आरोप – "भाजपला पराभव दिसतोय म्हणून हे केलं."</div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- SECTION 3: VOTE CHART -->
+<div class="section">
+  <h2 class="section-title"><span class="num">03</span> मतदान विश्लेषण – २०२४ विधानसभा</h2>
+  <div class="section-divider"></div>
+
+  <div class="vote-visual">
+    <h3 style="margin-bottom:0.3rem; font-size:1rem; color:var(--text-muted); font-family:'Space Mono',monospace; letter-spacing:2px; text-transform:uppercase;">सांगोला विधानसभा २०२४ निकाल</h3>
+    <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1.5rem;">एकूण मतदान: ७७.९% | एकूण मते: ~२,६३,८३०</p>
+
+    <div class="vote-bar-container">
+      <div class="vote-party">
+        <div class="vote-label">🌾 डॉ. बाबासाहेब देशमुख (शेकाप)</div>
+        <div class="vote-bar-wrap">
+          <div class="vote-bar bar-shekap" data-width="80" style="width:0%">1,16,256</div>
+        </div>
+        <span style="font-family:'Space Mono',monospace; font-size:0.8rem; color:#5ED98A;">44.09%</span>
+      </div>
+
+      <div class="vote-party">
+        <div class="vote-label">⚡ शहाजी बापू पाटील (शिवसेना)</div>
+        <div class="vote-bar-wrap">
+          <div class="vote-bar bar-bapu" data-width="62" style="width:0%">90,870</div>
+        </div>
+        <span style="font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--saffron);">34.46%</span>
+      </div>
+
+      <div class="vote-party">
+        <div class="vote-label">🔦 दीपक साळुंखे (शिवसेना UBT)</div>
+        <div class="vote-bar-wrap">
+          <div class="vote-bar bar-ubt" data-width="35" style="width:0%">~21.4%</div>
+        </div>
+        <span style="font-family:'Space Mono',monospace; font-size:0.8rem; color:#AA3333;">~21.4%</span>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem; background:rgba(255,50,50,0.08); border:1px solid rgba(255,50,50,0.2); border-radius:8px; padding:1rem;">
+      <p style="font-size:0.85rem; color:#FF8888;">
+        ⚠️ <strong>लक्षात घ्या:</strong> जर शिवसेना UBT ने उमेदवार दिला नसता किंवा भाजपने छुपा पाठिंबा शेकापला दिला नसता, तर बापू सहज जिंकले असते. तिकडचे ~२१% मते बापूंकडे आले असते = <strong style="color:var(--saffron);">५५% मते → मोठा विजय</strong>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- SECTION 4: WHY BJP AGAINST BAPU -->
+<div class="section">
+  <h2 class="section-title"><span class="num">04</span> भाजपने बापूंना का संपवायला सुरुवात केली?</h2>
+  <div class="section-divider"></div>
+  <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1.5rem;">
+    राजकीय विज्ञानाच्या दृष्टिकोनातून – <em>"Power Politics Theory"</em> आणि <em>"Competitive Clientelism"</em>
+  </p>
+
+  <div class="reason-chain">
+    <div class="reason-item">
+      <span class="reason-num">①</span>
+      <div class="reason-text">
+        <strong>बापू शिंदे गटाचे, भाजपचे नाही</strong><br>
+        बापू जिंकले तर ते एकनाथ शिंदेंना ताकद देतील – भाजपला नाही. भाजपसाठी शिंदे गट मजबूत होणे म्हणजे भाजपची सौदेबाजीची ताकद कमी होणे.
+      </div>
+    </div>
+    <div class="reason-item">
+      <span class="reason-num">②</span>
+      <div class="reason-text">
+        <strong>शेकाप जिंकले तर भाजपला फायदा</strong><br>
+        शेकाप हा विरोधी पक्ष आहे. सांगोल्यात शेकाप मजबूत झाला तर शिंदे गट कमकुवत होतो. यामुळे महायुतीत भाजपच मोठा भाऊ राहतो. शेकापशी थेट भाजपची स्पर्धा नसल्याने हे ट्रेडऑफ भाजपला परवडते.
+      </div>
+    </div>
+    <div class="reason-item">
+      <span class="reason-num">③</span>
+      <div class="reason-text">
+        <strong>सोलापूर जिल्ह्यात भाजपची स्वतःची जमीन नाही</strong><br>
+        जयकुमार गोरे (पालकमंत्री) यांची ताकद वाढवण्यासाठी बापू कमकुवत असणे गरजेचे. गोरे भाजपचे – ते एकट्याने जिल्ह्यावर वर्चस्व ठेवू इच्छितात.
+      </div>
+    </div>
+    <div class="reason-item">
+      <span class="reason-num">④</span>
+      <div class="reason-text">
+        <strong>विधान परिषद संधी का नाकारली?</strong><br>
+        शिंदे गटाला विधान परिषदेत कमी जागा द्यायच्या असतील तर बापूंसारख्या लोकप्रिय नेत्याला विचार न करणे हे धोरणात्मक आहे. बापू आमदार झाले असते तर त्यांची छबी आणखी मोठी होती – भाजपला नको असे.
+      </div>
+    </div>
+    <div class="reason-item">
+      <span class="reason-num">⑤</span>
+      <div class="reason-text">
+        <strong>"बापू बोलतात" – हे भाजपला धोकादायक</strong><br>
+        बापूंनी भाजपविरोधात उघडपणे बोलणे सुरू केल्यावर लगेच LCB छापा. हे सांगते की भाजपच्या नजरेत निष्ठावंत नेता नव्हे, तर "controlled asset" हवा. बोलणारा नेता नको.
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- SECTION 5: COMPARISON -->
+<div class="section">
+  <h2 class="section-title"><span class="num">05</span> बापू vs भाजप – कोण कोणासाठी?</h2>
+  <div class="section-divider"></div>
+
+  <div style="overflow-x:auto;">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>मुद्दा</th>
+          <th class="th-bapu">⚡ शहाजी बापू</th>
+          <th class="th-bjp">🪷 भाजप (सांगोल्यात)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>उद्देश</td>
+          <td class="bapu-cell">जनतेचा विकास, शेतकऱ्यांचे प्रश्न</td>
+          <td class="bjp-cell">सांगोल्यात स्वतःचे वर्चस्व</td>
+        </tr>
+        <tr>
+          <td>पाण्याचा प्रश्न</td>
+          <td class="bapu-cell">लढले, योजना आणल्या</td>
+          <td class="bjp-cell">जलजीवन योजना बंद, ₹११० कोटी थकीत</td>
+        </tr>
+        <tr>
+          <td>कार्यकर्त्यांशी नाते</td>
+          <td class="bapu-cell">आयुष्यभर जपले</td>
+          <td class="bjp-cell">सोयीनुसार वापर</td>
+        </tr>
+        <tr>
+          <td>आश्वासने</td>
+          <td class="bapu-cell">जे केलं ते दाखवलं</td>
+          <td class="bjp-cell">₹२० कोटी/सदस्य – अपूर्ण, ८० लाख महिला वगळल्या</td>
+        </tr>
+        <tr>
+          <td>मित्रपक्षाशी निष्ठा</td>
+          <td class="bapu-cell">माढ्यात भाजपसाठी प्रचार केला</td>
+          <td class="bjp-cell">बदल्यात बापूंच्या विरोधात काम केलं</td>
+        </tr>
+        <tr>
+          <td>स्मशानभूमी/रस्ते</td>
+          <td class="bapu-cell">आवाज उठवला</td>
+          <td class="bjp-cell">सभागृहात आश्वासन – पूर्ण नाही</td>
+        </tr>
+        <tr>
+          <td>संपत्ती</td>
+          <td class="bapu-cell">फक्त ₹५५.८ लाख – प्रामाणिक</td>
+          <td class="bjp-cell">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- SECTION 6: BJP NEXT MOVES -->
+<div class="section">
+  <h2 class="section-title"><span class="num">06</span> भाजपचे पुढील राजकीय डावपेच – Prediction</h2>
+  <div class="section-divider"></div>
+  <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.5rem;">राजकीय विज्ञान – <em>Elite Displacement Theory</em> + <em>Electoral Manipulation Tactics</em></p>
+
+  <div class="chess-grid">
+    <div class="chess-card">
+      <div class="move-num">MOVE 01</div>
+      <div class="chess-card-title">🔍 चौकशीचे सत्र सुरू ठेवणे</div>
+      <div class="chess-card-body">LCB छाप्यानंतर आर्थिक अनियमितता, जमीन व्यवहार किंवा निधी वापराबद्दल चौकशी लावण्याचा प्रयत्न. उद्देश – बापूंची प्रतिमा डागळणे, कार्यकर्त्यांमध्ये भीती पसरवणे.</div>
+    </div>
+    <div class="chess-card">
+      <div class="move-num">MOVE 02</div>
+      <div class="chess-card-title">🤝 शेकाप-भाजप छुपी युती</div>
+      <div class="chess-card-body">भाजप अधिकृतपणे महायुतीत आहे पण सांगोल्यात शेकापला छुपा पाठिंबा देत राहणार. "महायुतीचा उमेदवार नाही" म्हणून कार्यकर्त्यांना शेकापकडे वळवणे.</div>
+    </div>
+    <div class="chess-card">
+      <div class="move-num">MOVE 03</div>
+      <div class="chess-card-title">📦 विकास निधी अडवणे</div>
+      <div class="chess-card-body">जयकुमार गोरेंच्या माध्यमातून सांगोल्याचा निधी इतरत्र वळवणे. बापूंच्या परिसरात विकासकामे थांबवणे म्हणजे जनतेत असंतोष निर्माण होईल आणि बापूंना दोष मिळेल.</div>
+    </div>
+    <div class="chess-card">
+      <div class="move-num">MOVE 04</div>
+      <div class="chess-card-title">🪡 शिंदे-भाजप तणाव वाढवणे</div>
+      <div class="chess-card-body">शिंदे गटाच्या इतर नेत्यांना फोडण्याचा प्रयत्न. बापू एकटे पडले तर शिंदेंसाठी ते कमी महत्त्वाचे होतात. "Divide and Rule" – शिंदे गटाच्या आमदारांना भाजपत खेचणे.</div>
+    </div>
+    <div class="chess-card">
+      <div class="move-num">MOVE 05</div>
+      <div class="chess-card-title">📣 प्रतिनायक प्रतिमा तयार करणे</div>
+      <div class="chess-card-body">माध्यमांमधून बापूंना "वेळखाऊ", "असंतुष्ट", "पक्षविरोधी" म्हणून दाखवणे. मतदारांमध्ये संभ्रम निर्माण करणे – "बापू महायुतीत नाहीत" असा गैरसमज पसरवणे.</div>
+    </div>
+    <div class="chess-card">
+      <div class="move-num">MOVE 06</div>
+      <div class="chess-card-title">🏅 पर्यायी नेता उभा करणे</div>
+      <div class="chess-card-body">भाजपचा स्वतःचा एक नवा नेता सांगोल्यात उभा करण्याचा प्रयत्न. दीपक साळुंखेंना (UBT) गोड बोलवणे किंवा स्थानिक युवा नेत्याला पुढे आणणे जेणेकरून बापूंचा मतदारवर्ग विभागला जाईल.</div>
+    </div>
+  </div>
+
+  <div class="predict-box">
+    <div class="predict-title">⚔️ दीर्घकालीन भविष्यवाणी</div>
+    <ul class="predict-list">
+      <li><span class="predict-icon">→</span>
+        <span>जर शिंदे गट मजबूत राहिला तर भाजप बापूंना अंशतः "स्वीकारेल" – फक्त वापरासाठी. पण पद, निधी किंवा संधी देणार नाही.</span>
+      </li>
+      <li><span class="predict-icon">→</span>
+        <span>पुढील स्थानिक निवडणुकांमध्ये भाजप पुन्हा शेकाप + इतरांना सोबत घेऊन बापूंची कोंडी करण्याचा प्रयत्न करेल.</span>
+      </li>
+      <li><span class="predict-icon">→</span>
+        <span>जर बापू भाजपशी जुळवून घेतले तर ते एकनाथ शिंदेंशी दगाबाजी ठरेल. जर शिंदेंसोबत राहिले तर भाजपचा छळ सुरूच राहील.</span>
+      </li>
+      <li><span class="predict-icon">→</span>
+        <span>बापूंसाठी सर्वोत्तम रणनीती – जनतेत राहणे, विकासकामे दाखवणे, शिंदेंची ताकद वापरणे आणि भाजपच्या विश्वासघाताचा पर्दाफाश सातत्याने करणे.</span>
+      </li>
+      <li><span class="predict-icon">→</span>
+        <span>२०२९ विधानसभेत जर शेकाप-भाजप छुपी युती तुटली तर बापूंना पुनरागमनाची संधी आहे – जनाधार अजूनही मजबूत आहे.</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- VERDICT -->
+<div class="section">
+  <div class="verdict-section">
+    <div class="verdict-quote" style="position:relative; z-index:1;">
+      बापू जनतेसाठी लढतात,<br>भाजप पदासाठी लढते.
+    </div>
+    <p style="font-size:0.9rem; color:var(--text-muted); position:relative; z-index:1; margin-top:1rem;">
+      एका कार्यकर्त्याचा संताप समजतो. पण उत्तर फक्त एकच आहे –
+    </p>
+    <p style="font-size:1rem; color:var(--gold); font-weight:700; margin-top:1rem; position:relative; z-index:1;">
+      "जनतेत राहा, जनतेसाठी लढा – तोच खरा सांगोल्याचा नेता."
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>राजकीय विश्लेषण – सांगोला तालुका, सोलापूर जिल्हा, महाराष्ट्र</p>
+  <p style="margin-top:0.5rem; opacity:0.5;">माहिती स्रोत: TV9 Marathi, News18 Marathi, Oneindia, Devdiscourse, Wikipedia | जून 2026</p>
+</footer>
+
+<script>
+  // Animate vote bars on scroll
+  const bars = document.querySelectorAll('.vote-bar');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bar = entry.target;
+        const width = bar.getAttribute('data-width');
+        setTimeout(() => { bar.style.width = width + '%'; }, 200);
+        observer.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  bars.forEach(bar => observer.observe(bar));
+
+  // Stagger timeline items
+  const items = document.querySelectorAll('.timeline-item');
+  items.forEach((item, i) => {
+    item.style.animationDelay = (i * 0.08) + 's';
+  });
+
+  // Stagger cards
+  const cards = document.querySelectorAll('.card');
+  cards.forEach((card, i) => {
+    card.style.animationDelay = (i * 0.1) + 's';
+    card.style.animation = 'fadeInUp 0.5s ease both';
+  });
+</script>
+
+</body>
+</html>
