@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>राजकारण आणि व्यवस्था विश्लेषण | विक्रांत कदम</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;800&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-main: #1A1A1A;
+            --text-muted: #4A4A4A;
+            --accent: #2C3E50;
+            --saffron: #FF9933;
+            --green: #138808;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #EAEAEA;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Mukta', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Waving Flag Background */
+        @keyframes wave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .flag-bg {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh;
+            background: linear-gradient(120deg, rgba(255,153,51,0.2) 0%, rgba(255,255,255,0.4) 50%, rgba(19,136,8,0.2) 100%);
+            background-size: 200% 200%;
+            animation: wave 10s ease infinite;
+            z-index: -1;
+        }
+
+        .serif {
+            font-family: 'Tiro Devanagari Marathi', serif;
+        }
+
+        /* Hero Header */
+        .hero {
+            background-color: var(--accent);
+            color: #FFFFFF;
+            padding: 80px 20px 60px;
+            text-align: center;
+            border-bottom: 5px solid var(--saffron);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin: 0 0 10px;
+            font-weight: 800;
+        }
+
+        .hero p.subtitle {
+            font-size: 1.3rem;
+            color: #BDC3C7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* The Quote Section */
+        .quote-section {
+            max-width: 800px;
+            margin: -30px auto 40px;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 6px solid var(--saffron);
+            border-right: 6px solid var(--green);
+            position: relative;
+            z-index: 10;
+        }
+
+        .quote-section p {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .quote-section span {
+            display: block;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: var(--saffron);
+            font-weight: 800;
+        }
+
+        /* Culture Image Section */
+        .culture-image-container {
+            max-width: 1000px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .culture-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            display: block;
+        }
+
+        /* Perspective Section */
+        .perspective-box {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .perspective-box h2 {
+            margin-top: 0;
+            color: var(--accent);
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .perspective-box .intro-text {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .framework-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .framework-item h4 {
+            margin: 0 0 10px;
+            color: var(--accent);
+            font-size: 1.3rem;
+            border-bottom: 2px solid var(--saffron);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .framework-item p {
+            margin: 0;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+        }
+
+        /* 6 Pillars Grid */
+        .pillars-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--accent);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-color: var(--saffron);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .card-title h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .content-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .content-list li::before {
+            content: "■";
+            position: absolute;
+            left: 0;
+            color: var(--saffron);
+            font-size: 0.8rem;
+            top: 5px;
+        }
+        
+        .content-list li strong {
+            color: var(--text-main);
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 60px 20px 40px; }
+            .hero h1 { font-size: 2.2rem; }
+            .quote-section { margin: -20px 15px 30px; padding: 20px; }
+            .quote-section p { font-size: 1.1rem; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Waving Flag Background -->
+    <div class="flag-bg"></div>
+
+    <header class="hero">
+        <h1>राजकारण आणि व्यवस्था विश्लेषण</h1>
+        <p class="subtitle serif">मते नाही — वस्तुस्थिती, प्रश्न आणि विश्लेषण.</p>
+    </header>
+
+    <!-- NEW QUOTE SECTION -->
+    <div class="quote-section">
+        <p class="serif">"एखादा राजकीय पक्ष किंवा एखादा नेता म्हणजे देश नव्हे. देश, राजकीय पक्ष, जात आणि धर्म या सर्व पूर्णपणे वेगवेगळ्या गोष्टी आहेत. आपण आपली विचार करण्याची क्षमता वाढवली पाहिजे."</p>
+        <span>— एक नागरिक, एक विचार</span>
+    </div>
+
+    <!-- CULTURAL / SOIL IMAGE -->
+    <div class="culture-image-container">
+        <!-- Using a placeholder for Indian agriculture/culture -->
+        <img src="https://images.unsplash.com/photo-1595054225540-3798bc015f62?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Indian rural culture and agriculture">
+    </div>
+
+    <!-- POINT 7: THE PERSPECTIVE -->
+    <section class="perspective-box">
+        <h2>माझा दृष्टिकोन</h2>
+        <p class="intro-text">
+            माझा कोणत्याही राजकीय पक्षाशी संबंध नाही. माझे राजकीय विश्लेषण वैयक्तिक नेत्यांऐवजी व्यवस्थेतील त्रुटी शोधण्यावर आधारित आहे. आपण कोण बरोबर किंवा कोण चूक यावर चर्चा करणार नाही; तर काय काम करत आहे आणि काय बिघडले आहे याचे विश्लेषण करू.
+        </p>
+        
+        <div class="framework-grid">
+            <div class="framework-item">
+                <h4>🩺 राजकारणाचे निदान</h4>
+                <p>रोगाच्या लक्षणांवरून मुळापर्यंत जाणे. वस्तुस्थिती आणि पुराव्यांवर आधारित धोरणात्मक त्रुटींचे निदान करणे.</p>
+            </div>
+            <div class="framework-item">
+                <h4>🌾 शेतकऱ्याचा ताळेबंद</h4>
+                <p>भावनांपेक्षा अर्थशास्त्राला महत्त्व. ग्रामीण महाराष्ट्रातील अल्पभूधारक शेतकऱ्याच्या बांधावर जोपर्यंत धोरण फायद्याचे ठरत नाही, तोपर्यंत ते निरर्थक आहे.</p>
+            </div>
+            <div class="framework-item">
+                <h4>🌍 जागतिक दृष्टिकोन</h4>
+                <p>जागतिक महासत्ता त्यांच्या पायाभूत सुविधा आणि व्यवस्था कशा चालवतात, आणि आपण रशियासारख्या देशातून काय शिकू शकतो याची तुलना.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- POINTS 1 TO 6: THE PILLARS -->
+    <section class="pillars-section">
+        <h2 class="section-title">मुख्य विश्लेषण क्षेत्रे</h2>
+        
+        <div class="grid">
+            
+            <!-- Pillar 1 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🏥</div>
+                    <div class="card-title">
+                        <h3>आरोग्य व्यवस्था आणि धोरणे</h3>
+                    </div>
+                </div>
+                <ul class="content-list">
+                    <li><strong>ग्रामीण पायाभूत सुविधा:</strong> महाराष्ट्रातील प्राथमिक आरोग्य केंद्रांची (PHC) डेटावर आधारित स्थिती.</li>
+                    <li><strong>सरकारी योजना:</strong> महात्मा जोतीराव फुले जन आरोग्य योजनेसारख्या विमा योजनांचे जमिनीवरील वास्तव.</li>
+                    <li><strong>वैद्यकीय अर्थकारण:</strong> विद्यार्थ्यांना MBBS साठी परदेशात का जावे लागते, यामागील अर्थशास्त्र.</li>
+                </ul>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🚜</div>
+                    <div class="card-title">
+                        <h3>शेती आणि अर्थशास्त्र</h3>
+                    </div>
+                </div>
+                <ul class="content-list">
+                    <li><strong>पिकांचे अर्थशास्त्र:</strong> पुरवठा साखळी, निर्यात बंदी आणि हमीभाव (MSP) यामागील वास्तविक कारणे.</li>
+                    <li><strong>तंत्रज्ञान आणि सबसिडी:</strong> आधुनिक शेतीसाठी असलेल्या सरकारी योजना खऱ्या शेतकऱ्यांपर्यंत पोहोचतात का?</li>
+                    <li><strong>जागतिक तुलना:</strong> इतर देश त्यांच्या शेतकऱ्यांना कशी मदत करतात विरुद्ध भारत.</li>
+                </ul>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⚖️</div>
+                    <div class="card-title">
+                        <h3>नागरिकशास्त्र आणि प्रशासन</h3>
+                    </div>
+                </div>
+                <ul class="content-list">
+                    <li><strong>व्यवस्था समजून घेणे:</strong> ग्रामपंचायत बजेट आणि ग्रामीण विकास निधी सोप्या भाषेत.</li>
+                    <li><strong>कायद्यांचे विश्लेषण:</strong> नवीन कायदे आणि बिलांचा तटस्थ, ३-मुद्द्यांचा सारांश.</li>
+                    <li><strong>माहितीचा अधिकार (RTI):</strong> स्थानिक प्रशासनाला जबाबदार धरण्यासाठी RTI चा प्रभावी वापर कसा करावा.</li>
+                </ul>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-title">
+                        <h3>तरुण आणि रोजगार</h3>
+                    </div>
+                </div>
+                <ul class="content-list">
+                    <li><strong>कौशल्यातील तफावत:</strong> ग्रामीण महाराष्ट्रातील बेरोजगारीमागील खरी आकडेवारी आणि कारणे.</li>
+                    <li><strong>परीक्षा व्यवस्था:</strong> स्पर्धा परीक्षांमधील (MPSC, तलाठी भरती) त्रुटी आणि रखडलेल्या प्रक्रिया.</li>
+                    <li><strong>डिजिटल दरी:</strong> तंत्रज्ञानाच्या अभावामुळे भविष्यातील रोजगारावर होणारा परिणाम.</li>
+                </ul>
+            </div>
+
+            <!-- Pillar 5 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💪🏽</div>
+                    <div class="card-title">
+                        <h3>महिला सक्षमीकरण</h3>
+                    </div>
+                </div>
+                <ul class="content-list">
+                    <li><strong>शेतीतील महिला:</strong> शेतमजुरी करणाऱ्या पण जमिनीची मालकी नसलेल्या महिलांचे अर्थशास्त्र.</li>
+                    <li><strong>ग्रामीण आरोग्य:</strong> माता मृत्यूदर, ॲनिमिया आणि आशा (ASHA) स्वयंसेविकांचे प्रश्न.</li>
+                    <li><strong>राजकीय वास्तव:</strong> ५०% राजकीय आरक्षण आणि "सरपंच पती" या प्रथेचे वास्तव.</li>
+                </ul>
+            </div>
+
+            <!-- Pillar 6 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📚</div>
+                    <div class="card-title">
+                        <h3>शिक्षण व्यवस्था</h3>
+                    </div>
+                </div>
+                <ul class="content-list">
+                    <li><strong>ग्रामीण विरुद्ध शहरी:</strong> जिल्हा परिषद शाळा विरुद्ध खाजगी इंग्रजी शाळांमधील अर्थसंकल्पीय तफावत.</li>
+                    <li><strong>उच्च शिक्षणाचे अर्थकारण:</strong> NEET परीक्षेचे गणित आणि खाजगी महाविद्यालयांची फी रचना.</li>
+                    <li><strong>पदवी विरुद्ध कौशल्य:</strong> पदवीनंतर प्रत्यक्ष नोकरी मिळण्याचे प्रमाण आणि व्यावसायिक शिक्षणाची गरज.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
