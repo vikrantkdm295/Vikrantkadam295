@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Languages & Linguistics | Vikrant Satish Kadam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tiro+Devanagari+Marathi&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black:    #0a0a0a;
+      --charcoal: #141414;
+      --teal:     #0d9488;
+      --teal-glow: rgba(13, 148, 136, 0.15);
+      --teal-light: #2dd4bf;
+      --gold:     #c8960a;
+      --wheat:    #e8c96a;
+      --offwhite: #f0ede4;
+      --muted:    #888880;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--offwhite);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── FLOATING BG TEXT ── */
+    .bg-marquee {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5rem;
+      opacity: 0.02;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 5rem;
+      white-space: nowrap;
+      animation: scroll-left 50s linear infinite;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: var(--teal-light);
+      text-transform: uppercase;
+    }
+    .marquee-track.reverse { animation-direction: reverse; animation-duration: 45s; }
+    @keyframes scroll-left {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── FIXED NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--teal-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--wheat);
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
+
+    /* ── HERO SECTION ── */
+    #hero {
+      min-height: 85svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+      padding-top: 8rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem; height: 1px;
+      background: var(--teal-light);
+    }
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      font-weight: 900;
+      color: var(--offwhite);
+    }
+    .hero-title span {
+      color: var(--teal-light);
+      display: block;
+    }
+    .gold-line {
+      width: 120px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0.5rem 0;
+    }
+    .hero-subtitle {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      line-height: 1.8;
+      color: #c0bdb0;
+      max-width: 800px;
+    }
+
+    /* ── OVERVIEW SECTION ── */
+    #overview {
+      padding: 6rem 2.5rem;
+      background: linear-gradient(180deg, transparent, var(--charcoal), transparent);
+      border-radius: 4px;
+      margin-bottom: 4rem;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .overview-left h2 {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--wheat);
+      line-height: 1.3;
+    }
+    .overview-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .overview-right p {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #c0bdb0;
+    }
+    .overview-right p strong {
+      color: var(--teal-light);
+    }
+
+    /* ── SUBDECK CARDS GRID ── */
+    #subdecks { padding-bottom: 8rem; }
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+    .section-header h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      color: var(--offwhite);
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .subdeck-card {
+      background: var(--charcoal);
+      border: 1px solid rgba(13, 148, 136, 0.1);
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      text-decoration: none;
+      color: var(--offwhite);
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .subdeck-card:hover {
+      border-color: var(--teal-light);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px var(--teal-glow);
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+    .card-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--wheat);
+    }
+    .card-desc {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--muted);
+      flex: 1;
+    }
+    .card-action {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--teal-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+
+    /* ── VIDEO SPOTLIGHT PLACEHOLDER ── */
+    #video-spotlight {
+      padding-bottom: 8rem;
+    }
+    .video-placeholder-box {
+      background: #111;
+      border: 1px dashed rgba(200, 150, 10, 0.3);
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 2px;
+    }
+    .video-placeholder-box p {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      letter-spacing: 0.05em;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── RESPONSIVE DESIGN ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      section { padding: 0 1.5rem; }
+      #hero { padding-top: 7rem; }
+      .overview-grid { grid-template-columns: 1fr; gap: 2rem; }
+      #overview { padding: 4rem 1.5rem; }
+      .cards-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+    @media (max-width: 560px) {
+      .subdeck-card { padding: 2rem 1.5rem; }
+      .card-title { font-size: 1.3rem; }
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Marquee Text -->
+  <div class="bg-marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>POLYGLOT JOURNEY • MARATHI • RUSSIAN • ENGLISH • UZBEK •</span>
+      <span>POLYGLOT JOURNEY • MARATHI • RUSSIAN • ENGLISH • UZBEK •</span>
+    </div>
+    <div class="marquee-track reverse">
+      <span>संवाद आणि संस्कृती • चिकमहूद ते उफा • साहित्य आणि भाषा •</span>
+      <span>संवाद आणि संस्कृती • चिकमहूद ते उफा • साहित्य आणि भाषा •</span>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="vikrant_homepage_v3.html" class="nav-back">
+      ← BACK TO HOME
+    </a>
+    <div class="nav-title">PROJECT: LANGUAGES</div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="hero-eyebrow fade-up">05 / MULTILINGUAL RESOURCING</div>
+    <h1 class="hero-title fade-up">
+       can expand horizons.
+      <span>भाषा आणि वैश्विक संवाद</span>
+    </h1>
+    <div class="gold-line fade-up"></div>
+    <p class="hero-subtitle fade-up">
+      मराठी, हिंदी, English, आणि Russian भाषेचे संसाधन केंद्र[span_0](start_span)[span_0](end_span). माझ्या वैयक्तिक भाषा प्रवासातील अनुभव, वैद्यकीय संवाद आणि संस्कृतीचे संकलन.
+    </p>
+  </section>
+
+  <!-- Overview Section -->
+  <section id="overview" class="fade-up">
+    <div class="overview-inner">
+      <div class="overview-grid">
+        <div class="overview-left">
+          <h2>जमिनीशी जोडलेली पाळेमुळे, जगभर पसरलेला संवाद.</h2>
+        </div>
+        <div class="overview-right">
+          <p>
+            चिकमहूद (सांगोला) येथील मराठी मातीतून ते रशियामधील उफा शहरापर्यंतच्या प्रवासाने मला शिकवले की, <strong>भाषा हे केवळ संवादाचे माध्यम नसून ती संस्कृतीचे दार आहे.</strong>
+          </p>
+          <p>
+            वैद्यकीय शिक्षण घेताना रशियन भाषा आत्मसात करणे असो, आंतरराष्ट्रीय स्तरावर इंग्रजी भाषेवर पकड मिळवणे असो, किंवा नवीन भौगोलिक प्रदेशाचा शोध घेण्यासाठी उझबेक भाषा शिकणे असो; प्रत्येक भाषा नवीन जाणिवा समृद्ध करते. हा विभाग माझ्या याच प्रवासातील भाषा साधनांची माहिती देतो.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subdeck Cards Grid -->
+  <section id="subdecks">
+    <div class="section-header fade-up">
+      <h2>EXPLORE LANGUAGE SUBDECKS</h2>
+    </div>
+    
+    <div class="cards-grid">
+      <!-- Card 1: Marathi -->
+      <a href="languages-marathi.html" class="subdeck-card fade-up">
+        <div class="card-meta">SUBDECK 01 // MOTHER TONGUE</div>
+        <div class="card-title">मराठी (Marathi)</div>
+        <div class="card-desc">आपल्या मातृभाषेचे सौंदर्य, अभिजात साहित्य आणि वैयक्तिक व्लॉगचे संकलन. मुळांशी घट्ट नाते ठेवून केलेले विचार मंथन.</div>
+        <div class="card-action">EXPLORE DECK →</div>
+      </a>
+
+      <!-- Card 2: English -->
+      <a href="languages-english.html" class="subdeck-card fade-up">
+        <div class="card-meta">SUBDECK 02 // GLOBAL FLUENCY</div>
+        <div class="card-title">English Fluency</div>
+        <div class="card-desc">Technical translation, medical communication, and methods for achieving global confidence without losing identity.</div>
+        <div class="card-action">EXPLORE DECK →</div>
+      </a>
+
+      <!-- Card 3: Russian -->
+      <a href="languages-russian.html" class="subdeck-card fade-up">
+        <div class="card-meta">SUBDECK 03 // CLINICAL LIVING</div>
+        <div class="card-title">Русский Язык (Russian)</div>
+        <div class="card-desc">रशियन भाषेतील कठीण शब्दांचे सरलीकरण, युजीन ओनेगिन (Alexander Pushkin) बद्दलचे प्रेम, आणि वैद्यकीय कामकाजासाठी आवश्यक रशियन भाषा.</div>
+        <div class="card-action">EXPLORE DECK →</div>
+      </a>
+
+      <!-- Card 4: Uzbek -->
+      <a href="languages-uzbek.html" class="subdeck-card fade-up">
+        <div class="card-meta">SUBDECK 04 // FUTURE HORIZONS</div>
+        <div class="card-title">Oʻzbek Tili (Uzbek)</div>
+        <div class="card-desc">माझ्या आगामी प्रवास मोहिमेची पूर्वतयारी म्हणून सुरू असलेला उझबेक भाषा शिकण्याचा एक प्रामाणिक आणि मैत्रिपूर्ण प्रवास.</div>
+        <div class="card-action">EXPLORE DECK →</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Video Spotlight Placeholder Section -->
+  <section id="video-spotlight" class="fade-up">
+    <div class="section-header">
+      <h2>LANGUAGE JOURNEY VIDEOS</h2>
+    </div>
+    <div class="video-placeholder-box">
+      <!-- TODO: add your content here -->
+      <p>माझ्या भाषा प्रवासाचे आणि भाषा शिक्षणाचे व्हिडिओ लवकरच येथे अपलोड केले जातील[span_1](start_span)[span_1](end_span).</p>
+      <span style="font-size: 0.8rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;">Status: Content in Production</span>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 <span>Vikrant Satish Kadam</span>. Built with Grounded Integrity from Chikmahud to Ufa.
+  </footer>
+
+  <!-- IntersectionObserver Script for Scroll Animations -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target); // Optimize: target fires only once
+          }
+        });
+      }, observerOptions);
+
+      const animatedElements = document.querySelectorAll(".fade-up");
+      animatedElements.forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
