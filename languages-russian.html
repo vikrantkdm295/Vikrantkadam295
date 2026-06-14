@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Russian Language & Culture | Vikrant Satish Kadam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tiro+Devanagari+Marathi&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black:    #0a0a0a;
+      --charcoal: #141414;
+      --teal:     #0d9488;
+      --teal-glow: rgba(13, 148, 136, 0.15);
+      --teal-light: #2dd4bf;
+      --gold:     #c8960a;
+      --wheat:    #e8c96a;
+      --offwhite: #f0ede4;
+      --muted:    #888880;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--offwhite);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── FLOATING BG TEXT ── */
+    .bg-marquee {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5rem;
+      opacity: 0.02;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 5rem;
+      white-space: nowrap;
+      animation: scroll-left 50s linear infinite;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: var(--teal-light);
+      text-transform: uppercase;
+    }
+    .marquee-track.reverse { animation-direction: reverse; animation-duration: 45s; }
+    @keyframes scroll-left {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── FIXED NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--teal-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--wheat);
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
+
+    /* ── HERO SECTION ── */
+    #hero {
+      min-height: 85svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+      padding-top: 8rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem; height: 1px;
+      background: var(--teal-light);
+    }
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      font-weight: 900;
+      color: var(--offwhite);
+    }
+    .hero-title span {
+      color: var(--teal-light);
+      display: block;
+    }
+    .gold-line {
+      width: 120px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0.5rem 0;
+    }
+    .hero-subtitle {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      line-height: 1.8;
+      color: #c0bdb0;
+      max-width: 800px;
+    }
+
+    /* ── OVERVIEW SECTION ── */
+    #overview {
+      padding: 6rem 2.5rem;
+      background: linear-gradient(180deg, transparent, var(--charcoal), transparent);
+      border-radius: 4px;
+      margin-bottom: 4rem;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .overview-left h2 {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--wheat);
+      line-height: 1.3;
+    }
+    .overview-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .overview-right p {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #c0bdb0;
+    }
+    .overview-right p strong {
+      color: var(--teal-light);
+    }
+
+    /* ── SUBDECK CARDS GRID ── */
+    #subdecks { padding-bottom: 8rem; }
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+    .section-header h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      color: var(--offwhite);
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .subdeck-card {
+      background: var(--charcoal);
+      border: 1px solid rgba(13, 148, 136, 0.1);
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      text-decoration: none;
+      color: var(--offwhite);
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .subdeck-card:hover {
+      border-color: var(--teal-light);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px var(--teal-glow);
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+    .card-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--wheat);
+    }
+    .card-desc {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--muted);
+      flex: 1;
+    }
+    .card-action {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--teal-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+
+    /* ── QUOTE SECTION ── */
+    #quote-section {
+      padding: 4rem 2.5rem;
+      text-align: center;
+      background: rgba(13, 148, 136, 0.05);
+      border: 1px solid rgba(13, 148, 136, 0.2);
+      margin-bottom: 8rem;
+      border-radius: 4px;
+    }
+    .russian-quote {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      color: var(--wheat);
+      margin-bottom: 1rem;
+    }
+    .quote-translation {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      letter-spacing: 0.05em;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── RESPONSIVE DESIGN ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      section { padding: 0 1.5rem; }
+      #hero { padding-top: 7rem; }
+      .overview-grid { grid-template-columns: 1fr; gap: 2rem; }
+      #overview { padding: 4rem 1.5rem; }
+      .cards-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+    @media (max-width: 560px) {
+      .subdeck-card { padding: 2rem 1.5rem; }
+      .card-title { font-size: 1.3rem; }
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Marquee Text -->
+  <div class="bg-marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>РУССКИЙ ЯЗЫК • ПУШКИН • УФА • БГМУ •</span>
+      <span>РУССКИЙ ЯЗЫК • ПУШКИН • УФА • БГМУ •</span>
+    </div>
+    <div class="marquee-track reverse">
+      <span>रशियन साहित्य • वैद्यकीय रशियन • युजीन ओनेगिन •</span>
+      <span>रशियन साहित्य • वैद्यकीय रशियन • युजीन ओनेगिन •</span>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="languages.html" class="nav-back">
+      ← BACK TO LANGUAGES
+    </a>
+    <div class="nav-title">SUBDECK: RUSSIAN</div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="hero-eyebrow fade-up">CLINICAL & CULTURAL INTEGRATION</div>
+    <h1 class="hero-title fade-up">
+      Русский Язык
+      <span>(Russian Language)</span>
+    </h1>
+    <div class="gold-line fade-up"></div>
+    <p class="hero-subtitle fade-up">
+      उफामध्ये वैद्यकीय शिक्षण घेताना केवळ रूग्णांशी संवाद साधण्यासाठीच नाही, तर येथील संस्कृती आणि साहित्य समजून घेण्यासाठी रशियन भाषेचा अभ्यास हा एक अविभाज्य भाग बनला आहे[span_0](start_span)[span_0](end_span).
+    </p>
+  </section>
+
+  <!-- Overview Section -->
+  <section id="overview" class="fade-up">
+    <div class="overview-inner">
+      <div class="overview-grid">
+        <div class="overview-left">
+          <h2>जगण्याची भाषा आणि अभ्यासाची गरज.</h2>
+        </div>
+        <div class="overview-right">
+          <p>
+            रशियाच्या प्रजासत्ताक बाश्कोर्तोस्तान मधील उफा शहरात वावरताना, आणि बशकीर स्टेट मेडिकल युनिव्हर्सिटी (Bashkir State Medical University) मध्ये एक विद्यार्थी म्हणून प्रवास करताना, रशियन भाषेवर प्रभुत्व मिळवणे ही काळाची गरज आहे[span_1](start_span)[span_1](end_span). 
+          </p>
+          <p>
+            या प्रवासात तातर आणि बशकीर संस्कृतीशी असलेली जवळीक, स्थानिक खाद्यपदार्थ आणि इथल्या लोकांचे आदरातिथ्य या सर्व गोष्टींनी ही भाषा शिकण्याचा प्रवास आणखी रंजक केला आहे[span_2](start_span)[span_2](end_span). रुग्णालयात काम करताना लागणारे <strong>Clinical Russian</strong> आणि अलेक्झांडर पुश्किन (Alexander Pushkin) सारख्या लेखकांच्या <strong>अभिजात साहित्यापर्यंतचा</strong> हा प्रवास खालील कार्ड्समध्ये विभागला आहे[span_3](start_span)[span_3](end_span).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subdeck Cards Grid -->
+  <section id="subdecks">
+    <div class="section-header fade-up">
+      <h2>LEARNING MODULES</h2>
+    </div>
+    
+    <div class="cards-grid">
+      <!-- Card 1: Pushkin & Literature -->
+      <a href="languages-russian-pushkin.html" class="subdeck-card fade-up">
+        <div class="card-meta">MODULE 01 // CLASSICAL POETRY</div>
+        <div class="card-title">Alexander Pushkin & Poetry</div>
+        <div class="card-desc">रशियन साहित्यातील सौंदर्य. विशेषतः 'Eugene Onegin' मधील ओळी, त्यांचे अर्थ, आणि साहित्यातून भाषेचा अभ्यास करण्याचे माझे वैयक्तिक प्रयत्न[span_4](start_span)[span_4](end_span).</div>
+        <div class="card-action">READ POETRY →</div>
+      </a>
+
+      <!-- Card 2: BSMU / Medical Russian -->
+      <a href="languages-russian-bsmu.html" class="subdeck-card fade-up">
+        <div class="card-meta">MODULE 02 // SURVIVAL & CLINICAL</div>
+        <div class="card-title">Medical Russian @ BSMU</div>
+        <div class="card-desc">बशकीर स्टेट मेडिकल युनिव्हर्सिटी मधील दैनंदिन जीवन, वैद्यकीय शब्दसंग्रह (Medical Terminology), आणि रुग्णांशी प्रभावी संवाद साधण्यासाठी आवश्यक असलेले संभाषण[span_5](start_span)[span_5](end_span).</div>
+        <div class="card-action">STUDY TERMS →</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Quote Section -->
+  <section id="quote-section" class="fade-up">
+    <div class="russian-quote">"Я к вам пишу — чего же боле? Что я могу еще сказать?"</div>
+    <div class="quote-translation">— Alexander Pushkin (Eugene Onegin)[span_6](start_span)[span_6](end_span)</div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 <span>Vikrant Satish Kadam</span>. Built with Grounded Integrity from Chikmahud to Ufa[span_7](start_span)[span_7](end_span).
+  </footer>
+
+  <!-- IntersectionObserver Script for Scroll Animations -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      const animatedElements = document.querySelectorAll(".fade-up");
+      animatedElements.forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
+
