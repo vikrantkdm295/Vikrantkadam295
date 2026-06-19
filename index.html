@@ -517,30 +517,41 @@
       <div class="project-status">Coming Soon</div>
     </div>
 
-  </div>
-</section>
-
-<!-- POLITICS & SOCIETY (separate section, not nested inside a project card) -->
-<section id="politics">
-  <div class="projects-header fade-up">
-    <div class="section-label">Perspective</div>
-    <h2>Politics & Society</h2>
-  </div>
-  <div class="projects-grid">
-    <a href="projects/Politics.html" class="project-card fade-up" style="text-decoration: none;"> 
+    <!-- 6th card: opens the Politics & Society popup -->
+    <div class="project-card fade-up" onclick="openPolitics()" style="cursor: pointer;">
       <div class="project-icon">⚖️</div>
-      <h3>Governance & Policy</h3>
-      <p>Analysis of regional development, educational reform, and the importance of free media in building a stronger Sangola.</p>
-    </a> 
+      <h3>Politics & Society</h3>
+      <p>Governance, policy आणि philosophy वर माझे perspective — Sangola आणि त्यापलीकडे political thought वर विचार.</p>
+      <div class="project-status" style="color: #e8c96a;">Explore →</div>
     </div>
 
-    <a href="read1.html" class="project-card fade-up" style="text-decoration: none;">
-      <div class="project-icon">📜</div>
-      <h3>Philosophy & State</h3>
-      <p>Exploring classical political thought and how Socratic methods apply to modern administrative challenges and social progress.</p>
-    </a>
-
   </div>
+  <!-- POLITICS & SOCIETY POPUP -->
+<div id="politicsModal" class="politics-overlay">
+  <div class="politics-panel">
+    <button class="politics-close" onclick="closePolitics()" aria-label="Close">✕</button>
+    <div class="projects-header fade-up">
+      <div class="section-label">Perspective</div>
+      <h2>Politics & Society</h2>
+    </div>
+    <div class="projects-grid">
+
+      <a href="projects/Politics.html" class="project-card fade-up" style="text-decoration: none;">
+        <div class="project-icon">⚖️</div>
+        <h3>Governance & Policy</h3>
+        <p>Analysis of regional development, educational reform, and the importance of free media in building a stronger Sangola.</p>
+      </a>
+
+      <a href="#" class="project-card fade-up" style="text-decoration: none;" onclick="unlockPhilosophy(event)">
+        <div class="project-icon">📜</div>
+        <h3>Philosophy & State</h3>
+        <p>Exploring classical political thought and how Socratic methods apply to modern administrative challenges and social progress.</p>
+        <div class="project-status">🔒 Password protected</div>
+      </a>
+
+    </div>
+  </div>
+</div>
 </section>
 <!-- CONNECT -->
 <section id="connect">
