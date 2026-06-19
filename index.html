@@ -396,6 +396,61 @@
       transition: opacity 0.65s ease, transform 0.65s ease;
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
+    /* ── 3D FLIP & SCALE EFFECT ── */
+
+.card-container {
+  display: block;
+  perspective: 1000px;
+  z-index: 1;
+  text-decoration: none;
+}
+
+/* Brings the hovered item to the absolute top layout layer */
+.card-container:hover {
+  z-index: 999;
+  position: relative;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Flips 180 degrees and scales up to 1.5x original size */
+.card-container:hover .card-inner {
+  transform: rotateY(180deg) scale(1.5);
+}
+
+.card-front {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-back {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  
+  /* Changes the background color to Blue */
+  background: #0044ff !important; 
+  border: 1px solid var(--gold);
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+}
   </style>
 </head>
 <body>
@@ -482,11 +537,11 @@
   </div>
   <div class="projects-grid">
 
-    <!-- The outer link container now acts as the 3D space -->
-<a href="projects/farmer.html" class="card-container fade-up" style="text-decoration: none;">
+   <!-- Farmers Project Card with 3D Effect -->
+<a href="projects/farmer.html" class="card-container fade-up">
   <div class="card-inner">
     
-    <!-- THE FRONT: Your exact original project card -->
+    <!-- FRONT: Your original card styles -->
     <div class="card-front project-card">
       <div class="project-icon">🌾</div>
       <h3>Farmers</h3>
@@ -494,11 +549,12 @@
       <div class="project-status">Developing</div>
     </div>
 
-    <!-- THE BACK: What shows when it turns blue and scales up -->
+    <!-- BACK: Turns blue, scales 1.5x, and displays link intent -->
     <div class="card-back">
-      <div class="project-icon" style="font-size: 40px; margin-bottom: 10px;">🚀</div>
-      <h3>Explore Tools</h3>
-      <p>Click to open project...</p>
+      <div class="project-icon" style="font-size: 2.5rem;">🚀</div>
+      <h3 style="color: #ffffff; font-family: 'Space Grotesk', sans-serif;">पुढील पर्याय</h3>
+      <p style="color: #e0ede4; font-family: 'Tiro Devanagari Marathi', serif; font-size: 0.85rem;">शेती-विषयक AI टूल्स आणि रिसोर्सेस पाहण्यासाठी येथे क्लिक करा.</p>
+      <div class="project-status" style="color: var(--wheat);">Open Project</div>
     </div>
 
   </div>
