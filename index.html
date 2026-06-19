@@ -664,5 +664,35 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 </script>
+  <script>
+  function openPolitics() {
+    document.getElementById('politicsModal').classList.add('active');
+  }
+
+  function closePolitics() {
+    document.getElementById('politicsModal').classList.remove('active');
+  }
+
+  function unlockPhilosophy(e) {
+    e.preventDefault();
+    const pass = prompt("This section is password protected.\nEnter password:");
+    if (pass === null) return; // user cancelled
+    if (pass === "snehuu") {
+      window.location.href = "read1.html";
+    } else {
+      alert("Incorrect password.");
+    }
+  }
+
+  // click outside the panel closes it
+  document.getElementById('politicsModal').addEventListener('click', function (e) {
+    if (e.target === this) closePolitics();
+  });
+
+  // Esc key closes it
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closePolitics();
+  });
+</script>
 </body>
 </html>
