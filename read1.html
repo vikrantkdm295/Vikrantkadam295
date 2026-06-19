@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 क्रांतिकारी वाचन यादी | Revolutionary Reading</title>
+<style>
+  :root {
+    --bg:       #080B14;
+    --card:     #0F1220;
+    --card2:    #141828;
+    --border:   #1E2336;
+    --text:     #EEF0F8;
+    --muted:    #6B7094;
+    --orange:   #FF5722;
+    --orange2:  #FF8A50;
+    --amber:    #FFC107;
+    --blue:     #1565C0;
+    --blue2:    #5B9BF5;
+    --green:    #22C55E;
+    --red:      #EF4444;
+    --purple:   #9B59B6;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, 'Noto Sans Devanagari', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ═══════════════════════════════ HEADER ═══════════════════════════════ */
+  header {
+    background: linear-gradient(160deg, #0A0D1A 0%, #100820 45%, #08101E 100%);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 70% at 15% 50%, rgba(255,87,34,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 70% at 85% 50%, rgba(21,101,192,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .header-duo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .duo-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .duo-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    border: 2px solid;
+    transition: transform 0.2s;
+  }
+  .duo-avatar:hover { transform: scale(1.08); }
+  .duo-avatar.orange { border-color: var(--orange); background: rgba(255,87,34,0.09); }
+  .duo-avatar.blue   { border-color: var(--blue2);  background: rgba(91,155,245,0.09); }
+
+  .duo-badge .name {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .duo-badge .name.orange { color: var(--orange2); }
+  .duo-badge .name.blue   { color: var(--blue2); }
+
+  .duo-badge .years {
+    font-size: 0.62rem;
+    color: var(--muted);
+  }
+
+  .duo-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    color: var(--muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .duo-divider .line {
+    width: 1px; height: 28px;
+    background: linear-gradient(to bottom, transparent, var(--border), transparent);
+  }
+
+  header h1 {
+    position: relative; z-index: 1;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--orange), var(--orange2) 40%, var(--blue2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  header .tagline {
+    position: relative; z-index: 1;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 0.3rem;
+  }
+
+  header .quote {
+    position: relative; z-index: 1;
+    font-size: 0.75rem;
+    color: var(--amber);
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  /* ═══════════════════════════════ STATS BAR ═══════════════════════════════ */
+  .stats-bar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-num {
+    font-size: 1.7rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+  .stat-num.s-read { color: var(--green); }
+  .stat-num.s-left { color: var(--muted); }
+  .stat-num.s-total { color: var(--text); }
+
+  .stat-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  .overall-block {
+    flex: 1;
+    min-width: 180px;
+    max-width: 360px;
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .progress-meta span:last-child {
+    font-weight: 700;
+    color: var(--orange2);
+  }
+
+  .track {
+    height: 7px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
+  }
+  .fill.overall { background: linear-gradient(to right, var(--orange), var(--orange2), var(--green)); }
+  .fill.orange-fill { background: linear-gradient(to right, var(--orange), var(--orange2)); }
+  .fill.blue-fill   { background: linear-gradient(to right, var(--blue), var(--blue2)); }
+
+  /* ═══════════════════════════════ CONTROLS ═══════════════════════════════ */
+  .controls {
+    padding: 0.85rem 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.01);
+  }
+
+  .pill {
+    padding: 0.3rem 0.85rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .pill:hover { color: var(--text); border-color: var(--muted); }
+  .pill.active { background: var(--orange); color: white; border-color: var(--orange); }
+  .pill.reset  { border-color: rgba(239,68,68,0.4); color: var(--red); }
+  .pill.reset:hover { background: var(--red); color: white; border-color: var(--red); }
+
+  /* ═══════════════════════════════ GRID ═══════════════════════════════ */
+  .grid {
+    max-width: 1280px;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .grid { padding: 0 0.5rem; } }
+
+  /* ═══════════════════════════════ SECTION CARD ═══════════════════════════════ */
+  .section-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+
+  .section-card.completed-glow {
+    animation: glow-pulse 1.4s ease-out;
+  }
+  @keyframes glow-pulse {
+    0%   { box-shadow: 0 0 0px transparent; }
+    40%  { box-shadow: 0 0 30px rgba(34,197,94,0.35); }
+    100% { box-shadow: 0 0 0px transparent; }
+  }
+
+  .sec-head {
+    padding: 1.2rem 1.4rem;
+  }
+  .sec-head.orange { background: linear-gradient(135deg, rgba(255,87,34,0.08) 0%, rgba(255,138,80,0.03) 100%); border-bottom: 2px solid var(--orange); }
+  .sec-head.blue   { background: linear-gradient(135deg, rgba(21,101,192,0.08) 0%, rgba(91,155,245,0.03) 100%); border-bottom: 2px solid var(--blue2); }
+
+  .sec-head-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .sec-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+
+  .sec-info { flex: 1; min-width: 0; }
+
+  .sec-info h2 {
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.15rem;
+  }
+
+  .sec-info .subtitle {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .sec-count {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .orange .sec-count { background: rgba(255,87,34,0.12); color: var(--orange2); }
+  .blue   .sec-count { background: rgba(91,155,245,0.12); color: var(--blue2); }
+
+  .sec-prog-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .sec-prog-meta .pct { font-weight: 700; }
+  .orange .sec-prog-meta .pct { color: var(--orange2); }
+  .blue   .sec-prog-meta .pct { color: var(--blue2); }
+
+  /* ═══════════════════════════════ BOOK LIST ═══════════════════════════════ */
+  .book-list { padding: 0.5rem 0.6rem 0.8rem; }
+
+  /* Category divider */
+  .cat-div {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 0.5rem 0.25rem;
+    margin-top: 0.25rem;
+  }
+  .cat-div.hidden { display: none; }
+
+  .cat-div .cat-label {
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+    color: var(--muted);
+  }
+  .cat-div .cat-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .cat-div .cat-count {
+    font-size: 0.6rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* Book Item */
+  .book-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.65rem;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    border: 1px solid transparent;
+    margin-bottom: 0.15rem;
+    user-select: none;
+  }
+  .book-item:hover { background: var(--card2); border-color: var(--border); }
+  .book-item.done  { background: rgba(34,197,94,0.05); border-color: rgba(34,197,94,0.12); }
+  .book-item.hidden { display: none; }
+
+  /* Number */
+  .bnum {
+    font-size: 0.62rem;
+    color: var(--muted);
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 18px;
+    text-align: right;
+    margin-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Checkbox */
+  .bcb {
+    width: 17px; height: 17px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    border: 1.5px solid #2E3352;
+    display: grid;
+    place-items: center;
+    transition: all 0.15s;
+    margin-top: 2px;
+  }
+  .book-item.done .bcb {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .book-item.done .bcb::after {
+    content: '';
+    display: block;
+    width: 5px; height: 8px;
+    border: 2px solid white;
+    border-top: none; border-left: none;
+    transform: rotate(42deg) translate(-1px, -1px);
+  }
+
+  /* Book info */
+  .binfo { flex: 1; min-width: 0; }
+
+  .btitle {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+    transition: color 0.12s;
+  }
+  .book-item.done .btitle {
+    text-decoration: line-through;
+    text-decoration-color: rgba(107,112,148,0.6);
+    color: var(--muted);
+  }
+
+  .bsub {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.1rem;
+    line-height: 1.3;
+  }
+
+  .btags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.3rem;
+  }
+
+  .tag {
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.1rem 0.42rem;
+    border-radius: 3px;
+  }
+  .t-novel    { background: rgba(255,87,34,0.12);   color: #FF8A65; }
+  .t-story    { background: rgba(20,184,166,0.12);  color: #5EEAD4; }
+  .t-tamasha  { background: rgba(236,72,153,0.12);  color: #F472B6; }
+  .t-play     { background: rgba(239,68,68,0.10);   color: #FCA5A5; }
+  .t-poetry   { background: rgba(168,85,247,0.12);  color: #C084FC; }
+  .t-powada   { background: rgba(234,88,12,0.12);   color: #FDBA74; }
+  .t-travel   { background: rgba(14,165,233,0.12);  color: #38BDF8; }
+  .t-academic { background: rgba(99,102,241,0.12);  color: #A5B4FC; }
+  .t-economic { background: rgba(16,185,129,0.12);  color: #6EE7B7; }
+  .t-political{ background: rgba(37,99,235,0.12);   color: #93C5FD; }
+  .t-social   { background: rgba(245,158,11,0.12);  color: #FCD34D; }
+  .t-spiritual{ background: rgba(139,92,246,0.12);  color: #DDD6FE; }
+  .t-biography{ background: rgba(244,63,94,0.12);   color: #FB7185; }
+
+  .t-star { background: rgba(255,193,7,0.12); color: var(--amber); }
+
+  .byear {
+    font-size: 0.62rem;
+    color: #3E4468;
+    margin-top: 0.15rem;
+  }
+
+  /* ═══════════════════════════════ FOOTER ═══════════════════════════════ */
+  footer {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+
+  footer .f-quote {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 0.4rem;
+    line-height: 1.6;
+  }
+
+  footer .f-attr {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--blue2);
+  }
+
+  footer .f-divider {
+    width: 40px; height: 1px;
+    background: var(--border);
+    margin: 1rem auto;
+  }
+
+  footer .f-made {
+    font-size: 0.65rem;
+    color: #2E3352;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-duo">
+    <div class="duo-badge">
+      <div class="duo-avatar orange">🌹</div>
+      <span class="name orange">लोकशाहीर<br>अण्णाभाऊ साठे</span>
+      <span class="years">1920 – 1969</span>
+    </div>
+    <div class="duo-divider">
+      <div class="line"></div>
+      <span>✦</span>
+      <div class="line"></div>
+    </div>
+    <div class="duo-badge">
+      <div class="duo-avatar blue">⚖️</div>
+      <span class="name blue">डॉ. बाबासाहेब<br>आंबेडकर</span>
+      <span class="years">1891 – 1956</span>
+    </div>
+  </div>
+  <h1>क्रांतिकारी वाचन यादी</h1>
+  <p class="tagline">Master Reading Checklist · 57 Books · Two Revolutionary Minds</p>
+  <p class="quote">"जग बदल घालुनी घाव, सांगून गेले मज अण्णाभाऊ…"</p>
+</header>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num s-read" id="s-read">0</div>
+    <div class="stat-label">✅ वाचले / Read</div>
+  </div>
+  <div class="overall-block">
+    <div class="progress-meta">
+      <span>एकूण प्रगती / Total Progress</span>
+      <span id="s-pct">0%</span>
+    </div>
+    <div class="track"><div class="fill overall" id="s-bar" style="width:0%"></div></div>
+  </div>
+  <div class="stat">
+    <div class="stat-num s-left" id="s-left">57</div>
+    <div class="stat-label">📚 बाकी / Remaining</div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <button class="pill active" onclick="setFilter(this,'all')">📚 सर्व / All</button>
+  <button class="pill" onclick="setFilter(this,'read')">✅ वाचले / Read</button>
+  <button class="pill" onclick="setFilter(this,'unread')">📖 न वाचलेले / Unread</button>
+  <button class="pill reset" onclick="resetAll()">🔄 Reset All</button>
+</div>
+
+<!-- MAIN GRID -->
+<div class="grid">
+
+  <!-- ░░░░░░ ANNABHAU SATHE ░░░░░░ -->
+  <div class="section-card" id="card-annabhau">
+    <div class="sec-head orange">
+      <div class="sec-head-row">
+        <span class="sec-icon">🌹</span>
+        <div class="sec-info">
+          <h2>लोकशाहीर अण्णाभाऊ साठे</h2>
+          <div class="subtitle">Krantikari Sahitya · कृती, कथा, कविता</div>
+        </div>
+        <div class="sec-count" id="a-count">0/35</div>
+      </div>
+      <div class="sec-prog-meta">
+        <span id="a-label">0 पुस्तके वाचलेली</span>
+        <span class="pct" id="a-pct">0%</span>
+      </div>
+      <div class="track"><div class="fill orange-fill" id="a-bar" style="width:0%"></div></div>
+    </div>
+    <div class="book-list" id="list-annabhau"></div>
+  </div>
+
+  <!-- ░░░░░░ DR. AMBEDKAR ░░░░░░ -->
+  <div class="section-card" id="card-ambedkar">
+    <div class="sec-head blue">
+      <div class="sec-head-row">
+        <span class="sec-icon">⚖️</span>
+        <div class="sec-info">
+          <h2>डॉ. बाबासाहेब आंबेडकर</h2>
+          <div class="subtitle">Writings & Speeches · सामाजिक क्रांतिकारक</div>
+        </div>
+        <div class="sec-count" id="b-count">0/22</div>
+      </div>
+      <div class="sec-prog-meta">
+        <span id="b-label">0 पुस्तके वाचलेली</span>
+        <span class="pct" id="b-pct">0%</span>
+      </div>
+      <div class="track"><div class="fill blue-fill" id="b-bar" style="width:0%"></div></div>
+    </div>
+    <div class="book-list" id="list-ambedkar"></div>
+  </div>
+
+</div>
+
+<footer>
+  <p class="f-quote">"शिक्षण हे वाघिणीचे दूध आहे,<br>जो प्राशन करेल तो गुरगुरल्याशिवाय राहणार नाही।"</p>
+  <p class="f-attr">— डॉ. बाबासाहेब आंबेडकर</p>
+  <div class="f-divider"></div>
+  <p class="f-made">प्रगती जतन केली जाते · Progress saved in browser · जय भीम · जय अण्णाभाऊ</p>
+</footer>
+
+<script>
+// ════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════
+
+const TAG_CFG = {
+  novel:     {l:'कादंबरी · Novel',  c:'t-novel'},
+  story:     {l:'कथा · Stories',    c:'t-story'},
+  tamasha:   {l:'तमाशा',            c:'t-tamasha'},
+  play:      {l:'नाटक · Play',      c:'t-play'},
+  poetry:    {l:'कविता · Poetry',   c:'t-poetry'},
+  powada:    {l:'पोवाडा',           c:'t-powada'},
+  travel:    {l:'प्रवास · Travel',  c:'t-travel'},
+  academic:  {l:'Academic',         c:'t-academic'},
+  economic:  {l:'Economic',         c:'t-economic'},
+  political: {l:'Political',        c:'t-political'},
+  social:    {l:'Social',           c:'t-social'},
+  spiritual: {l:'Spiritual',        c:'t-spiritual'},
+  biography: {l:'Autobiography',    c:'t-biography'},
+};
+
+const ANNABHAU = [
+  // ── कादंबऱ्या / NOVELS ──────────────────────────
+  {id:'a1',  cat:'📖 कादंबऱ्या · Novels',
+   mr:'फकीरा',                         en:'Fakira',                              year:'1959', tags:['novel'],  star:'★ Sahitya Akademi Award'},
+  {id:'a2',  cat:'',
+   mr:'वारणेचा वाघ',                   en:'Varnecha Vagh (Tiger of Warna)',      year:'1953', tags:['novel']},
+  {id:'a3',  cat:'',
+   mr:'माकडीचा माळ',                   en:'Makdicha Mal (Monkey Garland)',       year:'',     tags:['novel']},
+  {id:'a4',  cat:'',
+   mr:'रानगंगा',                        en:'Ranganga (Wild River)',               year:'',     tags:['novel']},
+  {id:'a5',  cat:'',
+   mr:'आग',                              en:'Aag (Fire)',                          year:'',     tags:['novel']},
+  {id:'a6',  cat:'',
+   mr:'अवघाची संसार',                   en:'Avghachi Sansar',                     year:'',     tags:['novel']},
+  {id:'a7',  cat:'',
+   mr:'वैजयंता',                        en:'Vaijayanta',                          year:'',     tags:['novel']},
+  {id:'a8',  cat:'',
+   mr:'माती',                           en:'Mati (Soil)',                         year:'',     tags:['novel']},
+  {id:'a9',  cat:'',
+   mr:'पाझर',                           en:'Pazhar (Seepage)',                    year:'',     tags:['novel']},
+  {id:'a10', cat:'',
+   mr:'डोंगरची मैना',                   en:'Dongharchi Maina (Hill Myna)',        year:'',     tags:['novel']},
+  {id:'a11', cat:'',
+   mr:'रूपा',                           en:'Rupa',                                year:'',     tags:['novel']},
+  {id:'a12', cat:'',
+   mr:'पांढर्‍या ढगाची सावली',          en:'Pandhrya Dhagachi Savali',            year:'',     tags:['novel']},
+  {id:'a13', cat:'',
+   mr:'गुलाम',                          en:'Gulam (Slave)',                       year:'',     tags:['novel']},
+  {id:'a14', cat:'',
+   mr:'नवती',                           en:'Navati',                              year:'',     tags:['novel']},
+  {id:'a15', cat:'',
+   mr:'चंद्रा',                         en:'Chandra',                             year:'',     tags:['novel']},
+
+  // ── कथासंग्रह / SHORT STORIES ───────────────────
+  {id:'a16', cat:'📜 कथासंग्रह · Short Stories',
+   mr:'भूमिकन्या',                     en:'Bhumikanya (Daughter of the Soil)',   year:'',     tags:['story']},
+  {id:'a17', cat:'',
+   mr:'कृष्णाकाठच्या कथा',             en:'Krishnakathchya Katha',               year:'',     tags:['story']},
+  {id:'a18', cat:'',
+   mr:'अनुभव',                         en:'Anubhav (Experience)',                year:'',     tags:['story']},
+  {id:'a19', cat:'',
+   mr:'जगन्नाथाच्या रथाखाली',          en:'Under Jagannath\'s Chariot',          year:'',     tags:['story']},
+  {id:'a20', cat:'',
+   mr:'हरिजन',                         en:'Harijan',                             year:'',     tags:['story']},
+  {id:'a21', cat:'',
+   mr:'खुळ्याचा कारभार',               en:'Khulyacha Karbhar (Mad Man\'s Ways)', year:'',     tags:['story']},
+  {id:'a22', cat:'',
+   mr:'निखारे',                        en:'Nikhare (Embers)',                    year:'',     tags:['story']},
+
+  // ── तमाशा / नाटके ────────────────────────────────
+  {id:'a23', cat:'🎭 तमाशा / नाटके · Tamasha & Plays',
+   mr:'माझी मैना गावावर राहिली',       en:'Majhi Maina Gavavar Rahili',          year:'',     tags:['tamasha','play']},
+  {id:'a24', cat:'',
+   mr:'खापर्या विठोबा',                en:'Khyapri Vithoba',                     year:'',     tags:['tamasha','play']},
+  {id:'a25', cat:'',
+   mr:'माझ्या नावाची माती',            en:'Majhya Navachi Mati',                 year:'',     tags:['tamasha','play']},
+  {id:'a26', cat:'',
+   mr:'मुंबईची लावणी',                 en:'Mumbaiachi Lavani',                   year:'',     tags:['tamasha','play']},
+  {id:'a27', cat:'',
+   mr:'कृष्णाकाठ',                     en:'Krishnakath (Krishna\'s Bank)',        year:'',     tags:['play']},
+  {id:'a28', cat:'',
+   mr:'माझा देश',                      en:'Majha Desh (My Country)',             year:'',     tags:['play']},
+  {id:'a29', cat:'',
+   mr:'मेली त्याची माया',              en:'Meli Tyachi Maya',                    year:'',     tags:['play']},
+  {id:'a30', cat:'',
+   mr:'देवाला नको',                    en:'Devala Nako (Not for God)',           year:'',     tags:['play']},
+
+  // ── कविता / पोवाडे ───────────────────────────────
+  {id:'a31', cat:'🎵 कविता / पोवाडे · Poetry & Powadas',
+   mr:'स्टालिनग्राडचा पोवाडा',         en:'Ballad of Stalingrad',                year:'1943', tags:['poetry','powada'], star:'★ Iconic Anti-War Powada'},
+  {id:'a32', cat:'',
+   mr:'माझ्या मायभूमीचा पोवाडा',       en:'Ballad of My Motherland',             year:'',     tags:['poetry','powada']},
+  {id:'a33', cat:'',
+   mr:'जग बदल घालुनी घाव',             en:'Jag Badal Ghaluni Ghav',              year:'',     tags:['poetry','powada']},
+  {id:'a34', cat:'',
+   mr:'लोकशाहीर (काव्यसंग्रह)',        en:'Lokshahir — Collected Poems',         year:'',     tags:['poetry']},
+
+  // ── प्रवासवर्णन / TRAVEL ─────────────────────────
+  {id:'a35', cat:'✈️ प्रवासवर्णन · Travel Writing',
+   mr:'माझा रशियाचा प्रवास',           en:'Majha Rashiyacha Pravas (My Journey to Russia)', year:'1961', tags:['travel']},
+];
+
+const AMBEDKAR = [
+  // ── Academic & Economic ──────────────────────────
+  {id:'b1',  cat:'🎓 Academic & Economic',
+   title:'Administration and Finance of the East India Company',         year:'1915', tags:['academic','economic']},
+  {id:'b2',  cat:'',
+   title:'Castes in India: Their Mechanism, Genesis and Development',    year:'1916', tags:['academic','social']},
+  {id:'b3',  cat:'',
+   title:'The Problem of the Rupee: Its Origin and Its Solution',        year:'1923', tags:['academic','economic']},
+  {id:'b4',  cat:'',
+   title:'The Evolution of Provincial Finance in British India',         year:'1925', tags:['academic','economic']},
+
+  // ── Social & Political ───────────────────────────
+  {id:'b5',  cat:'⚡ Social & Political',
+   title:'Annihilation of Caste',                                        year:'1936', tags:['social','political'], star:'★ Most Iconic Work'},
+  {id:'b6',  cat:'',
+   title:'Pakistan or the Partition of India',                           year:'1940', tags:['political']},
+  {id:'b7',  cat:'',
+   title:'Ranade, Gandhi and Jinnah',                                    year:'1943', tags:['political','social']},
+  {id:'b8',  cat:'',
+   title:'Mr. Gandhi and the Emancipation of the Untouchables',         year:'1943', tags:['political','social']},
+  {id:'b9',  cat:'',
+   title:'What Congress and Gandhi Have Done to the Untouchables',       year:'1945', tags:['political','social']},
+  {id:'b10', cat:'',
+   title:'Who Were the Shudras?',                                        year:'1946', tags:['social','academic']},
+  {id:'b11', cat:'',
+   title:'States and Minorities',                                        year:'1947', tags:['political']},
+  {id:'b12', cat:'',
+   title:'The Untouchables: Who Were They and Why They Became Untouchable?', year:'1948', tags:['social','academic']},
+  {id:'b13', cat:'',
+   title:'The Rise and Fall of Hindu Women',                             year:'1951', tags:['social']},
+  {id:'b14', cat:'',
+   title:'Thoughts on Linguistic States',                                year:'1955', tags:['political']},
+  {id:'b15', cat:'',
+   title:'Buddha or Karl Marx',                                          year:'1956', tags:['political','spiritual']},
+
+  // ── Spiritual ────────────────────────────────────
+  {id:'b16', cat:'🪔 Spiritual',
+   title:'The Buddha and His Dhamma',                                    year:'1956', tags:['spiritual','social'], star:'★ Life\'s Magnum Opus'},
+
+  // ── Posthumous Works ─────────────────────────────
+  {id:'b17', cat:'📗 Posthumous Works',
+   title:'Riddles in Hinduism',                                          year:'1987*', tags:['social','academic']},
+  {id:'b18', cat:'',
+   title:'Philosophy of Hinduism',                                       year:'posth.', tags:['social','spiritual']},
+  {id:'b19', cat:'',
+   title:'Revolution and Counter-Revolution in Ancient India',           year:'posth.', tags:['academic','social']},
+  {id:'b20', cat:'',
+   title:'Waiting for a Visa (Autobiography)',                           year:'posth.', tags:['biography','social']},
+  {id:'b21', cat:'',
+   title:'Essays on Untouchables and Untouchability',                    year:'posth.', tags:['social']},
+  {id:'b22', cat:'',
+   title:'Commentaries on the Constitution of India',                    year:'posth.', tags:['political','academic']},
+];
+
+// ════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════
+const KEY = 'vikrant-kranti-reader-v1';
+let currentFilter = 'all';
+
+function getState() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
+  catch { return {}; }
+}
+function saveState(s) {
+  try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e) {}
+}
+
+// ════════════════════════════════════════
+//  RENDER BOOKS
+// ════════════════════════════════════════
+function makeItem(book, isAnnabhau) {
+  const el = document.createElement('div');
+  el.className = 'book-item';
+  el.dataset.id = book.id;
+
+  const num = parseInt(book.id.replace(/^[a-z]+/,''));
+  const mainTitle = isAnnabhau ? book.mr : book.title;
+  const sub       = isAnnabhau ? book.en : '';
+
+  const tagsHTML = (book.tags || []).map(t => {
+    const cfg = TAG_CFG[t] || {l:t, c:'t-academic'};
+    return `<span class="tag ${cfg.c}">${cfg.l}</span>`;
+  }).join('');
+
+  const starHTML = book.star
+    ? `<span class="tag t-star">${book.star}</span>` : '';
+
+  el.innerHTML = `
+    <div class="bnum">${num}</div>
+    <div class="bcb"></div>
+    <div class="binfo">
+      <div class="btitle">${mainTitle}</div>
+      ${sub ? `<div class="bsub">${sub}</div>` : ''}
+      <div class="btags">${tagsHTML}${starHTML}</div>
+      ${book.year ? `<div class="byear">${book.year}</div>` : ''}
+    </div>`;
+
+  el.addEventListener('click', () => toggle(book.id));
+  return el;
+}
+
+function makeCatDivider(label, count) {
+  const el = document.createElement('div');
+  el.className = 'cat-div';
+  el.dataset.cat = label;
+  el.innerHTML = `
+    <span class="cat-label">${label}</span>
+    <div class="cat-line"></div>
+    <span class="cat-count">${count} books</span>`;
+  return el;
+}
+
+function renderSection(books, listId, isAnnabhau) {
+  const list = document.getElementById(listId);
+  let currentCat = '';
+  let catCount = 0;
+  let catDivider = null;
+
+  // Pre-calculate category counts
+  const catCounts = {};
+  books.forEach(b => {
+    if (b.cat) { currentCat = b.cat; catCounts[currentCat] = 0; }
+    catCounts[currentCat]++;
+  });
+
+  currentCat = '';
+  books.forEach(b => {
+    if (b.cat) {
+      currentCat = b.cat;
+      catDivider = makeCatDivider(b.cat, catCounts[b.cat]);
+      list.appendChild(catDivider);
+    }
+    list.appendChild(makeItem(b, isAnnabhau));
+  });
+}
+
+// ════════════════════════════════════════
+//  UPDATE UI
+// ════════════════════════════════════════
+function applyState(state) {
+  document.querySelectorAll('.book-item').forEach(item => {
+    const done = !!state[item.dataset.id];
+    item.classList.toggle('done', done);
+    applyFilterToItem(item, done);
+  });
+  updateCatDividers();
+}
+
+function applyFilterToItem(item, done) {
+  let hide = false;
+  if (currentFilter === 'read'   && !done) hide = true;
+  if (currentFilter === 'unread' &&  done) hide = true;
+  item.classList.toggle('hidden', hide);
+}
+
+function updateCatDividers() {
+  document.querySelectorAll('.cat-div').forEach(div => {
+    let el = div.nextElementSibling;
+    let visible = false;
+    while (el && !el.classList.contains('cat-div')) {
+      if (el.classList.contains('book-item') && !el.classList.contains('hidden')) {
+        visible = true; break;
+      }
+      el = el.nextElementSibling;
+    }
+    div.classList.toggle('hidden', !visible);
+  });
+}
+
+function updateStats(state) {
+  const aRead = ANNABHAU.filter(b => state[b.id]).length;
+  const bRead = AMBEDKAR.filter(b => state[b.id]).length;
+  const total  = ANNABHAU.length + AMBEDKAR.length;
+  const totalRead = aRead + bRead;
+
+  // Overall
+  const overallPct = Math.round((totalRead / total) * 100);
+  document.getElementById('s-read').textContent = totalRead;
+  document.getElementById('s-left').textContent = total - totalRead;
+  document.getElementById('s-pct').textContent  = overallPct + '%';
+  document.getElementById('s-bar').style.width  = overallPct + '%';
+
+  // Annabhau
+  const aPct = Math.round((aRead / ANNABHAU.length) * 100);
+  document.getElementById('a-count').textContent = `${aRead}/${ANNABHAU.length}`;
+  document.getElementById('a-label').textContent = `${aRead} पुस्तके वाचलेली`;
+  document.getElementById('a-pct').textContent   = aPct + '%';
+  document.getElementById('a-bar').style.width   = aPct + '%';
+
+  // Ambedkar
+  const bPct = Math.round((bRead / AMBEDKAR.length) * 100);
+  document.getElementById('b-count').textContent = `${bRead}/${AMBEDKAR.length}`;
+  document.getElementById('b-label').textContent = `${bRead} पुस्तके वाचलेली`;
+  document.getElementById('b-pct').textContent   = bPct + '%';
+  document.getElementById('b-bar').style.width   = bPct + '%';
+
+  // Completion glow
+  if (aRead === ANNABHAU.length && aRead > 0) celebrate('card-annabhau');
+  if (bRead === AMBEDKAR.length && bRead > 0) celebrate('card-ambedkar');
+}
+
+function celebrate(cardId) {
+  const card = document.getElementById(cardId);
+  card.classList.remove('completed-glow');
+  void card.offsetWidth; // reflow
+  card.classList.add('completed-glow');
+}
+
+// ════════════════════════════════════════
+//  ACTIONS
+// ════════════════════════════════════════
+function toggle(id) {
+  const state = getState();
+  state[id] = !state[id];
+  saveState(state);
+
+  const item = document.querySelector(`.book-item[data-id="${id}"]`);
+  if (item) {
+    item.classList.toggle('done', state[id]);
+    applyFilterToItem(item, state[id]);
+    updateCatDividers();
+  }
+  updateStats(state);
+}
+
+function setFilter(btn, filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.controls .pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const state = getState();
+  document.querySelectorAll('.book-item').forEach(item => {
+    applyFilterToItem(item, !!state[item.dataset.id]);
+  });
+  updateCatDividers();
+}
+
+function resetAll() {
+  if (!confirm('सर्व प्रगती रीसेट होईल!\nAre you sure you want to reset all progress?')) return;
+  localStorage.removeItem(KEY);
+  document.querySelectorAll('.book-item').forEach(item => item.classList.remove('done','hidden'));
+  document.querySelectorAll('.cat-div').forEach(div => div.classList.remove('hidden'));
+  updateStats({});
+}
+
+// ════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════
+function init() {
+  renderSection(ANNABHAU, 'list-annabhau', true);
+  renderSection(AMBEDKAR, 'list-ambedkar', false);
+
+  const state = getState();
+  applyState(state);
+  updateStats(state);
+}
+
+init();
+</script>
+</body>
+</html>
