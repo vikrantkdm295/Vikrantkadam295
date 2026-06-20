@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Master Checklist — Vibe Coder to Ship-Ready</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0E2A41;
+    --bg-panel: #123854;
+    --bg-panel-active: #15405F;
+    --line: #4F8CB3;
+    --line-faint: rgba(127,209,224,0.08);
+    --cyan: #7FD1E0;
+    --ink: #EAF4FB;
+    --ink-dim: #8FA8C2;
+    --amber: #F2A93B;
+    --ship: #FF6B4A;
+    --radius: 2px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    background-image:
+      repeating-linear-gradient(0deg, var(--line-faint) 0px, var(--line-faint) 1px, transparent 1px, transparent 28px),
+      repeating-linear-gradient(90deg, var(--line-faint) 0px, var(--line-faint) 1px, transparent 1px, transparent 28px);
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    padding: 28px 16px 80px;
+  }
+
+  .sheet{
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Title block ---------- */
+  .title-block{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px 20px 24px;
+    background: rgba(18,56,84,0.5);
+    position: relative;
+  }
+  .title-block::before, .title-block::after,
+  .panel::before, .panel::after{
+    content:"";
+    position:absolute;
+    width:10px; height:10px;
+    border-color: var(--cyan);
+    opacity:0.6;
+  }
+  .title-block::before{ top:-1px; left:-1px; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+  .title-block::after{ bottom:-1px; right:-1px; border-bottom:2px solid var(--cyan); border-right:2px solid var(--cyan); }
+
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--cyan);
+    text-transform: uppercase;
+  }
+  h1{
+    font-size: clamp(28px, 6vw, 38px);
+    margin: 6px 0 4px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .subhead{
+    margin: 0 0 18px;
+    color: var(--ink-dim);
+    font-size: 14px;
+  }
+
+  /* ---------- Gauge ---------- */
+  .gauge-wrap{ margin-top: 6px; }
+  .gauge{
+    position: relative;
+    height: 14px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .gauge-fill{
+    height: 100%;
+    width: 0%;
+    background: var(--amber);
+    transition: width 0.4s ease, background-color 0.4s ease;
+  }
+  .gauge-fill.complete{ background: var(--ship); }
+  .gauge-ticks{
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(90deg, rgba(14,42,65,0.9) 0 1px, transparent 1px 10%);
+    pointer-events:none;
+  }
+  .gauge-readout{
+    display:flex; justify-content: space-between; align-items: baseline;
+    margin-top: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .percent{ font-size: 20px; font-weight: 600; color: var(--cyan); }
+  .count{ font-size: 12px; color: var(--ink-dim); }
+
+  .stamp{
+    margin-top: 16px;
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+    border: 1px solid var(--amber);
+    padding: 5px 10px;
+    border-radius: var(--radius);
+    transform: rotate(-2deg);
+  }
+  .stamp.ship{ color: var(--ship); border-color: var(--ship); }
+  .stamp.pulse{ animation: stampIn 0.35s ease; }
+  @keyframes stampIn{
+    0%{ transform: rotate(-2deg) scale(1.3); opacity:0; }
+    100%{ transform: rotate(-2deg) scale(1); opacity:1; }
+  }
+
+  .sync-status{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin: 14px 0 0;
+    min-height: 14px;
+  }
+
+  /* ---------- Panels ---------- */
+  main{ margin-top: 22px; display:flex; flex-direction:column; gap:14px; }
+
+  .panel{
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-panel);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .panel.panel-active{
+    border-color: var(--cyan);
+    background: var(--bg-panel-active);
+  }
+  .panel.panel-done{ opacity: 0.78; }
+
+  .panel-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line-faint);
+  }
+  .stage-no{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2px 6px;
+  }
+  .panel-head h2{
+    font-size: 16px;
+    margin: 0;
+    flex: 1;
+    font-weight: 600;
+  }
+  .focus-tag{
+    display:none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--bg);
+    background: var(--cyan);
+    padding: 3px 6px;
+    border-radius: var(--radius);
+  }
+  .panel-active .focus-tag{ display:inline-block; }
+  .panel-progress{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-dim);
+  }
+
+  .items{ list-style:none; margin:0; padding: 6px 8px 10px; }
+  .item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding: 7px 6px;
+    border-radius: var(--radius);
+  }
+  .check{
+    flex: none;
+    width: 20px; height: 20px;
+    margin-top: 2px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--bg);
+    cursor: pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 13px;
+    line-height:1;
+    padding: 0;
+  }
+  .check:focus-visible{
+    outline: 2px solid var(--cyan);
+    outline-offset: 2px;
+  }
+  .check[aria-pressed="true"]{
+    background: var(--amber);
+    border-color: var(--amber);
+  }
+  .check[aria-pressed="true"]::after{ content:"✓"; color: var(--bg); font-weight:700; }
+
+  .item-label{
+    font-size: 14px;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+  .item.checked .item-label{
+    color: var(--ink-dim);
+    text-decoration: line-through;
+    text-decoration-color: var(--line);
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    margin-top: 26px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+  #resetBtn{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--ink-dim);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  #resetBtn:hover{ color: var(--ink); border-color: var(--cyan); }
+  #resetBtn:focus-visible{ outline: 2px solid var(--cyan); outline-offset:2px; }
+  #resetBtn.armed{ color: var(--ship); border-color: var(--ship); }
+
+  .note{
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+
+    <header class="title-block">
+      <div class="eyebrow">Blueprint No. VC-08 — Web &amp; App Development</div>
+      <h1>Master Checklist</h1>
+      <p class="subhead">Vibe coder → ship-ready, working alongside Claude Code. Tap a box to track it.</p>
+
+      <div class="gauge-wrap">
+        <div class="gauge">
+          <div class="gauge-fill" id="gaugeFill"></div>
+          <div class="gauge-ticks"></div>
+        </div>
+        <div class="gauge-readout">
+          <span class="percent" id="percentLabel">0%</span>
+          <span class="count" id="countLabel">0 / 30 complete</span>
+        </div>
+      </div>
+
+      <div class="stamp" id="stamp">BLUEPRINT DRAFTED</div>
+      <p class="sync-status" id="syncStatus">Loading saved progress…</p>
+    </header>
+
+    <main id="checklist">
+
+      <section class="panel" data-stage="1">
+        <div class="panel-head">
+          <span class="stage-no">01</span>
+          <h2>Read the Code</h2>
+          <span class="focus-tag">Focus here</span>
+          <span class="panel-progress" data-progress>0/4</span>
+        </div>
+        <ul class="items">
+          <li class="item" data-id="1.1"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">HTML structure &amp; semantic tags</span></li>
+          <li class="item" data-id="1.2"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">CSS layout — flexbox &amp; grid</span></li>
+          <li class="item" data-id="1.3"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">JavaScript — variables, functions, DOM, async/await</span></li>
+          <li class="item" data-id="1.4"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Open a file Claude Code wrote and explain it line by line, unaided</span></li>
+        </ul>
+      </section>
+
+      <section class="panel" data-stage="2">
+        <div class="panel-head">
+          <span class="stage-no">02</span>
+          <h2>Version Control</h2>
+          <span class="focus-tag">Focus here</span>
+          <span class="panel-progress" data-progress>0/4</span>
+        </div>
+        <ul class="items">
+          <li class="item" data-id="2.1"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Git basics — init, add, commit</span></li>
+          <li class="item" data-id="2.2"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Push and pull with a remote</span></li>
+          <li class="item" data-id="2.3"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Branch, merge, resolve a conflict</span></li>
+          <li class="item" data-id="2.4"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Open a pull request on your own repo</span></li>
+        </ul>
+      </section>
+
+      <section class="panel" data-stage="3">
+        <div class="panel-head">
+          <span class="stage-no">03</span>
+          <h2>How Things Talk</h2>
+          <span class="focus-tag">Focus here</span>
+          <span class="panel-progress" data-progress>0/4</span>
+        </div>
+        <ul class="items">
+          <li class="item" data-id="3.1"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Request / response cycle</span></li>
+          <li class="item" data-id="3.2"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">HTTP methods — GET, POST, PUT, DELETE</span></li>
+          <li class="item" data-id="3.3"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Status codes — what 200 / 404 / 500 actually mean</span></li>
+          <li class="item" data-id="3.4"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Call a public API with fetch and read the JSON back</span></li>
+        </ul>
+      </section>
+
+      <section class="panel" data-stage="4">
+        <div class="panel-head">
+          <span class="stage-no">04</span>
+          <h2>Frontend Stack</h2>
+          <span class="focus-tag">Focus here</span>
+          <span class="panel-progress" data-progress>0/4</span>
+        </div>
+        <ul class="items">
+          <li class="item" data-id="4.1"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">React fundamentals — components, props, state</span></li>
+          <li class="item" data-id="4.2"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Hooks — useState, useEffect</span></li>
+          <li class="item" data-id="4.3"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Style with Tailwind or CSS modules — pick one</span></li>
+          <li class="item" data-id="4.4"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Build and run a React app locally, start to finish</span></li>
+        </ul>
+      </section>
+
+      <section class="panel" data-stage="5">
+        <div class="panel-head">
+          <span class="stage-no">05</span>
+          <h2>Backend Stack</h2>
+          <span class="focus-tag">Focus here</span>
+          <span class="panel-progress" data-progress>0/3</span>
+        </div>
+        <ul class="items">
+          <li class="item" data-id="5.1"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Pick one — Node.js or Python (FastAPI)</span></li>
+          <li class="item" data-id="5.2"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Build a route that returns real data</span></li>
+          <li class="item" data-id="5.3"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Environment variables — keep secrets out of code</span></li>
+        </ul>
+      </section>
+
+      <section class="panel" data-stage="6">
+        <div class="panel-head">
+          <span class="stage-no">06</span>
+          <h2>Data</h2>
+          <span class="focus-tag">Focus here</span>
+          <span class="panel-progress" data-progress>0/3</span>
+        </div>
+        <ul class="items">
+          <li class="item" data-id="6.1"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">SQL basics — SELECT, INSERT, UPDATE, DELETE</span></li>
+          <li class="item" data-id="6.2"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Design a schema — tables, keys, relationships</span></li>
+          <li class="item" data-id="6.3"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Connect your app to Postgres or SQLite</span></li>
+        </ul>
+      </section>
+
+      <section class="panel" data-stage="7">
+        <div class="panel-head">
+          <span class="stage-no">07</span>
+          <h2>Ship It</h2>
+          <span class="focus-tag">Focus here</span>
+          <span class="panel-progress" data-progress>0/3</span>
+        </div>
+        <ul class="items">
+          <li class="item" data-id="7.1"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Deploy frontend — Vercel or Netlify</span></li>
+          <li class="item" data-id="7.2"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Deploy backend — Railway or Render</span></li>
+          <li class="item" data-id="7.3"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Point a real domain at it</span></li>
+        </ul>
+      </section>
+
+      <section class="panel" data-stage="8">
+        <div class="panel-head">
+          <span class="stage-no">08</span>
+          <h2>The Vibe-Coding Discipline</h2>
+          <span class="focus-tag">Focus here</span>
+          <span class="panel-progress" data-progress>0/5</span>
+        </div>
+        <ul class="items">
+          <li class="item" data-id="8.1"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Review every diff before accepting it</span></li>
+          <li class="item" data-id="8.2"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Write specs, not vibes — be specific in prompts</span></li>
+          <li class="item" data-id="8.3"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Ask "why" when something looks off</span></li>
+          <li class="item" data-id="8.4"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Test what Claude Code builds before moving on</span></li>
+          <li class="item" data-id="8.5"><button class="check" type="button" aria-pressed="false"></button><span class="item-label">Keep a running README so context survives between sessions</span></li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer>
+      <button id="resetBtn" type="button">Reset progress</button>
+      <p class="note">Progress is saved privately for you and reloads next time you open this checklist.</p>
+    </footer>
+
+  </div>
+
+<script>
+(function(){
+  const STORAGE_KEY = 'master-checklist-progress';
+  const items = Array.from(document.querySelectorAll('.item'));
+  const TOTAL = items.length;
+  let progress = {};
+  let storageAvailable = true;
+
+  const gaugeFill = document.getElementById('gaugeFill');
+  const percentLabel = document.getElementById('percentLabel');
+  const countLabel = document.getElementById('countLabel');
+  const stampEl = document.getElementById('stamp');
+  const syncStatus = document.getElementById('syncStatus');
+  const resetBtn = document.getElementById('resetBtn');
+
+  function stampForPercent(p){
+    if(p >= 100) return { text: 'SHIP IT', cls: 'ship' };
+    if(p >= 75)  return { text: 'FINAL INSPECTION', cls: '' };
+    if(p >= 50)  return { text: 'WIRED & PLUMBED', cls: '' };
+    if(p >= 25)  return { text: 'FRAMING UP', cls: '' };
+    if(p > 0)    return { text: 'FOUNDATION POURED', cls: '' };
+    return { text: 'BLUEPRINT DRAFTED', cls: '' };
+  }
+
+  function render(){
+    let done = 0;
+    items.forEach(li => {
+      const id = li.dataset.id;
+      const checked = !!progress[id];
+      const btn = li.querySelector('.check');
+      btn.setAttribute('aria-pressed', checked ? 'true' : 'false');
+      li.classList.toggle('checked', checked);
+      if(checked) done++;
+    });
+
+    const percent = TOTAL ? Math.round((done / TOTAL) * 100) : 0;
+    gaugeFill.style.width = percent + '%';
+    gaugeFill.classList.toggle('complete', percent >= 100);
+    percentLabel.textContent = percent + '%';
+    countLabel.textContent = done + ' / ' + TOTAL + ' complete';
+
+    const prevStampText = stampEl.textContent;
+    const s = stampForPercent(percent);
+    stampEl.textContent = s.text;
+    stampEl.classList.toggle('ship', s.cls === 'ship');
+    if(s.text !== prevStampText){
+      stampEl.classList.remove('pulse');
+      void stampEl.offsetWidth;
+      stampEl.classList.add('pulse');
+    }
+
+    // per-section progress + focus indicator
+    let focusSet = false;
+    document.querySelectorAll('.panel').forEach(panel => {
+      const sectionItems = Array.from(panel.querySelectorAll('.item'));
+      const sectionDone = sectionItems.filter(li => progress[li.dataset.id]).length;
+      const sectionTotal = sectionItems.length;
+      panel.querySelector('[data-progress]').textContent = sectionDone + '/' + sectionTotal;
+
+      const complete = sectionDone === sectionTotal;
+      panel.classList.toggle('panel-done', complete);
+
+      if(!complete && !focusSet){
+        panel.classList.add('panel-active');
+        focusSet = true;
+      } else {
+        panel.classList.remove('panel-active');
+      }
+    });
+  }
+
+  async function loadProgress(){
+    try{
+      const result = await window.storage.get(STORAGE_KEY);
+      progress = result ? JSON.parse(result.value) : {};
+      syncStatus.textContent = '';
+    }catch(err){
+      progress = {};
+      storageAvailable = false;
+      syncStatus.textContent = "Couldn't load saved progress — this session will track locally only.";
+    }
+    render();
+  }
+
+  async function saveProgress(){
+    if(!storageAvailable) return;
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify(progress));
+    }catch(err){
+      storageAvailable = false;
+      syncStatus.textContent = "Couldn't save progress — this session will track locally only.";
+    }
+  }
+
+  items.forEach(li => {
+    const id = li.dataset.id;
+    const btn = li.querySelector('.check');
+    const label = li.querySelector('.item-label');
+    function toggle(){
+      progress[id] = !progress[id];
+      render();
+      saveProgress();
+    }
+    btn.addEventListener('click', toggle);
+    label.addEventListener('click', toggle);
+  });
+
+  let armed = false;
+  let armTimer = null;
+  resetBtn.addEventListener('click', () => {
+    if(!armed){
+      armed = true;
+      resetBtn.classList.add('armed');
+      resetBtn.textContent = 'Click again to confirm';
+      armTimer = setTimeout(() => {
+        armed = false;
+        resetBtn.classList.remove('armed');
+        resetBtn.textContent = 'Reset progress';
+      }, 3000);
+      return;
+    }
+    clearTimeout(armTimer);
+    armed = false;
+    progress = {};
+    render();
+    saveProgress();
+    resetBtn.classList.remove('armed');
+    resetBtn.textContent = 'Reset progress';
+  });
+
+  render();
+  loadProgress();
+})();
+</script>
+</body>
+</html>
