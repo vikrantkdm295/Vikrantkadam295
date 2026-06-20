@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>विश्वासघाताचा किल्ला — भेद नीती</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:ital@0;1&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:    #0a0a0a;
+    --cream:  #f5f0e8;
+    --red:    #b5001f;
+    --gold:   #c8a84b;
+    --dark:   #111111;
+    --muted:  #444444;
+    --stamp:  rgba(181,0,31,0.13);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'Tiro Devanagari Marathi', serif;
+    font-size: 17px;
+    line-height: 1.85;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(181,0,31,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 90%, rgba(200,168,75,0.05) 0%, transparent 55%);
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── TOP BAR ── */
+  .top-bar {
+    border-bottom: 2px solid var(--gold);
+    padding: 14px 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    animation: fadeDown .7s .1s forwards;
+  }
+  .top-bar .date { font-family:'Special Elite', monospace; font-size:13px; color:var(--muted); letter-spacing:.08em; }
+  .top-bar .label { font-family:'Special Elite', monospace; font-size:11px; color:var(--red); letter-spacing:.18em; text-transform:uppercase; }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    text-align: center;
+    padding: 52px 0 28px;
+    position: relative;
+    opacity: 0;
+    animation: fadeDown .8s .25s forwards;
+  }
+  .masthead .katha-label {
+    font-family:'Special Elite', monospace;
+    font-size: 11px; letter-spacing: .25em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 18px; display: block;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 8vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -.01em;
+    text-shadow: 0 0 60px rgba(181,0,31,0.25);
+  }
+  .masthead h1 span { color: var(--red); }
+  .masthead .subtitle {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: .12em;
+    font-family: 'Special Elite', monospace;
+  }
+
+  .divider-gold {
+    display: flex; align-items: center; gap: 12px;
+    margin: 24px 0;
+    opacity: 0; animation: fadeUp .7s .4s forwards;
+  }
+  .divider-gold::before, .divider-gold::after {
+    content:''; flex:1; height:1px; background:var(--gold); opacity:.5;
+  }
+  .divider-gold span { color:var(--gold); font-size:18px; }
+
+  /* ── CONCEPT BOX ── */
+  .concept-box {
+    border: 1px solid rgba(200,168,75,.3);
+    border-left: 4px solid var(--gold);
+    background: rgba(200,168,75,0.04);
+    padding: 28px 32px;
+    margin: 32px 0;
+    position: relative;
+    opacity: 0; animation: fadeUp .7s .5s forwards;
+  }
+  .concept-box::before {
+    content: '॥ संकल्पना ॥';
+    position: absolute; top: -11px; left: 24px;
+    background: var(--ink); padding: 0 10px;
+    font-family:'Special Elite', monospace;
+    font-size:11px; letter-spacing:.18em; color:var(--gold);
+  }
+  .concept-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  /* ── CONCEPT PILLS ── */
+  .pills {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
+  }
+  .pill {
+    background: rgba(181,0,31,.12);
+    border: 1px solid rgba(181,0,31,.35);
+    color: #ff6b7a;
+    padding: 6px 16px; border-radius: 2px;
+    font-size: 13px; font-family:'Special Elite', monospace;
+    letter-spacing:.06em;
+  }
+
+  /* ── SECTION HEADINGS ── */
+  .section {
+    margin: 52px 0 0;
+    opacity: 0; animation: fadeUp .7s .6s forwards;
+  }
+  .section-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; letter-spacing: .22em;
+    color: var(--red); text-transform: uppercase;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content:''; flex:1; height:1px; background:rgba(181,0,31,.3); }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  /* ── STORY ── */
+  .story-block {
+    background: rgba(245,240,232,0.03);
+    border: 1px solid rgba(245,240,232,0.08);
+    padding: 36px;
+    position: relative;
+    margin: 24px 0;
+  }
+  .story-block .stamp {
+    position: absolute; top: 18px; right: 20px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px; color: var(--gold); opacity: .35;
+    letter-spacing: .12em; writing-mode: vertical-rl;
+  }
+  .char-name {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold); font-weight: 700; font-style: italic;
+  }
+  .dialogue {
+    border-left: 3px solid var(--red);
+    margin: 18px 0;
+    padding: 14px 20px;
+    background: rgba(181,0,31,0.05);
+    font-style: italic;
+    color: #e0c8b0;
+    font-size: 16px;
+  }
+  .story-para { margin-bottom: 20px; color: #d4cec5; }
+
+  .sub-head {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--red);
+    margin: 32px 0 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sub-head::before { content: '▶'; font-size: 12px; }
+
+  /* ── TEASER ── */
+  .teaser {
+    text-align: center;
+    border: 2px solid var(--red);
+    padding: 32px;
+    margin: 48px 0;
+    background: rgba(181,0,31,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .teaser::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(181,0,31,0.1) 0%, transparent 70%);
+  }
+  .teaser h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--red); margin-bottom: 12px;
+  }
+  .teaser p { color: #c4bfb5; font-size: 15px; position: relative; }
+
+  /* ── TIMELINE ── */
+  .timeline { margin: 24px 0; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 0 24px;
+    margin-bottom: 0;
+    position: relative;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute; left: 110px; top: 0; bottom: 0;
+    width: 1px; background: rgba(200,168,75,.2);
+  }
+  .tl-year {
+    font-family: 'Special Elite', monospace;
+    font-size: 13px; color: var(--gold);
+    padding: 28px 20px 28px 0;
+    text-align: right; line-height: 1.3;
+    font-weight: bold;
+  }
+  .tl-content {
+    padding: 24px 0 24px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .tl-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .tl-content p { font-size: 15px; color: #b0a898; line-height: 1.75; }
+  .tl-content .highlight {
+    display: inline-block;
+    background: rgba(181,0,31,0.15);
+    border: 1px solid rgba(181,0,31,0.3);
+    color: #ff8a96; padding: 2px 10px;
+    font-size: 13px; margin-top: 8px;
+    font-family: 'Special Elite', monospace;
+  }
+  .tl-dot {
+    position: absolute; left: 104px; top: 32px;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid var(--ink);
+    box-shadow: 0 0 8px rgba(181,0,31,.6);
+  }
+
+  /* ── TRUTH TABLE ── */
+  .truth-table {
+    width: 100%; border-collapse: collapse;
+    margin: 24px 0; font-size: 15px;
+  }
+  .truth-table thead tr {
+    background: var(--red);
+  }
+  .truth-table thead th {
+    padding: 14px 18px; text-align: left;
+    font-family: 'Special Elite', monospace;
+    font-size: 12px; letter-spacing: .12em;
+    color: white; font-weight: normal;
+  }
+  .truth-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: background .2s;
+  }
+  .truth-table tbody tr:hover { background: rgba(200,168,75,.05); }
+  .truth-table tbody td {
+    padding: 13px 18px; color: #c8c0b4;
+  }
+  .truth-table tbody td:first-child {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold); font-style: italic; font-size: 16px;
+  }
+  .truth-table tbody td:last-child {
+    color: var(--cream); font-weight: 500;
+  }
+
+  /* ── REASON CARDS ── */
+  .reason-grid { display: grid; gap: 16px; margin-top: 20px; }
+  .reason-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-left: 3px solid var(--red);
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.02);
+    transition: border-color .25s, background .25s;
+  }
+  .reason-card:hover {
+    border-left-color: var(--gold);
+    background: rgba(200,168,75,0.04);
+  }
+  .reason-card .rnum {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; color: rgba(181,0,31,0.3);
+    float: left; margin-right: 14px; line-height: 1;
+  }
+  .reason-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .reason-card p { font-size: 14px; color: #9a9289; line-height: 1.7; }
+
+  /* ── CLOSING QUOTE ── */
+  .big-quote {
+    text-align: center;
+    padding: 52px 32px;
+    position: relative;
+  }
+  .big-quote::before {
+    content: '\201C';
+    position: absolute; top: 10px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 120px; color: rgba(181,0,31,0.1);
+    line-height: 1; pointer-events: none;
+  }
+  .big-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 3vw, 22px);
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.65;
+    position: relative; z-index: 1;
+  }
+  .big-quote cite {
+    display: block; margin-top: 16px;
+    font-size: 13px; color: var(--gold);
+    font-family: 'Special Elite', monospace;
+    letter-spacing: .1em; font-style: normal;
+  }
+
+  /* ── AUTHOR FOOTER ── */
+  .author-footer {
+    border-top: 1px solid rgba(200,168,75,.3);
+    border-bottom: 1px solid rgba(200,168,75,.3);
+    padding: 36px;
+    margin: 48px 0 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: center;
+    background: rgba(200,168,75,0.03);
+    position: relative;
+    overflow: hidden;
+  }
+  .author-footer::before {
+    content: 'CREATED BY';
+    position: absolute; top: 12px; right: 20px;
+    font-family: 'Special Elite', monospace;
+    font-size: 10px; letter-spacing: .25em;
+    color: rgba(200,168,75,.25);
+  }
+  .author-avatar {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: linear-gradient(135deg, #b5001f, #1a1a1a);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; color: var(--gold); font-weight: 700;
+  }
+  .author-info { }
+  .author-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--cream); font-weight: 700;
+  }
+  .author-sub {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px; color: var(--muted);
+    letter-spacing: .08em; margin-top: 4px; line-height: 1.6;
+  }
+  .author-sub a {
+    color: var(--gold); text-decoration: none;
+  }
+  .author-sub a:hover { text-decoration: underline; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity:0; transform:translateY(-16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .section:nth-child(1) { animation-delay: .5s; }
+  .section:nth-child(2) { animation-delay: .65s; }
+  .section:nth-child(3) { animation-delay: .8s; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity:0; transform:translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.visible { opacity:1; transform:none; }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; color: black; }
+    .top-bar, .masthead, .section, .concept-box,
+    .story-block, .teaser, .timeline, .truth-table,
+    .reason-grid, .big-quote, .author-footer {
+      opacity: 1 !important; animation: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <span class="date">भेद नीती | राजकीय नीतिकथा | २०२४</span>
+    <span class="label">◈ गोपनीय विश्लेषण ◈</span>
+  </div>
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <span class="katha-label">॥ राजकीय नीतिकथा ॥</span>
+    <h1>विश्वासघाताचा<br><span>किल्ला</span></h1>
+    <p class="subtitle">— भेद नीती · चाणक्याचे सर्वात धारदार शस्त्र —</p>
+  </div>
+
+  <div class="divider-gold"><span>◆</span></div>
+
+  <!-- CONCEPT -->
+  <div class="concept-box reveal">
+    <h2>📌 भेद नीती — संकल्पना</h2>
+    <p>चाणक्याने सांगितलेल्या <strong>"साम, दाम, दंड, भेद"</strong> या चार नीतींपैकी <strong>भेद नीती</strong> ही सर्वात धोकादायक आहे. शत्रूला थेट लढून हरवण्यापेक्षा — <em>मित्राचा बळी देऊन शत्रूला आपलासा करणे</em> — हीच भेद नीती.</p>
+    <div class="pills">
+      <span class="pill">🎯 Controlled Sacrifice</span>
+      <span class="pill">🤝 Embrace &amp; Absorb</span>
+      <span class="pill">♟️ Proxy Consolidation</span>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <div class="section reveal">
+    <div class="section-label">📖 नीतिकथा</div>
+    <h2 class="section-title">विश्वासघाताचा किल्ला</h2>
+
+    <div class="story-block">
+      <span class="stamp">NITI KATHA</span>
+      <p class="story-para">एके काळी <span class="char-name">मगधनगर</span> नावाचे एक बलाढ्य राज्य होते. त्याचा राजा होता <span class="char-name">महाराज देवराज</span>. त्याचा सर्वात चाणाक्ष मंत्री होता <span class="char-name">गोरदास</span>. मगधनगरला <span class="char-name">सांगलपूर</span> नावाचा एक प्रभावशाली तालुका जिंकायचा होता — कारण जो सांगलपूर जिंकेल, त्याचे संपूर्ण प्रांतावर वर्चस्व राहील.</p>
+
+      <div class="sub-head">दोन शक्ती</div>
+      <p class="story-para">सांगलपूरमध्ये दोन प्रमुख शक्ती होत्या. पहिला होता <span class="char-name">शूरसेन</span> — मगधनगरचाच निष्ठावंत सरदार. त्याने राजाशी एकनिष्ठा ठेवत अनेक बंड मोडून काढली होती. सांगलपूरमध्ये त्याचा दबदबा होता. दुसरा होता <span class="char-name">वंशराज देशमुखसिंह</span> — सांगलपूरचा परंपरागत प्रभावशाली नेता. त्याच्या घराण्याने ५५ वर्षे तिथे राज्य केले होते. तो मगधनगरचा शत्रू होता, पण <strong>अत्यंत लोकप्रिय</strong> होता.</p>
+
+      <div class="sub-head">गोरदासचा डाव</div>
+      <p class="story-para">मंत्री गोरदासने राजा देवराजला एकांतात सांगितले —</p>
+      <div class="dialogue">"महाराज, शूरसेनाला युद्धात जिंकवणे सोपे आहे. पण त्याने जिंकले तर सांगलपूरवर आपले नाही — त्याचेच वर्चस्व राहील. आपण त्याला कायम नियंत्रणात ठेवू शकणार नाही."</div>
+      <p class="story-para">राजाने विचारले — <em>"मग काय करावे?"</em></p>
+      <p class="story-para">गोरदास हसला आणि म्हणाला —</p>
+      <div class="dialogue">"शूरसेनाला एकट्याने युद्धात उतरवा. त्याला रसद देऊ नका, कुमक पाठवू नका. दुसऱ्या बाजूने त्याचा जुना मित्र दीपकसेन याला वेगळ्या ध्वजाखाली उभे करा. मते विभागली जातील. वंशराज जिंकेल. मग आपण वंशराजकडे जाऊ आणि म्हणू — 'तुम्ही आमच्यामुळेच जिंकलात. आता आमच्यासोबत या.' वंशराज आपलाच होईल — आणि सांगलपूरही!"</div>
+
+      <div class="sub-head">युद्ध सुरू झाले</div>
+      <p class="story-para">शूरसेनाने राजाकडे कुमकेची मागणी केली. पण गोरदासने दरबारात ती अडवली. शूरसेनाचे सैनिक थकले. दीपकसेन त्याच्याविरोधात उभा राहिला. एकाकी पडलेल्या शूरसेनाचा <strong>वंशराजने दारुण पराभव केला.</strong></p>
+      <div class="dialogue">"मला माहीत होते! गोरदासने माझे कंबरडे मोडले! माझी निवडणूक तीन शत्रू नेत्यांनी हाताळली!" — शूरसेन</div>
+
+      <div class="sub-head">गोरदासचे पुढचे पाऊल</div>
+      <p class="story-para">त्याच रात्री गोरदास वंशराजच्या भेटीला गेला —</p>
+      <div class="dialogue">"वंशराजसिंह, तुम्ही जिंकलात कारण आम्ही शूरसेनाला थोपवले. आता महाराजांसोबत या — सांगलपूर तुमचेच राहील, पण मगधनगरची ताकद तुम्हाला मिळेल."</div>
+      <p class="story-para">वंशराजने हात मिळवला. त्याचे विश्वासू सरदार मगधनगरमध्ये दाखल झाले. पंचायत समिती मगधनगरच्या ताब्यात आली. <strong>५५ वर्षांची सत्ता एका रात्रीत उलथली.</strong></p>
+
+      <div class="sub-head">शूरसेन परत का आला?</div>
+      <p class="story-para">पण कथेचा सर्वात रहस्यमय भाग इथे सुरू होतो — पराभवानंतर शूरसेनाने गोरदासवर जाहीर टीका केली. पण काही महिन्यांनी... <strong>शूरसेन पुन्हा मगधनगरच्या दरबारात हजर झाला!</strong></p>
+    </div>
+  </div>
+
+  <!-- TEASER -->
+  <div class="teaser reveal">
+    <h3>🔮 ही फक्त कथा नाही...</h3>
+    <p>या कथेतील प्रत्येक पात्र, प्रत्येक घटना — वास्तवातून घेतलेली आहे.<br>खाली स्क्रोल करा — संपूर्ण सत्य उघड होईल.</p>
+  </div>
+
+  <!-- EVENTS TIMELINE -->
+  <div class="section reveal">
+    <div class="section-label">🕵️ घडामोडी</div>
+    <h2 class="section-title">२०१९ ते २०२५ — संपूर्ण राजकीय पट</h2>
+
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-year">२०१९</div>
+        <div class="tl-content">
+          <div class="tl-dot"></div>
+          <h4>शहाजीबापूंचा अवघ्या ७६८ मतांनी विजय</h4>
+          <p>गणपतराव देशमुख वयामुळे निवडणुकीत उतरले नाहीत. शेकापचे डॉ. अनिकेत देशमुख उभे होते. शहाजीबापू आणि दीपकआबा साळुंखे <strong>एकत्र</strong> होते त्यामुळे अत्यंत कमी फरकाने विजय मिळाला. हा विजय म्हणजे खरी ताकद नव्हती — एकतेमुळे मिळालेला क्षणिक फायदा होता.</p>
+          <span class="highlight">⚠️ विजय खूपच अस्थिर होता</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">२०२२</div>
+        <div class="tl-content">
+          <div class="tl-dot"></div>
+          <h4>शिवसेना फूट — "काय झाडी, काय डोंगर"</h4>
+          <p>एकनाथ शिंदे यांनी बंड केले. शहाजीबापू गुवाहाटीला गेले. त्यांचे <strong>"काय झाडी, काय डोंगर, काय हॉटेल"</strong> हे विधान महाराष्ट्रभर गाजले. ते शिंदेसेनेचे प्रमुख चेहरे बनले — पण सांगोल्यात ठाकरे गट आणि काँग्रेसचा राग ओढवून घेतला.</p>
+          <span class="highlight">🔴 ध्रुवीकरण सुरू</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">२०२४<br>विधानसभा</div>
+        <div class="tl-content">
+          <div class="tl-dot"></div>
+          <h4>मतविभाजनाचा सापळा — दारुण पराभव</h4>
+          <p><strong>मते:</strong> बाबासाहेब १,१६,२८० | शहाजीबापू ९०,८९६ | दीपकआबा ५१,०००<br><br>शहाजीबापूंनी जाहीर म्हटले — <em>"पालकमंत्री जयकुमार गोरे यांनी विश्वासात घेतले नाही. भाजपने कंबरडे मोडले."</em> शूरसेन + दीपकसेन मते एकत्र आली असती तर विजय होता — पण डाव आधीच ठरलेला होता.</p>
+          <span class="highlight">❌ २५,३८४ मतांनी पराभव</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">२०२४<br>नोव्हेंबर</div>
+        <div class="tl-content">
+          <div class="tl-dot"></div>
+          <h4>बाबासाहेबांना भाजपची थेट ऑफर</h4>
+          <p>निवडणुकीनंतर लगेचच पालकमंत्री म्हणाले — <em>"बाबासाहेब देशमुख, बिन पाण्याच्या विहिरीत उडी मारू नका. पाणी असणाऱ्याकडे या!"</em> — भेद नीतीचा दुसरा टप्पा सुरू झाला. शत्रूला जिंकवले आता त्याला आत घ्यायचे.</p>
+          <span class="highlight">🤝 Embrace & Absorb Phase</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">२०२५<br>ऑक्टोबर</div>
+        <div class="tl-content">
+          <div class="tl-dot"></div>
+          <h4>ऑपरेशन लोटस — ५५ वर्षांची सत्ता उलथली</h4>
+          <p>शेकापचे पदाधिकारी, सरपंच, सदस्य भाजपमध्ये प्रवेश. साळुंखे गटातील ३ सदस्य भाजपमध्ये आले. पालकमंत्री स्वतः प्रवेश सोहळ्याला उपस्थित. <strong>सांगोला पंचायत समितीत भाजपची पहिल्यांदाच सत्ता — ५५ वर्षांची शेकापची एकाधिकारशाही संपली!</strong></p>
+          <span class="highlight">🏆 Operation Lotus यशस्वी</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-year">२०२५<br>डिसेंबर</div>
+        <div class="tl-content">
+          <div class="tl-dot"></div>
+          <h4>सांगोला नगरपरिषद — शहाजीबापू पुन्हा एकाकी!</h4>
+          <p>भाजपने महायुतीत शिंदेसेनेला (शहाजीबापूंना) पुन्हा एकटे पाडले. भाजपने शेकाप, राष्ट्रवादीसोबत युती केली. शहाजीबापू संतापाने म्हणाले — <em>"निवडणुकीपूर्वी मला माहीत होते, भाजपने कंबरडे मोडले. पैशावर तालुका विकत घेऊन जायचा नाद करू नका."</em></p>
+          <span class="highlight">🔁 इतिहास पुन्हा घडला</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TRUTH TABLE -->
+  <div class="section reveal">
+    <div class="section-label">⚖️ सत्य उघड</div>
+    <h2 class="section-title">कहाणीचे सत्य आणि वास्तव</h2>
+
+    <table class="truth-table">
+      <thead>
+        <tr>
+          <th>कहाणीतील पात्र</th>
+          <th>वास्तवातील व्यक्ती / संस्था</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>महाराज देवराज</td><td>भाजप</td></tr>
+        <tr><td>मंत्री गोरदास</td><td>पालकमंत्री जयकुमार गोरे</td></tr>
+        <tr><td>शूरसेन</td><td>शहाजी बापू पाटील</td></tr>
+        <tr><td>दीपकसेन</td><td>दीपकआबा साळुंखे</td></tr>
+        <tr><td>वंशराज देशमुखसिंह</td><td>डॉ. बाबासाहेब देशमुख (शेकाप)</td></tr>
+        <tr><td>सांगलपूर</td><td>सांगोला तालुका</td></tr>
+        <tr><td>मगधनगर</td><td>भाजप / महायुती सत्ता</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FINAL QUESTION -->
+  <div class="section reveal">
+    <div class="section-label">🤔 अंतिम प्रश्न</div>
+    <h2 class="section-title">शहाजीबापू इतक्या अपमानानंतरही भाजपकडे का परत गेले?</h2>
+
+    <div class="reason-grid">
+      <div class="reason-card reveal">
+        <span class="rnum">१</span>
+        <h4>राजकारणात पर्याय नसतो</h4>
+        <p>सांगोल्यात एकट्याने लढणे म्हणजे आत्मघात. शेकाप, ठाकरेसेना आणि भाजप एकाच वेळी शत्रू असणे परवडणारे नाही. भाजपशिवाय विधानसभेत परत येणे अशक्य.</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="rnum">२</span>
+        <h4>राजकारणात कायमचे शत्रू नसतात</h4>
+        <p>ज्याने धोका दिला तोच भविष्यात सत्ता देऊ शकतो — हे सत्य शहाजीबापूंना माहीत होते. "अपमान विसरण्याइतपत सत्ता महत्त्वाची असते."</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="rnum">३</span>
+        <h4>स्थानिक निवडणुकांसाठी पक्षाची साथ अनिवार्य</h4>
+        <p>ग्रामपंचायत, पंचायत समिती, नगरपरिषद — या निवडणुकांसाठी मोठ्या पक्षाची साथ हवी. भाजपशिवाय हे अशक्य.</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="rnum">४</span>
+        <h4>"१४ गावांत पाणी आणीन" — हे वचन पूर्ण करायचे होते</h4>
+        <p>शहाजीबापूंनी जनतेला वचन दिले होते. हे पाणी भाजपशिवाय येणार नाही — कारण निधी सरकारकडून येतो आणि सरकार भाजपचे आहे.</p>
+      </div>
+      <div class="reason-card reveal">
+        <span class="rnum">५</span>
+        <h4>भेद नीतीचे उत्तर — भेद नीतीनेच!</h4>
+        <p>शहाजीबापूंनी विचार केला असेल — "ज्याने माझा बळी दिला, त्याच्याच छताखाली राहिलो तर आतमध्ये राहून डाव खेळता येईल. बाहेर राहिलो तर संपूर्ण नाश." — हीच खरी राजकीय बुद्धिमत्ता!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOSING QUOTE -->
+  <div class="big-quote reveal">
+    <blockquote>
+      "राजकारणात विजेता तोच असतो जो अपमान विसरून,<br>
+      शत्रूशीही हात मिळवण्याची हिम्मत ठेवतो."
+    </blockquote>
+    <cite>— चाणक्य नीती</cite>
+  </div>
+
+  <!-- AUTHOR FOOTER -->
+  <div class="author-footer reveal">
+    <div class="author-avatar">VK</div>
+    <div class="author-info">
+      <div class="author-name">Vikrant Satish Kadam</div>
+      <div class="author-sub">
+        📸 Instagram: <a href="https://instagram.com/vikrantkadam295" target="_blank">@vikrantkadam295</a><br>
+        🎓 Student — Bashkir State Medical University (BGMU)<br>
+        📍 Ufa, Bashkortostan, Russia
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
