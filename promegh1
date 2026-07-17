@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Global Horizon — MBBS Abroad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#0A1628',
+                            800: '#0F1F3A',
+                            700: '#152C4D',
+                            600: '#1B3A60',
+                            500: '#1E4478',
+                        },
+                        teal: {
+                            400: '#2DD4BF',
+                            500: '#14B8A6',
+                            600: '#0D9488',
+                        },
+                        cyan: {
+                            400: '#22D3EE',
+                            500: '#06B6D4',
+                        },
+                        gold: {
+                            400: '#FBBF24',
+                            500: '#F59E0B',
+                            600: '#D97706',
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Montserrat', 'Poppins', 'sans-serif'],
+                        body: ['Poppins', 'Mukta', 'sans-serif'],
+                        marathi: ['Mukta', 'Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        ::selection { background: #14B8A6; color: #0A1628; }
+
+        .slide { 
+            opacity: 0; 
+            transform: translateY(30px); 
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); 
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+        }
+        .slide.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+            pointer-events: auto;
+        }
+        .slide.exit-up {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        .stat-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .stat-card:hover { transform: translateY(-6px); }
+
+        .pulse-ring {
+            animation: pulseRing 2.5s ease-out infinite;
+        }
+        @keyframes pulseRing {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+
+        .float { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .heartbeat-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 3s ease forwards;
+        }
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #2DD4BF, #06B6D4, #FBBF24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-indicator { transition: all 0.4s ease; }
+        .slide-indicator.active { width: 32px; border-radius: 9999px; }
+
+        .card-glow:hover {
+            box-shadow: 0 0 40px rgba(20, 184, 166, 0.15), 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .country-card { transition: all 0.5s ease; }
+        .country-card:hover { transform: scale(1.03); }
+        .country-card:hover .country-img { transform: scale(1.08); }
+        .country-img { transition: transform 0.7s ease; }
+
+        .trust-icon { transition: all 0.4s ease; }
+        .trust-icon:hover { transform: scale(1.1) rotate(5deg); }
+
+        @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .count-anim { animation: countUp 0.6s ease forwards; }
+
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(20,184,166,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(20,184,166,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .nav-btn {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+        }
+        .nav-btn:hover { background: rgba(20, 184, 166, 0.2); border-color: rgba(45, 212, 191, 0.4); }
+        .nav-btn:active { transform: scale(0.95); }
+
+        .cta-pulse {
+            animation: ctaPulse 2s ease-in-out infinite;
+        }
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4); }
+            50% { box-shadow: 0 0 0 12px rgba(20, 184, 166, 0); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0A1628; }
+        ::-webkit-scrollbar-thumb { background: #1B3A60; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #14B8A6; }
+
+        .slide-content-scroll {
+            overflow-y: auto;
+            max-height: 100vh;
+            scrollbar-width: thin;
+            scrollbar-color: #1B3A60 transparent;
+        }
+    </style>
+</head>
+<body class="bg-navy-900 text-white font-body overflow-hidden h-screen w-screen relative">
+
+    <!-- Background Grid Overlay -->
+    <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
+
+    <!-- Ambient Glow Elements -->
+    <div class="fixed top-[-200px] right-[-200px] w-[600px] h-[600px] rounded-full bg-teal-500/5 blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-200px] left-[-200px] w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gold-500/3 blur-[150px] pointer-events-none z-0"></div>
+
+    <!-- ==================== SLIDES CONTAINER ==================== -->
+    <div id="slidesContainer" class="relative w-full h-full z-10">
+
+        <!-- ========== SLIDE 1: TITLE ========== -->
+        <div class="slide active" data-slide="0">
+            <div class="h-screen w-screen flex items-center justify-center relative overflow-hidden">
+                <!-- Background Image -->
+                <div class="absolute inset-0">
+                    <img src="https://picsum.photos/seed/globalcampus/1920/1080.jpg" alt="University Campus" class="w-full h-full object-cover opacity-20">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/80 to-navy-900/60"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-navy-900/90 to-transparent"></div>
+                </div>
+                
+                <!-- Animated Heartbeat + Plane SVG -->
+                <div class="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:block opacity-20 float">
+                    <svg width="300" height="120" viewBox="0 0 300 120" fill="none">
+                        <path class="heartbeat-line" d="M0 60 L80 60 L100 20 L120 100 L140 40 L160 80 L180 60 L200 60 L220 45 L240 35 L270 60 L300 60" stroke="#14B8A6" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Plane icon at end -->
+                        <g transform="translate(270, 48) scale(0.5)">
+                            <path d="M22 2L11 13L22 13L11 30L44 17L33 17L44 2Z" fill="#FBBF24" opacity="0.8"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="relative z-10 px-8 md:px-16 max-w-4xl">
+                    <!-- Logo / Badge -->
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="relative">
+                            <div class="w-12 h-12 rounded-full border-2 border-teal-400/60 flex items-center justify-center">
+                                <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center">
+                                    <i data-lucide="globe" class="w-5 h-5 text-teal-400"></i>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 rounded-full border-2 border-teal-400/30 pulse-ring"></div>
+                        </div>
+                        <span class="font-heading text-sm uppercase tracking-[0.2em] text-teal-400 font-600">MBBS Abroad Consultancy</span>
+                    </div>
+
+                    <!-- Main Title -->
+                    <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl font-900 leading-[0.95] tracking-tight mb-6">
+                        <span class="text-white">The Global</span><br>
+                        <span class="gradient-text">Horizon</span>
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-lg md:text-xl text-zinc-400 font-light max-w-xl leading-relaxed mb-4 font-body">
+                        Your Gateway to World-Class Medical Education
+                    </p>
+                    <p class="text-sm md:text-base text-zinc-500 font-marathi max-w-lg leading-relaxed mb-10">
+                        जागतिक दर्जाचे वैद्यकीय शिक्षण, तुमच्या घरापासूनच — सुरक्षित, विश्वासार्ह, परिणामकारक.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="goToSlide(1)" class="cta-pulse bg-teal-500 hover:bg-teal-400 text-navy-900 font-heading font-700 text-sm uppercase tracking-wider px-8 py-4 rounded-full transition-all duration-300 flex items-center gap-2">
+                            Start Your Journey
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="goToSlide(7)" class="border border-zinc-600 hover:border-teal-400/50 text-zinc-300 hover:text-white font-heading font-500 text-sm uppercase tracking-wider px-8 py-4 rounded-full transition-all duration-300">
+                            View Destinations
+                        </button>
+                    </div>
+
+                    <!-- Bottom Stats -->
+                    <div class="flex flex-wrap gap-8 md:gap-12 mt-14 pt-8 border-t border-zinc-800/60">
+                        <div>
+                            <div class="text-2xl md:text-3xl font-heading font-800 text-white">5000+</div>
+                            <div class="text-xs text-zinc-500 uppercase tracking-wider mt-1">Students Placed</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl md:text-3xl font-heading font-800 text-white">15+</div>
+                            <div class="text-xs text-zinc-500 uppercase tracking-wider mt-1">Countries</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl md:text-3xl font-heading font-800 text-white">92%</div>
+                            <div class="text-xs text-zinc-500 uppercase tracking-wider mt-1">NMC Pass Rate</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl md:text-3xl font-heading font-800 text-white">12+</div>
+                            <div class="text-xs text-zinc-500 uppercase tracking-wider mt-1">Years Experience</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 2: THE DREAM ========== -->
+        <div class="slide" data-slide="1">
+            <div class="slide-content-scroll h-screen w-screen">
+                <div class="min-h-screen flex items-center px-8 md:px-16 lg:px-24 py-20">
+                    <div class="max-w-6xl mx-auto w-full">
+                        <!-- Section Label -->
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-[2px] bg-teal-400"></div>
+                            <span class="text-xs uppercase tracking-[0.2em] text-teal-400 font-heading font-600">The Dream</span>
+                        </div>
+
+                        <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                            <!-- Left Content -->
+                            <div>
+                                <h2 class="font-heading text-4xl md:text-5xl lg:text-6xl font-800 leading-[1.05] tracking-tight mb-6">
+                                    A Global Degree,<br>
+                                    <span class="gradient-text">A Lifelong Impact</span>
+                                </h2>
+                                <p class="text-zinc-400 text-lg leading-relaxed mb-6 font-light">
+                                    An international MBBS degree doesn't just give you a medical qualification — it gives you a global perspective, clinical exposure to diverse healthcare systems, and a career without borders.
+                                </p>
+                                <p class="text-zinc-500 text-base leading-relaxed mb-8 font-marathi">
+                                    आंतरराष्ट्रीय MBBS पदवी म्हणजे फक्त डॉक्टरचा पदवीकर नाही — ती जागतिक दृष्टिकोन, विविध आरोग्य प्रणालींचा अनुभव, आणि सीमांशिवाय कारकिर्दीचा मार्ग देते.
+                                </p>
+
+                                <!-- Key Points -->
+                                <div class="space-y-4">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <i data-lucide="graduation-cap" class="w-5 h-5 text-teal-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-heading font-700 text-white text-sm mb-1">WHO-Recognized Universities</h4>
+                                            <p class="text-zinc-500 text-sm">Degrees valid in 150+ countries worldwide</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <i data-lucide="stethoscope" class="w-5 h-5 text-cyan-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-heading font-700 text-white text-sm mb-1">Advanced Clinical Training</h4>
+                                            <p class="text-zinc-500 text-sm">Hands-on experience from Year 1 itself</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-10 h-10 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <i data-lucide="trending-up" class="w-5 h-5 text-gold-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-heading font-700 text-white text-sm mb-1">Higher Specialization Opportunities</h4>
+                                            <p class="text-zinc-500 text-sm">Direct path to PG in US, UK, Germany & more</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Image -->
+                            <div class="relative">
+                                <div class="relative rounded-2xl overflow-hidden aspect-[4/5]">
+                                    <img src="https://picsum.photos/seed/medstudent1/800/1000.jpg" alt="Medical Student Abroad" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-transparent"></div>
+                                    <div class="absolute bottom-6 left-6 right-6">
+                                        <div class="bg-navy-900/80 backdrop-blur-xl rounded-xl p-4 border border-zinc-700/30">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center">
+                                                    <i data-lucide="award" class="w-5 h-5 text-teal-400"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-white font-heading font-700 text-sm">NMC / MCI Approved</div>
+                                                    <div class="text-zinc-400 text-xs">All listed universities are fully recognized</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Decorative Element -->
+                                <div class="absolute -top-4 -right-4 w-24 h-24 border-2 border-teal-400/20 rounded-2xl -z-10"></div>
+                                <div class="absolute -bottom-4 -left-4 w-32 h-32 border-2 border-gold-400/10 rounded-2xl -z-10"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 3: THE REALITY CHECK ========== -->
+        <div class="slide" data-slide="2">
+            <div class="slide-content-scroll h-screen w-screen">
+                <div class="min-h-screen flex items-center px-8 md:px-16 lg:px-24 py-20">
+                    <div class="max-w-6xl mx-auto w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-[2px] bg-gold-400"></div>
+                            <span class="text-xs uppercase tracking-[0.2em] text-gold-400 font-heading font-600">The Reality Check</span>
+                        </div>
+
+                        <h2 class="font-heading text-4xl md:text-5xl font-800 leading-[1.05] tracking-tight mb-4 max-w-2xl">
+                            India vs. Abroad — <span class="text-gold-400">The Numbers Don't Lie</span>
+                        </h2>
+                        <p class="text-zinc-500 text-base max-w-xl mb-12 font-marathi">
+                            भारतातील वैद्यकीय प्रवेशाची वास्तविकता समजून घ्या — आणि जागतिक पर्याय कसे अधिक चांगले आहेत हे जाणून घ्या.
+                        </p>
+
+                        <!-- Comparison Grid -->
+                        <div class="grid md:grid-cols-2 gap-6 mb-12">
+                            <!-- India Column -->
+                            <div class="bg-navy-800/50 rounded-2xl p-8 border border-zinc-700/30">
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                        <i data-lucide="x-circle" class="w-5 h-5 text-red-400"></i>
+                                    </div>
+                                    <h3 class="font-heading font-700 text-lg text-white">MBBS in India</h3>
+                                </div>
+                                <div class="space-y-5">
+                                    <div class="flex items-center justify-between py-3 border-b border-zinc-700/30">
+                                        <span class="text-zinc-400 text-sm">NEET Aspirants (2024)</span>
+                                        <span class="text-white font-heading font-700">24 Lakh+</span>
+                                    </div>
+                                    <div class="flex items-center justify-between py-3 border-b border-zinc-700/30">
+                                        <span class="text-zinc-400 text-sm">Total Govt. Seats</span>
+                                        <span class="text-red-400 font-heading font-700">56,000</span>
+                                    </div>
+                                    <div class="flex items-center justify-between py-3 border-b border-zinc-700/30">
+                                        <span class="text-zinc-400 text-sm">Selection Ratio</span>
+                                        <span class="text-red-400 font-heading font-700">~2.3%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between py-3 border-b border-zinc-700/30">
+                                        <span class="text-zinc-400 text-sm">Private College Fee</span>
+                                        <span class="text-red-400 font-heading font-700">₹15-25 Lakh/yr</span>
+                                    </div>
+                                    <div class="flex items-center justify-between py-3">
+                                        <span class="text-zinc-400 text-sm">Donation / Capitation</span>
+                                        <span class="text-red-400 font-heading font-700">₹50L - ₹2 Cr</span>
+                                    </div>
+                                </div>
+                                <!-- Visual Bar -->
+                                <div class="mt-6 bg-zinc-800 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-red-500/60 h-full rounded-full" style="width: 97%"></div>
+                                </div>
+                                <p class="text-zinc-600 text-xs mt-2">97.7% students don't get a government seat</p>
+                            </div>
+
+                            <!-- Abroad Column -->
+                            <div class="bg-teal-500/5 rounded-2xl p-8 border border-teal-500/20 relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-3xl"></div>
+                                <div class="relative">
+                                    <div class="flex items-center gap-3 mb-6">
+                                        <div class="w-10 h-10 rounded-xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center">
+                                            <i data-lucide="check-circle" class="w-5 h-5 text-teal-400"></i>
+                                        </div>
+                                        <h3 class="font-heading font-700 text-lg text-white">MBBS Abroad (With Us)</h3>
+                                    </div>
+                                    <div class="space-y-5">
+                                        <div class="flex items-center justify-between py-3 border-b border-teal-500/10">
+                                            <span class="text-zinc-400 text-sm">Eligibility</span>
+                                            <span class="text-teal-400 font-heading font-700">NEET Qualified</span>
+                                        </div>
+                                        <div class="flex items-center justify-between py-3 border-b border-teal-500/10">
+                                            <span class="text-zinc-400 text-sm">Admission Guarantee</span>
+                                            <span class="text-teal-400 font-heading font-700">100%</span>
+                                        </div>
+                                        <div class="flex items-center justify-between py-3 border-b border-teal-500/10">
+                                            <span class="text-zinc-400 text-sm">Total Fee (6 yrs)</span>
+                                            <span class="text-teal-400 font-heading font-700">₹15-30 Lakh</span>
+                                        </div>
+                                        <div class="flex items-center justify-between py-3 border-b border-teal-500/10">
+                                            <span class="text-zinc-400 text-sm">Donation / Capitation</span>
+                                            <span class="text-teal-400 font-heading font-700">₹0</span>
+                                        </div>
+                                        <div class="flex items-center justify-between py-3">
+                                            <span class="text-zinc-400 text-sm">Clinical Exposure</span>
+                                            <span class="text-teal-400 font-heading font-700">From Year 1</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-6 bg-zinc-800 rounded-full h-3 overflow-hidden">
+                                        <div class="bg-teal-500 h-full rounded-full" style="width: 100%"></div>
+                                    </div>
+                                    <p class="text-teal-400/60 text-xs mt-2">100% admission assured with our guidance</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Insight -->
+                        <div class="bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 flex flex-col md:flex-row items-start md:items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="lightbulb" class="w-6 h-6 text-gold-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-heading font-700 text-white text-sm mb-1">Key Insight</h4>
+                                <p class="text-zinc-400 text-sm leading-relaxed">The total cost of an MBBS degree abroad (including living expenses) is often <span class="text-teal-400 font-600">less than the donation fee</span> charged by many private colleges in India — and you get a global degree.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 4: THE BRIDGE ========== -->
+        <div class="slide" data-slide="3">
+            <div class="slide-content-scroll h-screen w-screen">
+                <div class="min-h-screen flex items-center px-8 md:px-16 lg:px-24 py-20">
+                    <div class="max-w-6xl mx-auto w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-[2px] bg-cyan-400"></div>
+                            <span class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-heading font-600">The Bridge</span>
+                        </div>
+
+                        <h2 class="font-heading text-4xl md:text-5xl font-800 leading-[1.05] tracking-tight mb-4 max-w-3xl">
+                            From Here to There — <span class="text-cyan-400">We Make It Simple</span>
+                        </h2>
+                        <p class="text-zinc-500 text-base max-w-xl mb-14 font-marathi">
+                            तुमचे स्वप्न आमची जबाबदारी — प्रवेशापासून ते डिग्री मिळेपर्यंतचा संपूर्ण प्रवास आम्ही सोपा करतो.
+                        </p>
+
+                        <!-- Process Steps -->
+                        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <!-- Step 1 -->
+                            <div class="stat-card bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 card-glow relative">
+                                <div class="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-navy-900 border-2 border-cyan-400 flex items-center justify-center font-heading font-800 text-cyan-400 text-sm">01</div>
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5 mt-2">
+                                    <i data-lucide="phone-call" class="w-6 h-6 text-cyan-400"></i>
+                                </div>
+                                <h3 class="font-heading font-700 text-white mb-2">Free Counseling</h3>
+                                <p class="text-zinc-500 text-sm leading-relaxed">One-on-one session to understand your budget, preferences, and eligibility.</p>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="stat-card bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 card-glow relative">
+                                <div class="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-navy-900 border-2 border-cyan-400 flex items-center justify-center font-heading font-800 text-cyan-400 text-sm">02</div>
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5 mt-2">
+                                    <i data-lucide="file-check" class="w-6 h-6 text-cyan-400"></i>
+                                </div>
+                                <h3 class="font-heading font-700 text-white mb-2">University Selection</h3>
+                                <p class="text-zinc-500 text-sm leading-relaxed">Curated list of NMC-approved universities matched to your profile.</p>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="stat-card bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 card-glow relative">
+                                <div class="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-navy-900 border-2 border-cyan-400 flex items-center justify-center font-heading font-800 text-cyan-400 text-sm">03</div>
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5 mt-2">
+                                    <i data-lucide="plane" class="w-6 h-6 text-cyan-400"></i>
+                                </div>
+                                <h3 class="font-heading font-700 text-white mb-2">Admission & Visa</h3>
+                                <p class="text-zinc-500 text-sm leading-relaxed">Complete documentation, application filing, and visa processing.</p>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="stat-card bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 card-glow relative">
+                                <div class="absolute -top-3 -left-3 w-10 h-10 rounded-full bg-navy-900 border-2 border-teal-400 flex items-center justify-center font-heading font-800 text-teal-400 text-sm">04</div>
+                                <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-5 mt-2">
+                                    <i data-lucide="shield-check" class="w-6 h-6 text-teal-400"></i>
+                                </div>
+                                <h3 class="font-heading font-700 text-white mb-2">Ongoing Support</h3>
+                                <p class="text-zinc-500 text-sm leading-relaxed">Pre-departure training, in-country support, and NMC FMGE coaching.</p>
+                            </div>
+                        </div>
+
+                        <!-- Connecting Line Visual -->
+                        <div class="hidden lg:flex items-center justify-center mt-10 gap-2">
+                            <div class="h-[2px] w-20 bg-gradient-to-r from-transparent to-cyan-400/30"></div>
+                            <div class="text-cyan-400/40 text-xs font-heading uppercase tracking-widest">Seamless Process</div>
+                            <div class="h-[2px] w-20 bg-gradient-to-l from-transparent to-cyan-400/30"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 5: TRUST — SAFETY & SECURITY ========== -->
+        <div class="slide" data-slide="4">
+            <div class="slide-content-scroll h-screen w-screen">
+                <div class="min-h-screen flex items-center px-8 md:px-16 lg:px-24 py-20">
+                    <div class="max-w-6xl mx-auto w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-[2px] bg-teal-400"></div>
+                            <span class="text-xs uppercase tracking-[0.2em] text-teal-400 font-heading font-600">Trust Builders</span>
+                        </div>
+
+                        <h2 class="font-heading text-4xl md:text-5xl font-800 leading-[1.05] tracking-tight mb-4 max-w-3xl">
+                            Your Child's Safety Is <span class="text-teal-400">Non-Negotiable</span>
+                        </h2>
+                        <p class="text-zinc-500 text-base max-w-xl mb-12 font-marathi">
+                            आम्हाला माहीत आहे की तुमचे मूल घराबाहेर जात आहे — त्याच्या सुरक्षेची चिंता नैसर्गिक आहे. आम्ही प्रत्येक पातळीवर काळजी घेतो.
+                        </p>
+
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <!-- Card 1 -->
+                            <div class="trust-icon bg-navy-800/40 rounded-2xl p-8 border border-zinc-700/20 card-glow">
+                                <div class="w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-6">
+                                    <i data-lucide="shield" class="w-7 h-7 text-teal-400"></i>
+                                </div>
+                                <h3 class="font-heading font-700 text-white text-lg mb-3">Campus Security</h3>
+                                <p class="text-zinc-500 text-sm leading-relaxed mb-4">24/7 CCTV surveillance, secured hostel entries, and dedicated campus security personnel at all our partner universities.</p>
+                                <div class="flex items-center gap-2 text-teal-400 text-xs font-heading font-600 uppercase tracking-wider">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                    Verified by Our Team
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="trust-icon bg-navy-800/40 rounded-2xl p-8 border border-zinc-700/20 card-glow">
+                                <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
+                                    <i data-lucide="users" class="w-7 h-7 text-cyan-400"></i>
+                                </div>
+                                <h3 class="font-heading font-700 text-white text-lg mb-3">Indian Community</h3>
+                                <p class="text-zinc-500 text-sm leading-relaxed mb-4">Active Indian student associations, festival celebrations, and a strong peer network ensure your child never feels alone.</p>
+                                <div class="flex items-center gap-2 text-cyan-400 text-xs font-heading font-600 uppercase tracking-wider">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                    500+ Indian Students
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="trust-icon bg-navy-800/40 rounded-2xl p-8 border border-zinc-700/20 card-glow">
+                                <div class="w-14 h-14 rounded-2xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center mb-6">
+                                    <i data-lucide="phone" class="w-7 h-7 text-gold-400"></i>
+                                </div>
+                                <h3 class="font-heading font-700 text-white text-lg mb-3">Emergency Support</h3>
+                                <p class="text-zinc-500 text-sm leading-relaxed mb-4">Dedicated local coordinator available 24/7 for any emergency — medical, legal, or personal. Parents get regular updates.</p>
+                                <div class="flex items-center gap-2 text-gold-400 text-xs font-heading font-600 uppercase tracking-wider">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                    One Call Away
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Photo Strip -->
+                        <div class="grid grid-cols-3 gap-4 mt-10">
+                            <div class="rounded-xl overflow-hidden aspect-[16/10]">
+                                <img src="https://picsum.photos/seed/campus-safe/600/375.jpg" alt="Safe Campus" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                            </div>
+                            <div class="rounded-xl overflow-hidden aspect-[16/10]">
+                                <img src="https://picsum.photos/seed/hostel-room/600/375.jpg" alt="Hostel Room" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                            </div>
+                            <div class="rounded-xl overflow-hidden aspect-[16/10]">
+                                <img src="https://picsum.photos/seed/indian-fest/600/375.jpg" alt="Indian Festival" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 6: TRUST — FOOD & HOSTEL ========== -->
+        <div class="slide" data-slide="5">
+            <div class="slide-content-scroll h-screen w-screen">
+                <div class="min-h-screen flex items-center px-8 md:px-16 lg:px-24 py-20">
+                    <div class="max-w-6xl mx-auto w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-[2px] bg-gold-400"></div>
+                            <span class="text-xs uppercase tracking-[0.2em] text-gold-400 font-heading font-600">Trust Builders</span>
+                        </div>
+
+                        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                            <!-- Image Side -->
+                            <div class="relative">
+                                <div class="rounded-2xl overflow-hidden aspect-square">
+                                    <img src="https://picsum.photos/seed/indianfood-abroad/800/800.jpg" alt="Indian Food Abroad" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-transparent"></div>
+                                </div>
+                                <!-- Floating Badge -->
+                                <div class="absolute top-6 right-6 bg-navy-900/80 backdrop-blur-xl rounded-xl px-4 py-3 border border-gold-400/30">
+                                    <div class="text-gold-400 font-heading font-800 text-xl">₹150/day</div>
+                                    <div class="text-zinc-400 text-xs">Average Food Cost</div>
+                                </div>
+                            </div>
+
+                            <!-- Content Side -->
+                            <div>
+                                <h2 class="font-heading text-4xl md:text-5xl font-800 leading-[1.05] tracking-tight mb-6">
+                                    Indian Food & <span class="text-gold-400">Comfortable Living</span>
+                                </h2>
+                                <p class="text-zinc-500 text-base max-w-lg mb-8 font-marathi">
+                                    "परदेशात जाऊन चवीचा त्रास होईल का?" — हा प्रत्येक पालकाचा प्रश्न आहे. आमची उत्तरे येथे आहेत.
+                                </p>
+
+                                <div class="space-y-6">
+                                    <div class="flex items-start gap-4 bg-navy-800/30 rounded-xl p-5 border border-zinc-700/15">
+                                        <div class="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="utensils" class="w-5 h-5 text-gold-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-heading font-700 text-white text-sm mb-1">Indian Mess & Kitchen Access</h4>
+                                            <p class="text-zinc-500 text-sm leading-relaxed">Dedicated Indian mess serving dal, roti, sabzi, rice. Separate kitchen access for students who want to cook.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start gap-4 bg-navy-800/30 rounded-xl p-5 border border-zinc-700/15">
+                                        <div class="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="bed-double" class="w-5 h-5 text-gold-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-heading font-700 text-white text-sm mb-1">Modern Hostel Facilities</h4>
+                                            <p class="text-zinc-500 text-sm leading-relaxed">2-3 sharing rooms with attached bathroom, heating, Wi-Fi, laundry, and common recreational areas.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start gap-4 bg-navy-800/30 rounded-xl p-5 border border-zinc-700/15">
+                                        <div class="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="thermometer" class="w-5 h-5 text-gold-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-heading font-700 text-white text-sm mb-1">Climate-Adapted Living</h4>
+                                            <p class="text-zinc-500 text-sm leading-relaxed">Central heating for cold countries, AC rooms for tropical destinations. We ensure comfort in every climate.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start gap-4 bg-navy-800/30 rounded-xl p-5 border border-zinc-700/15">
+                                        <div class="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="shopping-bag" class="w-5 h-5 text-gold-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-heading font-700 text-white text-sm mb-1">Indian Grocery Stores</h4>
+                                            <p class="text-zinc-500 text-sm leading-relaxed">Indian spices, staples, and packaged food easily available near all our recommended university campuses.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 7: NMC / FMGE RESULTS ========== -->
+        <div class="slide" data-slide="6">
+            <div class="slide-content-scroll h-screen w-screen">
+                <div class="min-h-screen flex items-center px-8 md:px-16 lg:px-24 py-20">
+                    <div class="max-w-6xl mx-auto w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-[2px] bg-teal-400"></div>
+                            <span class="text-xs uppercase tracking-[0.2em] text-teal-400 font-heading font-600">Trust Builders</span>
+                        </div>
+
+                        <h2 class="font-heading text-4xl md:text-5xl font-800 leading-[1.05] tracking-tight mb-4 max-w-3xl">
+                            NMC / FMGE — <span class="text-teal-400">Results That Speak</span>
+                        </h2>
+                        <p class="text-zinc-500 text-base max-w-xl mb-14 font-marathi">
+                            "परदेशातून आल्यावर डॉक्टर होणार का?" — आमच्या विद्यार्थ्यांचे निकाल स्वतः उत्तर देतात.
+                        </p>
+
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                            <div class="stat-card bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 text-center card-glow">
+                                <div class="text-4xl md:text-5xl font-heading font-900 text-teal-400 mb-2" data-count="92">92%</div>
+                                <div class="text-zinc-500 text-xs uppercase tracking-wider font-heading">Our FMGE Pass Rate</div>
+                                <div class="text-zinc-600 text-xs mt-2">National Avg: ~18%</div>
+                            </div>
+                            <div class="stat-card bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 text-center card-glow">
+                                <div class="text-4xl md:text-5xl font-heading font-900 text-cyan-400 mb-2">850+</div>
+                                <div class="text-zinc-500 text-xs uppercase tracking-wider font-heading">FMGE Cleared</div>
+                                <div class="text-zinc-600 text-xs mt-2">Since 2012</div>
+                            </div>
+                            <div class="stat-card bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 text-center card-glow">
+                                <div class="text-4xl md:text-5xl font-heading font-900 text-gold-400 mb-2">100%</div>
+                                <div class="text-zinc-500 text-xs uppercase tracking-wider font-heading">NMC Recognition</div>
+                                <div class="text-zinc-600 text-xs mt-2">All Listed Universities</div>
+                            </div>
+                            <div class="stat-card bg-navy-800/40 rounded-2xl p-6 border border-zinc-700/20 text-center card-glow">
+                                <div class="text-4xl md:text-5xl font-heading font-900 text-white mb-2">6</div>
+                                <div class="text-zinc-500 text-xs uppercase tracking-wider font-heading">Months FMGE Coaching</div>
+                                <div class="text-zinc-600 text-xs mt-2">Included Free</div>
+                            </div>
+                        </div>
+
+                        <!-- Why Our Students Clear -->
+                        <div class="bg-navy-800/30 rounded-2xl p-8 border border-zinc-700/15">
+                            <h3 class="font-heading font-700 text-white text-lg mb-6">Why Our Students Clear FMGE at 5x the National Average</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-teal-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i>
+                                    </div>
+                                    <p class="text-zinc-400 text-sm leading-relaxed"><span class="text-white font-600">Structured FMGE Prep:</span> Dedicated coaching from 4th year onwards with mock tests, previous year papers, and subject-wise modules.</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-teal-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i>
+                                    </div>
+                                    <p class="text-zinc-400 text-sm leading-relaxed"><span class="text-white font-600">Indian Faculty Guidance:</span> Regular sessions with Indian doctors who understand the FMGE pattern inside-out.</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-teal-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i>
+                                    </div>
+                                    <p class="text-zinc-400 text-sm leading-relaxed"><span class="text-white font-600">Clinical Rotation Alignment:</span> We select universities whose clinical training syllabus aligns closely with Indian medical standards.</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-teal-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-teal-400"></i>
+                                    </div>
+                                    <p class="text-zinc-400 text-sm leading-relaxed"><span class="text-white font-600">Peer Study Groups:</span> Senior students mentor juniors — creating a self-sustaining ecosystem of high performers.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 8: POPULAR DESTINATIONS ========== -->
+        <div class="slide" data-slide="7">
+            <div class="slide-content-scroll h-screen w-screen">
+                <div class="min-h-screen px-8 md:px-16 lg:px-24 py-20">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-[2px] bg-teal-400"></div>
+                            <span class="text-xs uppercase tracking-[0.2em] text-teal-400 font-heading font-600">Popular Destinations</span>
+                        </div>
+
+                        <h2 class="font-heading text-4xl md:text-5xl font-800 leading-[1.05] tracking-tight mb-4">
+                            Choose Your <span class="gradient-text">Global Campus</span>
+                        </h2>
+                        <p class="text-zinc-500 text-base max-w-xl mb-12 font-marathi">
+                            प्रत्येक देशाचे आपले वैशिष्ट्य आहे — तुमच्या बजेट आणि पसंतीनुसार योग्य निवड करा.
+                        </p>
+
+                        <!-- Country Cards -->
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Russia -->
+                            <div class="country-card bg-navy-800/40 rounded-2xl overflow-hidden border border-zinc-700/20 card-glow">
+                                <div class="h-44 overflow-hidden">
+                                    <img src="https://picsum.photos/seed/russia-moscow/600/350.jpg" alt="Russia" class="country-img w-full h-full object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h3 class="font-heading font-700 text-white text-lg">Russia</h3>
+                                        <span class="text-xs bg-teal-500/10 text-teal-400 px-2.5 py-1 rounded-full font-heading font-600">Most Popular</span>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Duration</span><span class="text-white font-500">6 Years</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Fee Range</span><span class="text-white font-500">₹15-25 Lakh</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Medium</span><span class="text-white font-500">English</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Top University</span><span class="text-teal-400 font-500">Kazan Federal</span></div>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500/30"></div>
+                                    </div>
+                                    <p class="text-zinc-600 text-xs mt-1.5">Value for Money Rating</p>
+                                </div>
+                            </div>
+
+                            <!-- Ukraine -->
+                            <div class="country-card bg-navy-800/40 rounded-2xl overflow-hidden border border-zinc-700/20 card-glow">
+                                <div class="h-44 overflow-hidden">
+                                    <img src="https://picsum.photos/seed/kyiv-city/600/350.jpg" alt="Ukraine" class="country-img w-full h-full object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h3 class="font-heading font-700 text-white text-lg">Ukraine</h3>
+                                        <span class="text-xs bg-cyan-500/10 text-cyan-400 px-2.5 py-1 rounded-full font-heading font-600">European Standard</span>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Duration</span><span class="text-white font-500">6 Years</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Fee Range</span><span class="text-white font-500">₹18-28 Lakh</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Medium</span><span class="text-white font-500">English</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Top University</span><span class="text-cyan-400 font-500">Bogomolets NMU</span></div>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500/30"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500/30"></div>
+                                    </div>
+                                    <p class="text-zinc-600 text-xs mt-1.5">Value for Money Rating</p>
+                                </div>
+                            </div>
+
+                            <!-- Philippines -->
+                            <div class="country-card bg-navy-800/40 rounded-2xl overflow-hidden border border-zinc-700/20 card-glow">
+                                <div class="h-44 overflow-hidden">
+                                    <img src="https://picsum.photos/seed/manila-ph/600/350.jpg" alt="Philippines" class="country-img w-full h-full object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h3 class="font-heading font-700 text-white text-lg">Philippines</h3>
+                                        <span class="text-xs bg-gold-500/10 text-gold-400 px-2.5 py-1 rounded-full font-heading font-600">USMLE Ready</span>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Duration</span><span class="text-white font-500">5.5 Years</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Fee Range</span><span class="text-white font-500">₹20-30 Lakh</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Medium</span><span class="text-white font-500">English</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Top University</span><span class="text-gold-400 font-500">AMA University</span></div>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500/30"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500/30"></div>
+                                    </div>
+                                    <p class="text-zinc-600 text-xs mt-1.5">Value for Money Rating</p>
+                                </div>
+                            </div>
+
+                            <!-- Bangladesh -->
+                            <div class="country-card bg-navy-800/40 rounded-2xl overflow-hidden border border-zinc-700/20 card-glow">
+                                <div class="h-44 overflow-hidden">
+                                    <img src="https://picsum.photos/seed/dhaka-bd/600/350.jpg" alt="Bangladesh" class="country-img w-full h-full object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h3 class="font-heading font-700 text-white text-lg">Bangladesh</h3>
+                                        <span class="text-xs bg-teal-500/10 text-teal-400 px-2.5 py-1 rounded-full font-heading font-600">Budget Friendly</span>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Duration</span><span class="text-white font-500">5 Years</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Fee Range</span><span class="text-white font-500">₹12-20 Lakh</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Medium</span><span class="text-white font-500">English</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Top University</span><span class="text-teal-400 font-500">Dhaka University</span></div>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-teal-500"></div>
+                                    </div>
+                                    <p class="text-zinc-600 text-xs mt-1.5">Value for Money Rating</p>
+                                </div>
+                            </div>
+
+                            <!-- Kyrgyzstan -->
+                            <div class="country-card bg-navy-800/40 rounded-2xl overflow-hidden border border-zinc-700/20 card-glow">
+                                <div class="h-44 overflow-hidden">
+                                    <img src="https://picsum.photos/seed/bishkek-kg/600/350.jpg" alt="Kyrgyzstan" class="country-img w-full h-full object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h3 class="font-heading font-700 text-white text-lg">Kyrgyzstan</h3>
+                                        <span class="text-xs bg-gold-500/10 text-gold-400 px-2.5 py-1 rounded-full font-heading font-600">Lowest Cost</span>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Duration</span><span class="text-white font-500">6 Years</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Fee Range</span><span class="text-white font-500">₹10-18 Lakh</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Medium</span><span class="text-white font-500">English</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Top University</span><span class="text-gold-400 font-500">Osh State Uni</span></div>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-gold-500"></div>
+                                    </div>
+                                    <p class="text-zinc-600 text-xs mt-1.5">Value for Money Rating</p>
+                                </div>
+                            </div>
+
+                            <!-- Kazakhstan -->
+                            <div class="country-card bg-navy-800/40 rounded-2xl overflow-hidden border border-zinc-700/20 card-glow">
+                                <div class="h-44 overflow-hidden">
+                                    <img src="https://picsum.photos/seed/almaty-kz/600/350.jpg" alt="Kazakhstan" class="country-img w-full h-full object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h3 class="font-heading font-700 text-white text-lg">Kazakhstan</h3>
+                                        <span class="text-xs bg-cyan-500/10 text-cyan-400 px-2.5 py-1 rounded-full font-heading font-600">Rising Star</span>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Duration</span><span class="text-white font-500">5 Years</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Fee Range</span><span class="text-white font-500">₹15-22 Lakh</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Medium</span><span class="text-white font-500">English</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-zinc-500">Top University</span><span class="text-cyan-400 font-500">Kazakh Natl Med</span></div>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500"></div>
+                                        <div class="h-1 flex-1 rounded-full bg-cyan-500/30"></div>
+                                    </div>
+                                    <p class="text-zinc-600 text-xs mt-1.5">Value for Money Rating</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 9: TESTIMONIALS ========== -->
+        <div class="slide" data-slide="8">
+            <div class="slide-content-scroll h-screen w-screen">
+                <div class="min-h-screen flex items-center px-8 md:px-16 lg:px-24 py-20">
+                    <div class="max-w-6xl mx-auto w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-[2px] bg-gold-400"></div>
+                            <span class="text-xs uppercase tracking-[0.2em] text-gold-400 font-heading font-600">Success Stories</span>
+                        </div>
+
+                        <h2 class="font-heading text-4xl md:text-5xl font-800 leading-[1.05] tracking-tight mb-12">
+                            Parents & Students <span class="text-gold-400">Trust Us</span>
+                        </h2>
+
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <!-- Testimonial 1 -->
+                            <div class="bg-navy-800/40 rounded-2xl p-8 border border-zinc-700/20 card-glow flex flex-col">
+                                <div class="flex gap-1 mb-4">
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                </div>
+                                <p class="text-zinc-400 text-sm leading-relaxed mb-6 flex-1">"My daughter is now in her 3rd year in Russia. The hostel is safe, Indian food is available, and she calls us every day. The consultancy handled everything — we didn't have to worry about anything."</p>
+                                <div class="flex items-center gap-3 pt-4 border-t border-zinc-700/30">
+                                    <div class="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center font-heading font-700 text-teal-400 text-sm">RD</div>
+                                    <div>
+                                        <div class="text-white font-heading font-600 text-sm">Dr. Ramesh Deshmukh</div>
+                                        <div class="text-zinc-500 text-xs">Parent — Pune, Maharashtra</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial 2 -->
+                            <div class="bg-navy-800/40 rounded-2xl p-8 border border-zinc-700/20 card-glow flex flex-col">
+                                <div class="flex gap-1 mb-4">
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                </div>
+                                <p class="text-zinc-400 text-sm leading-relaxed mb-6 flex-1">"I cleared FMGE in my first attempt with 185 marks. The free coaching provided by the consultancy during my final year was the game-changer. Forever grateful."</p>
+                                <div class="flex items-center gap-3 pt-4 border-t border-zinc-700/30">
+                                    <div class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center font-heading font-700 text-cyan-400 text-sm">SP</div>
+                                    <div>
+                                        <div class="text-white font-heading font-600 text-sm">Dr. Sneha Patil</div>
+                                        <div class="text-zinc-500 text-xs">Student — Now practicing in Mumbai</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial 3 -->
+                            <div class="bg-navy-800/40 rounded-2xl p-8 border border-zinc-700/20 card-glow flex flex-col">
+                                <div class="flex gap-1 mb-4">
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                    <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                                </div>
+                                <p class="text-zinc-400 text-sm leading-relaxed mb-6 flex-1">"माझा मुलगा बांगलादेशात शिकतो. सुरुवातीला खूप भीती वाटत होती, पण आता सगळं ठीक आहे. या consultancy ने खरंच खूप मदत केली. प्रत्येक पाऊलावर मार्गदर्शन मिळालं."</p>
+                                <div class="flex items-center gap-3 pt-4 border-t border-zinc-700/30">
+                                    <div class="w-10 h-10 rounded-full bg-gold-500/20 flex items-center justify-center font-heading font-700 text-gold-400 text-sm">AJ</div>
+                                    <div>
+                                        <div class="text-white font-heading font-600 text-sm">आनंद जाधव</div>
+                                        <div class="text-zinc-500 text-xs">पालक — सातारा, महाराष्ट्र</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SLIDE 10: CALL TO ACTION ========== -->
+        <div class="slide" data-slide="9">
+            <div class="h-screen w-screen flex items-center justify-center relative overflow-hidden">
+                <!-- Background -->
+                <div class="absolute inset-0">
+                    <img src="https://picsum.photos/seed/graduation-global/1920/1080.jpg" alt="Graduation" class="w-full h-full object-cover opacity-15">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/90 to-navy-900/70"></div>
+                </div>
+
+                <!-- Ambient Glow -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-teal-500/10 blur-[150px] pointer-events-none"></div>
+
+                <div class="relative z-10 text-center px-8 max-w-3xl">
+                    <!-- Icon -->
+                    <div class="relative inline-flex items-center justify-center mb-8">
+                        <div class="w-20 h-20 rounded-full bg-teal-500/10 border-2 border-teal-400/30 flex items-center justify-center">
+                            <i data-lucide="plane" class="w-8 h-8 text-teal-400"></i>
+                        </div>
+                        <div class="absolute inset-0 rounded-full border-2 border-teal-400/20 pulse-ring"></div>
+                    </div>
+
+                    <h2 class="font-heading text-4xl md:text-6xl font-900 leading-[1.05] tracking-tight mb-6">
+                        Your Global Medical<br>
+                        <span class="gradient-text">Career Starts Here</span>
+                    </h2>
+
+                    <p class="text-zinc-400 text-lg leading-relaxed mb-4">
+                        Book a free counseling session today. No fees, no obligations — just honest guidance from experts who've placed 5000+ students abroad.
+                    </p>
+                    <p class="text-zinc-500 text-base mb-10 font-marathi">
+                        आजच मोफत काउन्सेलिंग सेशन बुक करा. कोणतेही फीस नाही, कोणतीही अटी नाही — फक्त तज्ञांकडून प्रामाणिक मार्गदर्शन.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                        <button class="cta-pulse bg-teal-500 hover:bg-teal-400 text-navy-900 font-heading font-700 text-sm uppercase tracking-wider px-10 py-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            Book Free Counseling
+                        </button>
+                        <button class="border border-zinc-600 hover:border-teal-400/50 text-zinc-300 hover:text-white font-heading font-500 text-sm uppercase tracking-wider px-10 py-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            WhatsApp Us
+                        </button>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="flex flex-wrap justify-center gap-8 text-sm">
+                        <div class="flex items-center gap-2 text-zinc-400">
+                            <i data-lucide="phone-call" class="w-4 h-4 text-teal-400"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-zinc-400">
+                            <i data-lucide="mail" class="w-4 h-4 text-teal-400"></i>
+                            <span>info@globalhorizonmbbs.com</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-zinc-400">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-teal-400"></i>
+                            <span>Pune, Maharashtra</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <!-- Slide Counter -->
+    <div class="fixed top-6 right-8 z-50 flex items-center gap-3">
+        <span id="slideCounter" class="font-heading font-700 text-sm text-zinc-500">01 / 10</span>
+    </div>
+
+    <!-- Slide Indicators (Right Side) -->
+    <div class="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2 hidden md:flex">
+        <button onclick="goToSlide(0)" class="slide-indicator active w-2 h-2 rounded-full bg-teal-400" data-indicator="0"></button>
+        <button onclick="goToSlide(1)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="1"></button>
+        <button onclick="goToSlide(2)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="2"></button>
+        <button onclick="goToSlide(3)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="3"></button>
+        <button onclick="goToSlide(4)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="4"></button>
+        <button onclick="goToSlide(5)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="5"></button>
+        <button onclick="goToSlide(6)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="6"></button>
+        <button onclick="goToSlide(7)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="7"></button>
+        <button onclick="goToSlide(8)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="8"></button>
+        <button onclick="goToSlide(9)" class="slide-indicator w-2 h-2 rounded-full bg-zinc-600" data-indicator="9"></button>
+    </div>
+
+    <!-- Prev / Next Buttons -->
+    <button id="prevBtn" onclick="prevSlide()" class="nav-btn fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full border border-zinc-700/50 bg-navy-900/50 flex items-center justify-center text-zinc-400 hover:text-white opacity-0 pointer-events-none transition-opacity duration-300">
+        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+    </button>
+    <button id="nextBtn" onclick="nextSlide()" class="nav-btn fixed right-4 md:right-20 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full border border-zinc-700/50 bg-navy-900/50 flex items-center justify-center text-zinc-400 hover:text-white">
+        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Bottom Progress Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 h-1 bg-navy-800/50">
+        <div id="progressBar" class="h-full bg-gradient-to-r from-teal-500 to-cyan-400 transition-all duration-700 ease-out" style="width: 10%"></div>
+    </div>
+
+    <!-- Keyboard Hint -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 text-zinc-600 text-xs font-heading uppercase tracking-wider opacity-0 transition-opacity duration-500" id="keyHint">
+        <span class="px-1.5 py-0.5 rounded border border-zinc-700 text-zinc-500">←</span>
+        <span class="px-1.5 py-0.5 rounded border border-zinc-700 text-zinc-500">→</span>
+        <span>Navigate</span>
+    </div>
+
+    <script>
+        // Initialize Lucide
+        lucide.createIcons();
+
+        // Slide System
+        let currentSlide = 0;
+        const totalSlides = 10;
+        let isAnimating = false;
+
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.slide-indicator');
+        const progressBar = document.getElementById('progressBar');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const keyHint = document.getElementById('keyHint');
+
+        function updateUI() {
+            // Update indicators
+            indicators.forEach((ind, i) => {
+                if (i === currentSlide) {
+                    ind.classList.add('active');
+                    ind.classList.remove('bg-zinc-600');
+                    ind.classList.add('bg-teal-400');
+                } else {
+                    ind.classList.remove('active');
+                    ind.classList.add('bg-zinc-600');
+                    ind.classList.remove('bg-teal-400');
+                }
+            });
+
+            // Update progress bar
+            progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+
+            // Update counter
+            slideCounter.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${totalSlides}`;
+
+            // Update nav buttons
+            if (currentSlide === 0) {
+                prevBtn.classList.add('opacity-0', 'pointer-events-none');
+                prevBtn.classList.remove('opacity-100', 'pointer-events-auto');
+            } else {
+                prevBtn.classList.remove('opacity-0', 'pointer-events-none');
+                prevBtn.classList.add('opacity-100', 'pointer-events-auto');
+            }
+
+            if (currentSlide === totalSlides - 1) {
+                nextBtn.classList.add('opacity-0', 'pointer-events-none');
+                nextBtn.classList.remove('opacity-100', 'pointer-events-auto');
+            } else {
+                nextBtn.classList.remove('opacity-0', 'pointer-events-none');
+                nextBtn.classList.add('opacity-100', 'pointer-events-auto');
+            }
+        }
+
+        function goToSlide(index) {
+            if (isAnimating || index === currentSlide || index < 0 || index >= totalSlides) return;
+            isAnimating = true;
+
+            const direction = index > currentSlide ? 'forward' : 'backward';
+            const currentEl = slides[currentSlide];
+            const nextEl = slides[index];
+
+            // Exit current
+            currentEl.classList.remove('active');
+            currentEl.classList.add(direction === 'forward' ? 'exit-up' : '');
+            currentEl.style.transform = direction === 'forward' ? 'translateY(-30px)' : 'translateY(30px)';
+            currentEl.style.opacity = '0';
+
+            // Prepare next
+            nextEl.style.transform = direction === 'forward' ? 'translateY(30px)' : 'translateY(-30px)';
+            nextEl.style.opacity = '0';
+
+            // Force reflow
+            void nextEl.offsetWidth;
+
+            // Enter next
+            setTimeout(() => {
+                nextEl.classList.add('active');
+                nextEl.style.transform = '';
+                nextEl.style.opacity = '';
+
+                currentSlide = index;
+                updateUI();
+
+                // Reset scroll for new slide
+                const scrollContainer = nextEl.querySelector('.slide-content-scroll');
+                if (scrollContainer) scrollContainer.scrollTop = 0;
+
+                setTimeout(() => {
+                    currentEl.classList.remove('exit-up');
+                    currentEl.style.transform = '';
+                    currentEl.style.opacity = '';
+                    isAnimating = false;
+                }, 700);
+            }, 50);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) goToSlide(currentSlide - 1);
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                goToSlide(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                goToSlide(totalSlides - 1);
+            }
+        });
+
+        // Touch/Swipe Support
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                if (diffX > 0) nextSlide();
+                else prevSlide();
+            }
+        }, { passive: true });
+
+        // Mouse Wheel
+        let wheelTimeout;
+        document.addEventListener('wheel', (e) => {
+            // Check if scrollable content needs scrolling first
+            const activeSlide = slides[currentSlide];
+            const scrollContainer = activeSlide.querySelector('.slide-content-scroll');
+            
+            if (scrollContainer) {
+                const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+                const atTop = scrollTop <= 5;
+                const atBottom = scrollTop + clientHeight >= scrollHeight - 5;
+
+                if (e.deltaY > 0 && !atBottom) return;
+                if (e.deltaY < 0 && !atTop) return;
+            }
+
+            clearTimeout(wheelTimeout);
+            wheelTimeout = setTimeout(() => {
+                if (e.deltaY > 0) nextSlide();
+                else if (e.deltaY < 0) prevSlide();
+            }, 80);
+        }, { passive: true });
+
+        // Show keyboard hint after 3 seconds
+        setTimeout(() => {
+            if (window.innerWidth >= 768) {
+                keyHint.classList.remove('opacity-0');
+                keyHint.classList.add('opacity-100');
+                setTimeout(() => {
+                    keyHint.classList.remove('opacity-100');
+                    keyHint.classList.add('opacity-0');
+                }, 4000);
+            }
+        }, 3000);
+
+        // Initial UI
+        updateUI();
+    </script>
+</body>
+</html>
